@@ -1,13 +1,15 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
-import Allproduct from './components/All-Product';
-import Navigation from './components/Navigation';
+import "antd/dist/antd.css";
+import { Layout} from "antd";
+import Header_page from './components/Header_page';
 function App() {
   return (
-    <div className="App">
-      <Navigation></Navigation>
-      <Allproduct></Allproduct>
-    </div>
+      <Layout>
+        <Header_page>
+        </Header_page>
+      </Layout>
+   
   );
 }
 

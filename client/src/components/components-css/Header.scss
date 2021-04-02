@@ -1,0 +1,68 @@
+.ant-layout {
+    .header {
+        background: #fff;
+        position: relative;
+        div {
+            .menu {
+                .menu__top {
+                    display: flex;
+                    justify-content: space-between;
+                    height: 42px;
+                    .menu__top__select {
+                        div {
+                            border: 0px;
+                            outline: none;
+                        }
+                        div:focus {
+                            outline: none;
+                        }
+                    }
+                    .menu__top__profile {
+                        ul {
+                            display: flex;
+                            li {
+                                margin-left: 15px;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+                .menu__bottom{
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 10px;
+                    /* .logo{
+
+                    } */
+                    .menu{
+                       
+                        ul{
+                            display: flex;
+                            li{
+                                height: 0px;
+                                a{
+                                    margin:0 25px;
+                                    text-transform: uppercase;
+                                    font-size: 18px;
+                                    color: #000;
+                                    font-weight: 600;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &::after {
+            content: "";
+            background: #FAFAFB;
+            height: 2px;
+            width: 100%;
+            left: 0;
+            bottom: 10px;
+            position: absolute;
+            display: block;
+        }
+    }
+}
