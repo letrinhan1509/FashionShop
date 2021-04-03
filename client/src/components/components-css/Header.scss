@@ -1,13 +1,16 @@
+//@import url('./images/bg/bg.svg');
 .ant-layout {
     .header {
         background: #fff;
         position: relative;
+        height: 140px;
         div {
             .menu {
                 .menu__top {
                     display: flex;
                     justify-content: space-between;
                     height: 42px;
+                    
                     .menu__top__select {
                         div {
                             border: 0px;
@@ -60,9 +63,10 @@
             height: 2px;
             width: 100%;
             left: 0;
-            bottom: 10px;
+            bottom: 90px;
             position: absolute;
             display: block;
         }
     }
+    
 }
