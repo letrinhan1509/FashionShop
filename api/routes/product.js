@@ -50,11 +50,16 @@ router.get('/api/new-product', async function(req, res) {
   let data = await modelProduct.newProduct();
   res.json(data);
 })
+  // Sản phẩm theo loại:
+router.get('/api/san-pham/:loai', async function(req, res) {
+  let loai = req.params.loai;
+  let data = await modelProduct.detail(loai);
+  res.json(data);
+})
+  // Chi tiết sản phẩm theo tên:
 router.get('/api/chi-tiet-san-pham/:name', async function(req, res) {
   let name = req.params.name;
-  console.log(name);
   let data = await modelProduct.detailByName(name);
-  console.log(data);
   res.json(data);
 })
 

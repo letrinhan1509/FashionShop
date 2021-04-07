@@ -3,16 +3,11 @@ var dataList=[]; // biến để chứa dữ liệu đổ về cho controller
 var dataName = [];
 
 // định nghĩa các hàm để tương tác vào mysql
-exports.list = () => {
-    // let sql = "SELECT * FROM product";
-    // let query = db.query(sql, (err, result) => {
-    //     console.log('List success');
-    //     dataList = result;
-    // })
-    // return dataList;
 
+    // Danh sách tất cả sản phẩm:
+exports.list = () => {
     return new Promise( (hamOK, hamLoi) => {
-        let sql = "SELECT * FROM product";
+        let sql = "SELECT * FROM sanpham";
         db.query(sql, (err, d) => {
             console.log('List success');
             dataList = d;
@@ -21,16 +16,10 @@ exports.list = () => {
         }
     )
 }
+    // Lọc sản phẩm theo ID:
 exports.detail = (idProduct) => {
-    // let sql = `SELECT * FROM product WHERE idProduct=${idProduct}`;
-    // let query = db.query(sql, (err, d) => {
-    //     console.log('Detail success');
-    //     data = d[0];
-    // })
-    // return data;
-
     return new Promise( (hamOK, hamLoi) => {
-        let sql = `SELECT * FROM product WHERE idProduct=${idProduct}`;
+        let sql = `SELECT * FROM sanpham WHERE masp=${idProduct}`;
         db.query(sql, (err, d) => {
             console.log('List success');
             data = d[0];
@@ -39,32 +28,31 @@ exports.detail = (idProduct) => {
         }
     )
 }
+    // Tìm kiếm sản phẩm theo name:
+exports.searchName = (idProduct) => {
+    return new Promise( (hamOK, hamLoi) => {
+        let sql = `SELECT * FROM sanpham WHERE masp=${idProduct}`;
+        db.query(sql, (err, d) => {
+            console.log('List success');
+            data = d[0];
+            hamOK(data);
+        })
+        }
+    )
+}
+    // Chi tiết sản phẩm theo tên:
 exports.detailByName = (name) => {
-    // let filterProduct;
-    // let sql = `SELECT * FROM product`;
-    // let query = db.query(sql, (err, d) => {
-    //     console.log('Detail success');
-    //     dataName = d;
-    // })
-    // for( i in dataName) {
-    //     let product = dataName[i];
-    //     let newName = replaceNameProduct(product.nameProduct.toLowerCase());
-    //     if(newName === name) {
-    //         filterProduct = product;
-    //     }
-    // }
-    // return filterProduct;
-
     return new Promise( (hamOK, hamLoi) => {
             let filterProduct;
-            let sql = `SELECT * FROM product`;
+            let sql = `SELECT * FROM sanpham`;
             let query = db.query(sql, (err, d) => {
                 console.log('Detail success');
                 dataName = d;
                 for( i in dataName) {
                     let product = dataName[i];
-                    let newName = replaceNameProduct(product.nameProduct.toLowerCase());
-                    if(newName === name) {
+                    //let newName = replaceNameProduct(product.tensp);
+                    let newName = product.tensp;
+                    if(newName == name) {
                         filterProduct = product;
                     }
                 }
@@ -167,7 +155,7 @@ function xoa_dau(str) {
     str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "u");
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "y");
     str = str.replace(/Đ/g, "d");
-    str = str.split(' ').join('-');
+    //str = str.split(' ').join('-');
     return str;
   }
   

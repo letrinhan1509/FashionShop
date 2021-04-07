@@ -12,7 +12,7 @@ exports.list = async () => {
     // })
     // return dataList;
     return new Promise( (hamOK, hamLoi) => {
-        let sql = "SELECT * FROM catalog";
+        let sql = "SELECT * FROM loaisp";
         db.query(sql, (err, d) => {
             console.log('List success');
             dataList = d;
@@ -22,28 +22,16 @@ exports.list = async () => {
     )
 }
 exports.listByName = async (nameCat) => {
-    // let sql = `SELECT * FROM catalog WHERE nameCat='${nameCat}'`;
-    // let query = await db.query(sql, (err, result) => {
-    //     console.log('Get idCat by nameCat success');
-    //     itemCat = result[0].idCat;
-    // })
-    // let sql2 = `SELECT * FROM product WHERE idCat=${itemCat}`;
-    // let query2 = await db.query(sql2, (err, result) => {
-    //     console.log('Get list product by id Cat success');
-    //     dataListPro = result;
-    // })
-    // return dataListPro;
-
     return new Promise( (hamOK, hamLoi) => {
-        let sql = `SELECT * FROM catalog WHERE nameCat='${nameCat}'`;
+        let sql = `SELECT * FROM loaisp WHERE maloai='${nameCat}'`;
         db.query(sql, (err, result) => {
             console.log('Get idCat by nameCat success');
-            itemCat = result[0].idCat;
+            itemCat = result[0].maloai;
         })
-        let sql2 = `SELECT * FROM product WHERE idCat=${itemCat}`;
-        db.query(sql2, (err, result) => {
+        let sql2 = `SELECT * FROM sanpham WHERE maloai='${itemCat}'`;
+        db.query(sql2, (err, result1) => {
             console.log('Get list product by id Cat success');
-            dataListPro = result;
+            dataListPro = result1;
             hamOK(dataListPro);
         })
         }
