@@ -1,17 +1,19 @@
-//@import url('./images/bg/bg.svg');
 .ant-layout {
    
     .header {
         background: #fff;
+<<<<<<< HEAD
         position: relaftive;
         height: 140px;
+=======
+        position: relative;
+>>>>>>> parent of 19dd1ba (1)
         div {
             .menu {
                 .menu__top {
                     display: flex;
                     justify-content: space-between;
                     height: 42px;
-                    
                     .menu__top__select {
                         div {
                             border: 0px;
@@ -64,10 +66,9 @@
             height: 2px;
             width: 100%;
             left: 0;
-            bottom: 90px;
+            bottom: 10px;
             position: absolute;
             display: block;
         }
     }
-    
 }

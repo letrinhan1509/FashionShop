@@ -1,13 +1,16 @@
-import { Row, Col, Layout, Select, Badge } from 'antd';
+import { Row, Col, Layout } from 'antd';
 import React from "react";
-import { ShoppingCartOutlined, UserOutlined, SearchOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
+import { Badge } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import "./components-css/Header.scss"
 const { Option } = Select;
 const { Header } = Layout;
-
 const Header_page = () => {
     return (
-        <>
+        <> 
             <Header className="header">
                 <Row>
                     <Col className="menu" span={22} offset={1}>
@@ -25,22 +28,22 @@ const Header_page = () => {
                             <div className="menu__top__profile">
                                 <ul>
                                     <li>
-                                        <UserOutlined />My Profile
+                                    <UserOutlined />My Profile
                                     </li>
                                     <li>
                                         <Badge size="small" count={5}>
-                                            <a href="#/"  ><ShoppingCartOutlined style={{ fontSize: '26px' }} ></ShoppingCartOutlined></a>
-                                            
+                                            <a href="#" className="head-example"  />
+                                            <ShoppingCartOutlined  style={{ fontSize: '26px' }}  />
                                         </Badge>
                                     </li>
                                     <li>
                                         Item
                                     </li>
                                     <li>
-                                        $0.00
+                                            $0.00
                                     </li>
                                     <li>
-                                        <SearchOutlined />
+                                    <SearchOutlined />
                                     </li>
                                 </ul>
                             </div>
@@ -48,24 +51,30 @@ const Header_page = () => {
                         </div>
                         <div className="menu__bottom">
                             <div className="logo">
-                                <img src="./images/icon/logo.svg" alt="cc"/>
+                                <img src="./images/icon/logo.svg"></img>
                             </div>
                             <div className="menu" >
                                 <ul>
+<<<<<<< HEAD
                                     <li><a href='#/'>Home</a></li>
                                     <li><a  href='#/'>Áo</a></li>
                                     <li><a  href='#/'>Balo</a></li>
                                     <li><a  href='#/'>Giày/Dép</a></li>
                                     <li><a  href='#/'>Nón</a></li>
                                     <li><a  href='#/'>Phụ kiện</a></li>
+=======
+                                    <li><a>Home</a></li>
+                                    <li><a>Bags</a></li>
+                                    <li><a>Sneakers</a></li>
+                                    <li><a>Belt</a></li>
+                                    <li><a>Contact</a></li>
+>>>>>>> parent of 19dd1ba (1)
                                 </ul>
                             </div>
                         </div>
                     </Col>
                 </Row>
             </Header>
-           
-            
         </>
     );
 };

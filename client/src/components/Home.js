@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Row, Col, Carousel, Card } from 'antd';
 import './components-css/Home.scss';
@@ -164,3 +165,5 @@ const Home = () => {
 
 
 export default Home;
+=======
+>>>>>>> parent of 19dd1ba (1)
