@@ -2,7 +2,7 @@
 import './App.css';
 import "antd/dist/antd.css";
 import { Layout} from "antd";
-import Header_page from './components/Header_page';
+import Header_page from './components/include/Header_page';
 import { Content } from 'antd/lib/layout/layout';
 import ProductDetail from "./container/Product-detail";
 import Home from "./container/Home";
