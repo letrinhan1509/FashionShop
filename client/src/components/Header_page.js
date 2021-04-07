@@ -53,10 +53,11 @@ const Header_page = () => {
                             <div className="menu" >
                                 <ul>
                                     <li><a href='#/'>Home</a></li>
-                                    <li><a  href='#/'>Bags</a></li>
-                                    <li><a  href='#/'>Sneakers</a></li>
-                                    <li><a  href='#/'>Belt</a></li>
-                                    <li><a  href='#/'>Contact</a></li>
+                                    <li><a  href='#/'>Áo</a></li>
+                                    <li><a  href='#/'>Balo</a></li>
+                                    <li><a  href='#/'>Giày/Dép</a></li>
+                                    <li><a  href='#/'>Nón</a></li>
+                                    <li><a  href='#/'>Phụ kiện</a></li>
                                 </ul>
                             </div>
                         </div>
