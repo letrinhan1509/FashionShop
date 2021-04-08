@@ -12,7 +12,7 @@ exports.list = () => {
     // return dataList;
 
     return new Promise( (hamOK, hamLoi) => {
-        let sql = "SELECT * FROM product";
+        let sql = "SELECT * FROM sanpham";
         db.query(sql, (err, d) => {
             console.log('List success');
             dataList = d;
