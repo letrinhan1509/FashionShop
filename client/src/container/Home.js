@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Carousel, Card } from 'antd';
+import { Row, Col, Carousel, Card, Tabs } from 'antd';
+
+
 //mport "./components-css/Home.scss";
 import "./components-css/Home.scss";
 import axios from 'axios';
+const { TabPane } = Tabs;
 const contentStyle = {
     height: '590px',
     backgroundImage: './',
@@ -45,23 +48,25 @@ const Home = () => {
     }, []);
     const [ProductHome, setProductHome] = useState([]);
     useEffect(() => {
-         setProductHome(ListProductHome)
-    },[ListProductHome]);
+        setProductHome(ListProductHome)
+    }, [ListProductHome]);
     //console.log(ProductHome);
-    const handleClick =(e) => {
+    const handleClick = (e) => {
+          console.log(e);
         setProductHome(ListProductHome);
         let filterProduct = [];
-        const name = e.target.name;
-        console.log(name)
-        if (name === "all") {
+        //let name = e.target.name;
+       
+        //console.log(name)
+        if (e === "all") {
             filterProduct = ListProductHome;
-            console.log(filterProduct);
-          
+            //console.log(filterProduct);
+
         } else {
             filterProduct = ListProductHome.filter(
-                ListProductHome => ListProductHome.maloai === name
+                ListProductHome => ListProductHome.maloai === e
             )
-            console.log(filterProduct);
+            //console.log(filterProduct);
         }
         setProductHome(filterProduct)
         /// bị ngu chổ này)
@@ -100,8 +105,9 @@ const Home = () => {
                                         <Card className="card-pro" bordered={false}
                                             hoverable
                                             style={{ width: 350 }}
-                                            title={productItem.title} >
+                                        >
                                             <img alt="ao" src={`./images/aoKhoac/${productItem.img}`} />
+                                            <Meta className="card-pro-name" title={productItem.title} />
                                             <Meta className="card-pro-price" title={`$ ${productItem.price}`} />
                                         </Card>
                                     </Col>
@@ -117,7 +123,7 @@ const Home = () => {
                 <Col span={22} offset={1}>
                     <div className="menu_filter">
                         <h3>Best Seller</h3>
-                        <ul>
+                       {/*  <ul>
                             {button.map(({ name, value }) => (
                                 <li key={name}>
                                     <a href="#/"
@@ -128,26 +134,36 @@ const Home = () => {
                                     >{value}</a>
                                 </li>
                             ))}
+                        </ul> */}
+                        <Tabs  onChange={handleClick}>
+                            {button.map(({ name, value }) => (
+                                <TabPane tab={value} key={name} name={name}>
+                               
+                                </TabPane>
+                            ))}
 
-
-                        </ul>
+                        </Tabs>
                     </div>
                     <div className="site-card-wrapper product_home">
                         <Row gutter={16}>
                             {ProductHome.map((productItem) => {
-                                /* if (productItem.length > 0) { */
+                                //if (productItem.giamgia > 0) {
                                 return (
                                     <Col key={productItem.masp} span={6}>
                                         <Card key={productItem.masp} className="card-pro card_product_home" bordered={false}
-                                            hoverable
-
-                                            title={productItem.tensp} >
+                                            hoverable >
                                             <img alt="ao" src={`./images/test/${productItem.hinh}`} />
-                                            <Meta className="card-pro-price" title={`$ ${productItem.gia}`} />
+                                            <Meta className="card-pro-name" title={productItem.tensp} />
+                                            <div className="price">
+                                                <Meta className="card-pro-priceSale" title={`${productItem.gia - (productItem.gia * productItem.giamgia / 100)} VNĐ`} />
+                                                <Meta className="card-pro-price" title={`${productItem.gia} VNĐ`} />
+                                                <Meta className="card-pro-sale" title={`${productItem.giamgia}% Off`} />
+                                            </div>
+
                                         </Card>
                                     </Col>
                                 );
-
+                                //}
                             }
                             )
                             }
