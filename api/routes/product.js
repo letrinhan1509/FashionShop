@@ -38,7 +38,7 @@ router.get('/:name', async function(req, res) {
 
 
       // API
-router.get('/api/product', async function(req, res) {
+router.get('/api/product', async function(req, res) { 
   let listPro = await modelProduct.list();
   res.json(listPro);
 })

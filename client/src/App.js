@@ -1,9 +1,11 @@
 //import logo from './logo.svg';
 import './App.css';
 import "antd/dist/antd.css";
+
 import { Layout, Col, Row } from "antd";
 import React, { useState } from "react";
-import Header_page from './components/Header_page';
+import Header_page from './components/include/Header_page';
+import { Content } from 'antd/lib/layout/layout';
 import ProductDetail from "./container/Product-detail";
 import Home from "./container/Home";
 import { BrowserRouter as Router, Route } from "react-router-dom";

@@ -32,8 +32,10 @@ const Header_page = () => {
                                     </li>
                                     <li>
                                         <Badge size="small" count={5}>
-                                            <a href="#" className="head-example"  />
-                                            <ShoppingCartOutlined  style={{ fontSize: '26px' }}  />
+                                            <a href="#/" className="head-example" >
+                                            <ShoppingCartOutlined  style={{ fontSize: '26px' }}>
+                                            </ShoppingCartOutlined>
+                                            </a>
                                         </Badge>
                                     </li>
                                     <li>
@@ -51,15 +53,16 @@ const Header_page = () => {
                         </div>
                         <div className="menu__bottom">
                             <div className="logo">
-                                <img src="./images/icon/logo.svg"></img>
+                                <img alt="img" src="./images/icon/logo.svg"></img>
                             </div>
                             <div className="menu" >
                                 <ul>
-                                    <li><a>Home</a></li>
-                                    <li><a>Bags</a></li>
-                                    <li><a>Sneakers</a></li>
-                                    <li><a>Belt</a></li>
-                                    <li><a>Contact</a></li>
+                                    <li><a href='#/'>Home</a></li>
+                                    <li><a  href='#/'>Áo</a></li>
+                                    <li><a  href='#/'>Balo</a></li>
+                                    <li><a  href='#/'>Giày/Dép</a></li>
+                                    <li><a  href='#/'>Nón</a></li>
+                                    <li><a  href='#/'>Phụ kiện</a></li>
                                 </ul>
                             </div>
                         </div>
