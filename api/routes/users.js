@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../models/database')
-var modelUser = require('../models/model_user');
+const modelUser = require('../models/model_user');
 const bcrypt = require("bcrypt");
 
 /* GET users listing. */
@@ -13,7 +13,7 @@ router.get('/tai-khoan', function(req, res, next) {
         res.redirect("/users/dang-nhap");
     }
 });
-router.get('/dang-nhap', function(req, res, next) {
+/* router.get('/dang-nhap', function(req, res, next) {
     res.render('site/dang-nhap.ejs')
 });
 router.post('/dang-nhap', function(req, res, next) {
@@ -81,7 +81,7 @@ router.post('/luu', function(req, res, next) {
     }
 
     res.redirect("/users/thanh-cong");
-})
+}) */
 router.get('/thanh-cong', function(req, res, next) {
     let message = "Đăng ký thành công";
     res.render('site/thanh-cong', { message: message })
@@ -165,5 +165,81 @@ router.post('/quen-mat-khau', async(req, res) => {
         res.render('site/quen-mat-khau', { message: mess });
     }
 })
+
+
+            // API
+    // Danh sách tất cả khách hàng:
+router.get('/api/khach-hang', async function(req, res) {
+    let listUsers = await modelUser.list();
+    res.json(listUsers);
+});
+router.get('/api/dang-ky', async function(req, res) {
+    res.json('success');
+});
+    // Đăng ký tài khoản:
+router.post('/api/dang-ky', function(req, res, next) {
+    let ten = req.body.tenkh;
+    let em = req.body.email;
+    let mk = req.body.matkhau;
+    let rmk = req.body.nhaplaimk; 
+    let sdt = req.body.sodienthoai;
+    let dc = req.body.diachi;
+
+    if (mk === rmk && mk != "") {
+        // Mã hoá mật khẩu:
+        //var salt = bcrypt.genSaltSync(10);
+        //var pass_mahoa = bcrypt.hashSync(mk, salt);
+
+        let kh_info = { tenkh: ten, email: em, matkhau: mk, sodienthoai: sdt, diachi: dc };
+
+        let sql = 'INSERT INTO khachhang SET ?';
+        db.query(sql, kh_info, (err, d) => {
+            console.log('Insert User success');
+        });
+    } else {
+        res.json('fail');
+    }  
+    res.json('success');
+})
+    // Đăng nhập tài khoản:
+router.post('/api/dang-nhap', function(req, res, next) {
+    let em = req.body.email;
+    let mk = req.body.matkhau;
+
+    let sql = `SELECT * FROM khachhang WHERE email = '${em}'`;
+    db.query(sql, (err, rows) => {
+        if (rows.length <= 0) {
+            //res.redirect("/users/dang-nhap");
+            //return;
+            res.json('fail');
+        }
+        let user = rows[0];
+        let pass_fromdb = user.matkhau; // Lấy mật khẩu từ DB lên.
+        console.log(user);
+        console.log("Mật khẩu DB:", pass_fromdb);
+        var kq = bcrypt.compareSync(mk, pass_fromdb); //
+        console.log(kq);
+        if (mk === pass_fromdb) {
+            console.log("OK!!! Đăng nhập thành công");
+            //res.json(user);
+            res.json('success');
+        } 
+        /* if (kq) {
+            console.log("OK");
+            res.json(user);
+            res.json('success');
+        } */ else {
+            console.log("Not OK");
+            res.json('fail');
+        }
+    });
+});
+    // Tìm khách hàng bằng tên:
+router.get('/api/chi-tiet-khach-hang/:name', async function(req, res) {
+    let nameUser = req.params.name;
+    let User = await modelUser.detailByName(nameUser);
+    console.log(User);
+    res.json(User);
+});
 
 module.exports = router;

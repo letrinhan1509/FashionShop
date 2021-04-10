@@ -38,6 +38,7 @@ router.get('/:name', async function(req, res) {
 
 
       // API
+  // Danh sách tất cả sản phẩm:
 router.get('/api/product', async function(req, res) { 
   let listPro = await modelProduct.list();
   res.json(listPro);
@@ -50,7 +51,7 @@ router.get('/api/new-product', async function(req, res) {
   let data = await modelProduct.newProduct();
   res.json(data);
 })
-  // Sản phẩm theo loại:
+  // Chi tiết sản phẩm theo id:
 router.get('/api/san-pham/:loai', async function(req, res) {
   let loai = req.params.loai;
   let data = await modelProduct.detail(loai);

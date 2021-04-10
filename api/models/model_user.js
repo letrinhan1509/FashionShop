@@ -22,3 +22,21 @@ exports.checkUsername = (username) => {
         }
     )
 }
+exports.list = () => {
+    return new Promise( (hamOK, hamLoi) => {
+        let sql = 'SELECT * FROM khachhang'
+        db.query(sql, (err, result) => {
+            console.log('List All Users Success!');
+            hamOK(result);
+        });
+    });
+};
+exports.detailByName = (nameUser) => {
+    return new Promise( (hamOK, hamLoi) => {
+        let sql = `SELECT * FROM khachhang WHERE tenkh='${nameUser}'`;
+        db.query(sql, (err, result) => {
+            console.log('User Success!');
+            hamOK(result[0]);
+        })
+    });
+}
