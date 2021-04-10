@@ -5,7 +5,7 @@ import { Badge } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
-import "../components-css/Header.scss"
+import "../components/components-css/Header.scss"
 const { Option } = Select;
 const { Header } = Layout;
 const Header_page = () => {
