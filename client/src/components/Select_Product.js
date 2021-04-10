@@ -1,0 +1,396 @@
+import { Col, Layout, Row, Rate, Statistic, Select, Radio, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
+import moment from 'moment';
+import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import "../components/components-css/SelectProduct.scss";
+const { Sider, Content } = Layout;
+const { Option } = Select;
+const { Meta } = Card;
+
+const Select_Product = () => {
+
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+    }
+
+    const [value, setValue] = React.useState(1);
+    const onChange = e => {
+        console.log('radio checked', e.target.value);
+        setValue(e.target.value);
+    };
+
+
+
+    const [size, setSize] = useState('large');
+    function Change(value) {
+        console.log('changed', value);
+    }
+
+
+
+    const { TabPane } = Tabs;
+    function callback(key) {
+        console.log(key);
+    }
+
+
+    const data = [
+        {
+            actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+            author: 'Han Solo',
+            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            content: (
+                <p>
+                    We supply a series of design principles, practical patterns and high quality design
+                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
+                    efficiently.
+                </p>
+            ),
+            datetime: (
+                <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
+                    <span>{moment().subtract(1, 'days').fromNow()}</span>
+                </Tooltip>
+            ),
+        },
+        {
+            actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+            author: 'Taki',
+            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            content: (
+                <p>
+                    We supply a series of design principles, practical patterns and high quality design
+                    resources. very good !!!
+                </p>
+            ),
+            datetime: (
+                <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
+                    <span>{moment().subtract(2, 'days').fromNow()}</span>
+                </Tooltip>
+            ),
+        },
+    ];
+
+    const product = [
+        {
+            key: "1",
+
+            name: "Product Name",
+            src: [{
+                id: 'hinh1',
+                file: './images/giay/iconGray.jpg'
+            },
+            {
+                id: 'hinh2',
+                file: "./images/giay/lacoste.jpg"
+            },
+            {
+                id: 'hinh3',
+                file: "./images/giay/pumathunder.jpg"
+            },
+            {
+                id: 'hinh4',
+                file: "./images/giay/mlbNY.jpg",
+            }
+            ],
+            color: [
+                "red",
+                "black",
+                "white",
+                "blue"
+            ],
+        }
+    ];
+
+    const Tabs_product = () => (
+        <Tabs defaultActiveKey="1" style={{ width: 900 }}>
+            <TabPane tab="Product Infomation" key="1">
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum magni velit vero hic temporibus eveniet, distinctio quas nemo, qui porro ex
+                    sapiente molestiae provident reiciendis saepe. Voluptate nihil perferendis assumenda.Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Rerum magni velit vero hic temporibus eveniet, distinctio quas nemo, qui porro ex sapiente molestiae provident reiciendis saepe. Voluptate nihil perferendis assumenda.
+            </p>
+                <p>
+                    Voluptate nihil perferendis assumenda.Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Rerum magni velit vero hic temporibus eveniet, distinctio quas nemo, qui porro ex sapiente molestiae provident reiciendis saepe. Voluptate nihil perferendis assumenda.
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum magni velit vero hic temporibus eveniet, distinctio quas nemo, qui porro ex
+                    sapiente molestiae provident reiciendis saepe.
+            </p>
+            </TabPane>
+            <TabPane tab="Reviews" key="2">
+                <List
+                    className="comment-list"
+                    header={`${data.length} replies`}
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={item => (
+                        <li>
+                            <Comment
+                                actions={item.actions}
+                                author={item.author}
+                                avatar={item.avatar}
+                                content={item.content}
+                                datetime={item.datetime}
+                            />
+                        </li>
+                    )}
+                />
+            </TabPane>
+            <TabPane tab="Another Tab" key="3">
+                Content of Tab Pane 3
+          </TabPane>
+        </Tabs>
+    );
+
+
+    const [index, setIndex] = useState(product[0].src[0].file);
+    const [current, setCurrent] = useState(product[0].src[0].id);
+
+    /* const [images, setImages] = useState({myRef.current.children}); */
+    const handleTab = (imgfile, e) => {
+        setIndex(imgfile);
+        let currentId = e.target.name;
+        console.log(current)
+        setCurrent(`${current}`);
+        console.log(current)
+        let listPhoto = document.getElementsByClassName('hinh');
+        for (let i = 0; i < listPhoto.length; i++) {
+            if (currentId == current) {
+                document.getElementById(current).classList.add('active');
+            }
+            else
+                if (listPhoto[i].classList.contains('active')) 
+                { 
+                    listPhoto[i].classList.remove('active');
+                }
+        }
+
+    }
+
+
+
+
+
+
+    return (
+        <Content>
+            <Row className="cover-one">
+                {product.map((item) => {
+                    return (
+                        <Col className="img-box" key={item.key}>
+                            <Row>
+                                <Col>
+                                    <img src={index} alt="product" />
+                                </Col>
+                            </Row>
+                            <Row className="img-change">
+                                {item.src.map((img) => {
+                                    return (
+                                        <Col className="hinh"><img  name={img.id} src={img.file} alt="product" onClick={(e) => handleTab(img.file, e)} /></Col>
+                                    );
+                                })}
+                            </Row>
+                        </Col>
+                    );
+                })}
+
+                <Col className="imfo-col">
+                    <h1>BIGBALL CHUNKY P BOSTON RED SOX</h1>
+                    <ul className="vote-star">
+                        <li><Rate /></li>
+                        <li><Statistic title="reviews" value={0} /></li>
+                        <li><a href="#">Submit a review</a></li>
+                    </ul>
+                    <div className="sale-imfo">
+                        <ul className="price">
+                            <li className="new">$299,00</li>
+                            <li className="old">$534,33</li>
+                            <li className="percent">24% Off</li>
+                        </ul>
+                        <Row>
+                            <Col>
+                                <p>Availability:</p>
+                                <p>Category:</p>
+                            </Col>
+                            <Col offset={5}>
+                                <p>In stock</p>
+                                <p>Acessories</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col><p>Free shipping</p></Col>
+                        </Row>
+                    </div>
+                    <div className="size-color">
+                        <Row className="box-one">
+                            <Col>
+                                <span>Select Color</span>
+                            </Col>
+                            <Col>
+                                {/* <Radio.Group onChange={onChange} value={value}>
+                                    <Radio value={1}></Radio>
+                                    <Radio value={2}></Radio>
+                                    <Radio value={3}></Radio>
+                                    <Radio value={4}></Radio>
+                                </Radio.Group> */}
+                                {
+                                    product.map((items) => {
+                                        return (
+                                            <div >
+                                                {items.color.map((item) => {
+                                                    return (
+                                                        <button className="select-color" style={{ background: item }}></button>
+                                                    );
+                                                })}
+                                            </div>
+                                        );
+                                    })
+                                }
+                            </Col>
+                        </Row>
+                        <Row className="box-two">
+                            <Col>
+                                <span>Size</span>
+                            </Col>
+                            <Col>
+                                <Select defaultValue="S" style={{ width: 120 }} onChange={handleChange}>
+                                    <Option value="S">S</Option>
+                                    <Option value="M">M</Option>
+                                    {/* <Option value="disabled" disabled>
+                                Disabled
+                            </Option> */}
+                                    <Option value="L">L</Option>
+                                    <Option value="XL">XL</Option>
+                                </Select>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className="add-cart">
+                        <Row>
+                            <Col>
+                                <InputNumber size="large" min={1} max={10} defaultValue={1} onChange={Change} />
+                            </Col>
+                            <Col offset={9} span={4}>
+                                <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
+                                    Add To Cart
+                                </Button>
+                            </Col>
+                            <Col offset={4} span={2}>
+                                <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className="social-network">
+                        <Row>
+                            <Col>
+                                <Button className="btn-facebook" type="primary" icon={<FacebookOutlined />} size={size}>
+                                    Share on Facebook
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button className="btn-switter" type="primary" icon={<TwitterOutlined />} size={size}>
+                                    Share on Twitter
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+                <Col className="best-seller">
+                    <Row>
+                        <Col>
+                            <h1>Best Seller</h1>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="box">
+                            <Carousel autoplay style={{ width: 300 }}>
+                                <div>
+                                    <Card
+                                        className="card"
+                                        hoverable
+                                        style={{ width: 300 }}
+                                        cover={<img alt="example" src="./images/giay/superstartMickey.jpg" />}
+                                    >
+                                        <Row>
+                                            <Col offset={5}>
+                                                <Rate />
+                                                {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
+                                                <ul className="price">
+                                                    <li className="new">$299,00</li>
+                                                    <li className="old">$534,33</li>
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                </div>
+                                <div>
+                                    <Card
+                                        className="card"
+                                        hoverable
+                                        style={{ width: 300 }}
+                                        cover={<img alt="example" src="./images/giay/stansmith.jpg" />}
+                                    >
+                                        <Row>
+                                            <Col offset={5}>
+                                                <Rate />
+                                                {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
+                                                <ul className="price">
+                                                    <li className="new">$199,00</li>
+                                                    <li className="old">$454,33</li>
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                </div>
+                                <div>
+                                    <Card
+                                        className="card"
+                                        hoverable
+                                        style={{ width: 300 }}
+                                        cover={<img alt="example" src="./images/giay/pumathunder.jpg" />}
+                                    >
+                                        <Row>
+                                            <Col offset={5}>
+                                                <Rate />
+                                                {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
+                                                <ul className="price">
+                                                    <li className="new">$200,00</li>
+                                                    <li className="old">$300,00</li>
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                </div>
+                                <div>
+                                    <Card
+                                        className="card"
+                                        hoverable
+                                        style={{ width: 300 }}
+                                        cover={<img alt="example" src="./images/giay/jordan1UBT.jpg" />}
+                                    >
+                                        <Row>
+                                            <Col offset={5}>
+                                                <Rate />
+                                                {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
+                                                <ul className="price">
+                                                    <li className="new">$299,00</li>
+                                                    <li className="old">$400,00</li>
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                </div>
+                            </Carousel>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+            <Row className="cover-two">
+                <Col className="comments">
+                    <Tabs_product />
+                </Col>
+            </Row>
+        </Content>
+    );
+}
+
+export default Select_Product;

@@ -14,14 +14,18 @@ router.get('/:name', async function(req, res) {
 })
 
 
-      // API 
+      // API
+  // Danh sách loại sản phẩm:
 router.get('/api/catolog', async function(req, res) {
   let listPro = await modelCatalog.list();
   res.json(listPro);
 })
-router.get('/api/:name', async function(req, res) {
+  // Danh sách sản phẩm theo loại:
+router.get('/api/loai-sp/:name', async function(req, res) {
   let name = req.params.name;
+  console.log(name);
   let listPro = await modelCatalog.listByName(name);
+  //console.log(listPro);
   res.json(listPro);
 })
 
