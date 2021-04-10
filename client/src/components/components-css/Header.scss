@@ -1,5 +1,4 @@
 .ant-layout {
-   
     .header {
         background: #fff;
         position: relaftive;
@@ -7,7 +6,6 @@
         div {
             .menu {
                 .menu__top {
-                    display: flex;
                     justify-content: space-between;
                     height: 42px;
                     .menu__top__select {
@@ -29,26 +27,24 @@
                         }
                     }
                 }
-                .menu__bottom{
+                .menu__bottom {
                     display: flex;
                     justify-content: space-between;
                     margin-top: 10px;
                     /* .logo{
 
                     } */
-                    .menu{
-                       
-                        ul{
+                    .menu {
+                        ul {
                             display: flex;
-                            li{
+                            li {
                                 height: 0px;
-                                a{
-                                    margin:0 25px;
+                                a {
+                                    margin: 0 25px;
                                     text-transform: uppercase;
                                     font-size: 18px;
                                     color: #000;
                                     font-weight: 600;
-
                                 }
                             }
                         }
@@ -58,7 +54,7 @@
         }
         &::after {
             content: "";
-            background: #FAFAFB;
+            background: #fafafb;
             height: 2px;
             width: 100%;
             left: 0;
