@@ -1,11 +1,12 @@
 import React from "react";
-import { Form, Input, Row,Col,Button,message} from "antd";
+import { Form, Input, Row, Col, Button, message,Select } from "antd";
 //import "./component-css/Register.css";
 
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 import Meta from "antd/lib/card/Meta";
-import "./components-css/Register.scss"
+import "./components-css/Register.scss";
+const { Option } = Select;
 const formItemLayout = {
     labelCol: {
         xs: {
@@ -41,9 +42,16 @@ const RegisterForm = () => {
     const [form] = Form.useForm();
     const history = useHistory();
 
-
+    const prefixSelector = (
+        <Form.Item name="prefix" noStyle>
+          <Select style={{ width: 70 }}>
+            <Option value="86">+84</Option>
+           
+          </Select>
+        </Form.Item>
+      );
     const register = (values) => {
-        const url = "localhost:3001/users/api/dang-ky"
+        const url = "http://localhost:3001/users/api/dang-ky"
         axios.post(url, values).then((res) => {
             message.success("Register successfully!")
             setTimeout(() => { history.push('/login') }, 2000)
@@ -57,7 +65,7 @@ const RegisterForm = () => {
     return (
         <Row className="register-container">
             <Col className="register-form-wrapper" offset={6} span={10}>
-                <Meta id='register-title' className="register-title" title="Đăng kí tài khoản"/>
+                <Meta id='register-title' className="register-title" title="Đăng kí tài khoản" />
                 <Form
                     {...formItemLayout}
                     form={form}
@@ -87,8 +95,8 @@ const RegisterForm = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        name="username"
-                        label="Tài khoản"
+                        name="tenkh"
+                        label="Tên khách hàng"
                         tooltip="Đây là tên đăng nhập của bạn."
                         rules={[
                             {
@@ -101,7 +109,7 @@ const RegisterForm = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        name="password"
+                        name="matkhau"
                         label="Mật khẩu"
                         rules={[
                             {
@@ -111,10 +119,10 @@ const RegisterForm = () => {
                         ]}
                         hasFeedback
                     >
-                    <Input.Password />
+                        <Input.Password />
                     </Form.Item>
                     <Form.Item
-                        name="passwordConfirm"
+                        name="nhaplaimk"
                         label="Xác nhận mật khẩu"
                         dependencies={["password"]}
                         hasFeedback
@@ -125,7 +133,7 @@ const RegisterForm = () => {
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
-                                    if (!value || getFieldValue("password") === value) {
+                                    if (!value || getFieldValue("matkhau") === value) {
                                         return Promise.resolve();
                                     }
 
@@ -138,7 +146,31 @@ const RegisterForm = () => {
                             }),
                         ]}
                     >
-                    <Input.Password />
+                        <Input.Password />
+                    </Form.Item>
+                    <Form.Item
+                        name="sodienthoai"
+                        label="Phone Number"
+                        rules={[{
+                            required: true,
+                            message: 'Vui lòng nhập số điện thoại !'
+                        }]}
+                    >
+                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item
+                        name="diachi"
+                        label="Địa chỉ"
+                        tooltip="Địa chỉ giao hàng"
+                      /*   rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng nhập tên tài khoảng !!!",
+                                whitespace: true,
+                            },
+                        ]} */
+                    >
+                        <Input />
                     </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">

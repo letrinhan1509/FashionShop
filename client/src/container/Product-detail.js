@@ -2,8 +2,8 @@ import { Col, Layout, Row, Breadcrumb, Card } from "antd";
 import React from 'react';
 import "../components/components-css/ProductDetail.scss"
 import "../components/Select_Product"
-import Select_Product from "../components/Select_Product";
-const { Sider, Content } = Layout;
+import SelectProduct from "../components/Select_Product";
+const { Content } = Layout;
 
 const ProductDetail = () => {
 
@@ -45,10 +45,10 @@ const ProductDetail = () => {
                 <Col className="link-col" offset={10} >
                     <Breadcrumb>
                         <Breadcrumb.Item>
-                            <a href="">Home</a>
+                            <a href="#/">Home</a>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            <a href="">Hot Deal</a>
+                            <a href="#/">Hot Deal</a>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>BIGBALL CHUNKY P BOSTON RED SOX</Breadcrumb.Item>
                     </Breadcrumb>
@@ -56,7 +56,7 @@ const ProductDetail = () => {
             </Row>
             <Row>
                 <Col offset={2}>
-                    <Select_Product />
+                    <SelectProduct />
                 </Col>
             </Row>
             <Row className="related">
@@ -78,7 +78,7 @@ const ProductDetail = () => {
                                                 style={{ width: 320 }}>
 
                                                 <div>
-                                                    <img src={`./images/giay/${Items.img}`} />
+                                                    <img alt='img' src={`./images/giay/${Items.img}`} />
                                                 </div>
                                                 <p>
                                                     {Items.name}

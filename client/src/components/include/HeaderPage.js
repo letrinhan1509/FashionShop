@@ -35,7 +35,9 @@ const Header_page = () => {
                                 <img style={logo} alt='logo' src="./images/icon/logo.svg" />
                             </div>
                     <Col className="menu" span={22} offset={1}>
-                        <Menu style={contentStyle} mode="horizontal">
+                        <Menu style={contentStyle} mode="horizontal"
+                           onClick={handClick}
+                           selectedKeys={[current]}>
                             <Menu.Item key="Profile" >
                                 <UserOutlined />My Profile
                             </Menu.Item>
@@ -56,11 +58,17 @@ const Header_page = () => {
                             <Menu.Item key="sreach">
                                 <SearchOutlined />
                             </Menu.Item>
+                            <Menu.Item key="register" style={menu} icon={<UserAddOutlined style={{ fontSize: 20}} />}>
+                            </Menu.Item>
+                           
+                            <Menu.Item key="login" style={menu} icon={<LoginOutlined style={{ fontSize: 20}} />}>
+                            </Menu.Item>
                         </Menu>
                         <Col className="menu" span={22} offset={1}>
                         <Menu style={contentStyle} mode="horizontal"
                         onClick={handClick}
                         selectedKeys={[current]}>
+                     
                             <Menu.Item key="/" style={menu} >
                                 Home
                             </Menu.Item>
@@ -76,13 +84,7 @@ const Header_page = () => {
                             <Menu.Item key="pk" style={menu}>
                                 Phụ kiện
                             </Menu.Item>
-                            <Menu.Item key="register" style={menu} icon={<UserAddOutlined style={{ fontSize: 20}} />}>
-                             Đăng kí
-                            </Menu.Item>
                            
-                            <Menu.Item key="login" style={menu} icon={<LoginOutlined style={{ fontSize: 20}} />}>
-                             Đăng Nhập
-                            </Menu.Item>
                         </Menu>
                         </Col>
                     </Col>

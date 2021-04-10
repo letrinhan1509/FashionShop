@@ -2,24 +2,24 @@
 import './App.css';
 import "antd/dist/antd.css";
 
-import { Layout, Col, Row } from "antd";
-import React, { useState } from "react";
-import Header_page from './components/include/Header_page';
+import { Layout} from "antd";
+import React from "react";
+import HeaderPage from './components/include/HeaderPage';
 import { Content } from 'antd/lib/layout/layout';
 import ProductDetail from "./container/Product-detail";
 import Home from "./container/Home";
 import Footer from "./components/include/Footer";
 import Register from "./container/Register";
+import Login from "./container/Login";
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
-const { Header, Footer, Sider, Content } = Layout;
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
   return (
     
       <Router>
         <Layout>
-          <Header_page />
+          <HeaderPage />
           <Content className="content-wrapper">
             <Route exact path="/">
                 <Home />

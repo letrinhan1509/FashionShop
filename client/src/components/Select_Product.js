@@ -1,27 +1,25 @@
-import { Col, Layout, Row, Rate, Statistic, Select, Radio, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
+import { Col, Layout, Row, Rate, Statistic, Select, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import "../components/components-css/SelectProduct.scss";
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 const { Option } = Select;
-const { Meta } = Card;
-
 const Select_Product = () => {
 
     function handleChange(value) {
         console.log(`selected ${value}`);
     }
 
-    const [value, setValue] = React.useState(1);
+   /*  const [value, setValue] = React.useState(1);
     const onChange = e => {
         console.log('radio checked', e.target.value);
         setValue(e.target.value);
-    };
+    }; */
 
 
 
-    const [size, setSize] = useState('large');
+    const [size/* , setSize */] = useState('large');
     function Change(value) {
         console.log('changed', value);
     }
@@ -29,9 +27,9 @@ const Select_Product = () => {
 
 
     const { TabPane } = Tabs;
-    function callback(key) {
+   /*  function callback(key) {
         console.log(key);
-    }
+    } */
 
 
     const data = [
@@ -101,7 +99,7 @@ const Select_Product = () => {
         }
     ];
 
-    const Tabs_product = () => (
+    const TabsProduct = () => (
         <Tabs defaultActiveKey="1" style={{ width: 900 }}>
             <TabPane tab="Product Infomation" key="1">
                 <p>
@@ -154,7 +152,7 @@ const Select_Product = () => {
         console.log(current)
         let listPhoto = document.getElementsByClassName('hinh');
         for (let i = 0; i < listPhoto.length; i++) {
-            if (currentId == current) {
+            if (currentId === current) {
                 document.getElementById(current).classList.add('active');
             }
             else
@@ -198,7 +196,7 @@ const Select_Product = () => {
                     <ul className="vote-star">
                         <li><Rate /></li>
                         <li><Statistic title="reviews" value={0} /></li>
-                        <li><a href="#">Submit a review</a></li>
+                        <li><a href="#/">Submit a review</a></li>
                     </ul>
                     <div className="sale-imfo">
                         <ul className="price">
@@ -386,7 +384,7 @@ const Select_Product = () => {
             </Row>
             <Row className="cover-two">
                 <Col className="comments">
-                    <Tabs_product />
+                <TabsProduct />
                 </Col>
             </Row>
         </Content>
