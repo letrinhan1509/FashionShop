@@ -50,19 +50,19 @@ const Login = () => {
   const login = (values) => {
     const url = "http://localhost:3001/users/api/dang-nhap";
     axios
-      .post(url + 'login', values)
+      .post(url , values)
       .then(async (res) => {
         if (res.data.status === "success") {
           message.success("Login successful!")
           cookies.save('jwt', res.data.token)
-
+          
           const valided = await validUser(url);
            
           if (valided.status === "success") {
             cookies.save('username', valided.user.username)
             
             setTimeout(async () => {
-              await histor.push("/home")
+              await histor.push("/")
               window.location.reload()
             }, 2000)
           }

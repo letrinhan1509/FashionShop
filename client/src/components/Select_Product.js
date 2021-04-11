@@ -1,21 +1,29 @@
 import { Col, Layout, Row, Rate, Statistic, Select, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../components/components-css/SelectProduct.scss";
+import axios from 'axios';
+import { useParams } from "react-router";
 const { Content } = Layout;
 const { Option } = Select;
 const Select_Product = () => {
-
+    const { id } = useParams();
+    console.log(id);
+    const [ListProductHome, setListProductHome] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:3001/san-pham/api/product'
+        ).then(res => { setListProductHome(res.data) })
+    }, []);
     function handleChange(value) {
         console.log(`selected ${value}`);
     }
 
-   /*  const [value, setValue] = React.useState(1);
-    const onChange = e => {
-        console.log('radio checked', e.target.value);
-        setValue(e.target.value);
-    }; */
+    /*  const [value, setValue] = React.useState(1);
+     const onChange = e => {
+         console.log('radio checked', e.target.value);
+         setValue(e.target.value);
+     }; */
 
 
 
@@ -27,9 +35,9 @@ const Select_Product = () => {
 
 
     const { TabPane } = Tabs;
-   /*  function callback(key) {
-        console.log(key);
-    } */
+    /*  function callback(key) {
+         console.log(key);
+     } */
 
 
     const data = [
@@ -156,142 +164,143 @@ const Select_Product = () => {
                 document.getElementById(current).classList.add('active');
             }
             else
-                if (listPhoto[i].classList.contains('active')) 
-                { 
+                if (listPhoto[i].classList.contains('active')) {
                     listPhoto[i].classList.remove('active');
                 }
         }
 
     }
-
-
-
-
-
-
+    let item = [];
+    item = ListProductHome.filter(
+        ListProductHome => ListProductHome.masp == id
+    )
     return (
         <Content>
             <Row className="cover-one">
-                {product.map((item) => {
+                {item.map((e) => {
                     return (
-                        <Col className="img-box" key={item.key}>
+                        <Col className="img-box" key={e.key}>
                             <Row>
                                 <Col>
-                                    <img src={index} alt="product" />
+                                    <img src={`../images/test/${e.hinh}`} alt="product" />
                                 </Col>
                             </Row>
                             <Row className="img-change">
-                                {item.src.map((img) => {
+                                {item.map((e) => {
                                     return (
-                                        <Col className="hinh"><img  name={img.id} src={img.file} alt="product" onClick={(e) => handleTab(img.file, e)} /></Col>
+                                        <Col className="hinh"><img name={e.id} src={`../images/test/${e.hinh}`} alt="product" onClick={(e) => handleTab(e.file, e)} /></Col>
                                     );
                                 })}
                             </Row>
                         </Col>
                     );
                 })}
-
-                <Col className="imfo-col">
-                    <h1>BIGBALL CHUNKY P BOSTON RED SOX</h1>
-                    <ul className="vote-star">
-                        <li><Rate /></li>
-                        <li><Statistic title="reviews" value={0} /></li>
-                        <li><a href="#/">Submit a review</a></li>
-                    </ul>
-                    <div className="sale-imfo">
-                        <ul className="price">
-                            <li className="new">$299,00</li>
-                            <li className="old">$534,33</li>
-                            <li className="percent">24% Off</li>
-                        </ul>
-                        <Row>
-                            <Col>
-                                <p>Availability:</p>
-                                <p>Category:</p>
-                            </Col>
-                            <Col offset={5}>
-                                <p>In stock</p>
-                                <p>Acessories</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col><p>Free shipping</p></Col>
-                        </Row>
-                    </div>
-                    <div className="size-color">
-                        <Row className="box-one">
-                            <Col>
-                                <span>Select Color</span>
-                            </Col>
-                            <Col>
-                                {/* <Radio.Group onChange={onChange} value={value}>
+                {item.map((e) => {
+                    return (
+                        <>
+                            <Col className="imfo-col">
+                                <h1>{e.tensp}</h1>
+                                <ul className="vote-star">
+                                    <li><Rate /></li>
+                                    <li><Statistic title="reviews" value={0} /></li>
+                                    <li><a href="#/">Submit a review</a></li>
+                                </ul>
+                                <div className="sale-imfo">
+                                    <ul className="price">
+                                        <li className="new">{`${e.gia - (e.gia * e.giamgia / 100)} VNĐ`}</li>
+                                        <li className="old">{e.gia}VNĐ</li>
+                                        <li className="percent">{e.giamgia}% OFF</li>
+                                    </ul>
+                                    <Row>
+                                        <Col>
+                                            <p>Availability:</p>
+                                            <p>Category:</p>
+                                        </Col>
+                                        <Col offset={5}>
+                                            <p>In stock</p>
+                                            <p>Acessories</p>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col><p>Free shipping</p></Col>
+                                    </Row>
+                                </div>
+                                <div className="size-color">
+                                    <Row className="box-one">
+                                        <Col>
+                                            <span>Select Color</span>
+                                        </Col>
+                                        <Col>
+                                            {/* <Radio.Group onChange={onChange} value={value}>
                                     <Radio value={1}></Radio>
                                     <Radio value={2}></Radio>
                                     <Radio value={3}></Radio>
                                     <Radio value={4}></Radio>
                                 </Radio.Group> */}
-                                {
-                                    product.map((items) => {
-                                        return (
-                                            <div >
-                                                {items.color.map((item) => {
+                                            {
+                                                product.map((items) => {
                                                     return (
-                                                        <button className="select-color" style={{ background: item }}></button>
+                                                        <div >
+                                                            {items.color.map((item) => {
+                                                                return (
+                                                                    <button className="select-color" style={{ background: item }}></button>
+                                                                );
+                                                            })}
+                                                        </div>
                                                     );
-                                                })}
-                                            </div>
-                                        );
-                                    })
-                                }
-                            </Col>
-                        </Row>
-                        <Row className="box-two">
-                            <Col>
-                                <span>Size</span>
-                            </Col>
-                            <Col>
-                                <Select defaultValue="S" style={{ width: 120 }} onChange={handleChange}>
-                                    <Option value="S">S</Option>
-                                    <Option value="M">M</Option>
-                                    {/* <Option value="disabled" disabled>
+                                                })
+                                            }
+                                        </Col>
+                                    </Row>
+                                    <Row className="box-two">
+                                        <Col>
+                                            <span>Size</span>
+                                        </Col>
+                                        <Col>
+                                            <Select defaultValue="S" style={{ width: 120 }} onChange={handleChange}>
+                                                <Option value="S">S</Option>
+                                                <Option value="M">M</Option>
+                                                {/* <Option value="disabled" disabled>
                                 Disabled
                             </Option> */}
-                                    <Option value="L">L</Option>
-                                    <Option value="XL">XL</Option>
-                                </Select>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="add-cart">
-                        <Row>
-                            <Col>
-                                <InputNumber size="large" min={1} max={10} defaultValue={1} onChange={Change} />
-                            </Col>
-                            <Col offset={9} span={4}>
-                                <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
-                                    Add To Cart
+                                                <Option value="L">L</Option>
+                                                <Option value="XL">XL</Option>
+                                            </Select>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className="add-cart">
+                                    <Row>
+                                        <Col offset={13} span={4}>
+                                            <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
+                                                Add To Cart
                                 </Button>
-                            </Col>
-                            <Col offset={4} span={2}>
-                                <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="social-network">
-                        <Row>
-                            <Col>
-                                <Button className="btn-facebook" type="primary" icon={<FacebookOutlined />} size={size}>
-                                    Share on Facebook
+                                        </Col>
+                                        <Col offset={4} span={2}>
+                                            <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className="social-network">
+                                    <Row>
+                                        <Col>
+                                            <Button className="btn-facebook" type="primary" icon={<FacebookOutlined />} size={size}>
+                                                Share on Facebook
                                 </Button>
-                            </Col>
-                            <Col>
-                                <Button className="btn-switter" type="primary" icon={<TwitterOutlined />} size={size}>
-                                    Share on Twitter
+                                        </Col>
+                                        <Col>
+                                            <Button className="btn-switter" type="primary" icon={<TwitterOutlined />} size={size}>
+                                                Share on Twitter
                                 </Button>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </Col>
-                        </Row>
-                    </div>
-                </Col>
+
+                        </>
+                    )
+                })}
+
                 <Col className="best-seller">
                     <Row>
                         <Col>
@@ -306,7 +315,7 @@ const Select_Product = () => {
                                         className="card"
                                         hoverable
                                         style={{ width: 300 }}
-                                        cover={<img alt="example" src="./images/giay/superstartMickey.jpg" />}
+                                        cover={<img alt="example" src="../images/giay/superstartMickey.jpg" />}
                                     >
                                         <Row>
                                             <Col offset={5}>
@@ -325,7 +334,7 @@ const Select_Product = () => {
                                         className="card"
                                         hoverable
                                         style={{ width: 300 }}
-                                        cover={<img alt="example" src="./images/giay/stansmith.jpg" />}
+                                        cover={<img alt="example" src="../images/giay/stansmith.jpg" />}
                                     >
                                         <Row>
                                             <Col offset={5}>
@@ -344,7 +353,7 @@ const Select_Product = () => {
                                         className="card"
                                         hoverable
                                         style={{ width: 300 }}
-                                        cover={<img alt="example" src="./images/giay/pumathunder.jpg" />}
+                                        cover={<img alt="example" src="../images/giay/pumathunder.jpg" />}
                                     >
                                         <Row>
                                             <Col offset={5}>
@@ -363,7 +372,7 @@ const Select_Product = () => {
                                         className="card"
                                         hoverable
                                         style={{ width: 300 }}
-                                        cover={<img alt="example" src="./images/giay/jordan1UBT.jpg" />}
+                                        cover={<img alt="example" src="../images/giay/jordan1UBT.jpg" />}
                                     >
                                         <Row>
                                             <Col offset={5}>
@@ -384,7 +393,7 @@ const Select_Product = () => {
             </Row>
             <Row className="cover-two">
                 <Col className="comments">
-                <TabsProduct />
+                    <TabsProduct />
                 </Col>
             </Row>
         </Content>

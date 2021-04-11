@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Carousel, Card, Tabs, Image } from 'antd';
-import { ShoppingCartOutlined,HeartOutlined } from '@ant-design/icons';
+import { Link,useHistory } from "react-router-dom";
+import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
 import axios from 'axios';
+import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
     height: '590px',
@@ -53,13 +55,13 @@ const Home = () => {
         } else {
             filterProduct = ListProductHome.filter(
                 ListProductHome => ListProductHome.maloai === e
-            )}
+            )
+        }
         setProductHome(filterProduct)
     };
     const [hiddenitem] = useState(12);
-    const onClick= () =>{
-        console.log("cccc")
-    }
+    const history = useHistory();
+    <ProductDetail ListProductHome ={ListProductHome}/>
     return (
         <>
             <Carousel className="slider__bg">
@@ -77,22 +79,22 @@ const Home = () => {
                         <Row gutter={16} >
                             {ListProduct.map((productItem) => {
                                 return (
-                                    <Col key={productItem.id} span={6}  xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
+                                    <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
                                         <Card
-                                           
-                                            className="card-pro" 
+
+                                            className="card-pro"
                                             bordered={false}
                                             hoverable
                                             style={{ width: "100%" }}>
-                                            <img 
-                                            alt="ao" 
-                                            src={`./images/aoKhoac/${productItem.img}`} />
-                                            <Meta 
-                                            className="card-pro-name" 
-                                            title={productItem.title} />
-                                            <Meta 
-                                            className="card-pro-price" 
-                                            title={`$ ${productItem.price}`} />
+                                            <img
+                                                alt="ao"
+                                                src={`./images/aoKhoac/${productItem.img}`} />
+                                            <Meta
+                                                className="card-pro-name"
+                                                title={productItem.title} />
+                                            <Meta
+                                                className="card-pro-price"
+                                                title={`$ ${productItem.price}`} />
                                         </Card>
                                     </Col>
                                 );
@@ -105,10 +107,10 @@ const Home = () => {
                         <h3>Best Seller</h3>
                         <Tabs onChange={handleClick} centered="true" >
                             {button.map(({ name, value }) => (
-                                <TabPane 
-                                tab={value} 
-                                key={name} 
-                                name={name}>
+                                <TabPane
+                                    tab={value}
+                                    key={name}
+                                    name={name}>
                                 </TabPane>
                             ))}
                         </Tabs>
@@ -118,50 +120,53 @@ const Home = () => {
                             {ProductHome.slice(0, hiddenitem).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
-                                        <Card 
-                                        width={'100%'}
-                                        key={productItem.masp} 
-                                        className="card-pro card_product_home" 
-                                        bordered={false}
-                                        hoverable >
-                                            <Image
+                                        <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>
+                                            <Card
                                                 width={'100%'}
-                                                src={`./images/test/${productItem.hinh}`}
-                                                preview={{
-                                                    visible: false,
-                                                        onVisibleChange: ()=>{onClick()},
-                                                    mask: <div>
-                                                        <ShoppingCartOutlined 
-                                                        style={{ fontSize: '36px' }} />
-                                                        <HeartOutlined 
-                                                        style={{ fontSize: '36px' }}/>
+                                                key={productItem.masp}
+                                                className="card-pro card_product_home"
+                                                bordered={false}
+                                                hoverable >
+                                                <Image
+                                                    width={'100%'}
+                                                    src={`./images/test/${productItem.hinh}`}
+                                                    preview={{
+                                                        visible: false,
+                                                        /* onVisibleChange: () => { onClick() }, */
+                                                        mask: <div>
+                                                            <ShoppingCartOutlined
+                                                                style={{ fontSize: '36px' }} />
+                                                            <EyeOutlined
+                                                                style={{ fontSize: '36px' }}
+                                                            />
                                                         </div>
-                                                }} 
-                                            />
-                                            <Meta 
-                                            className="card-pro-name" 
-                                            title={productItem.tensp} />
-                                            <div className="price">
-                                                <Meta 
-                                                className="card-pro-priceSale" 
-                                                title={`${productItem.gia - (productItem.gia * productItem.giamgia / 100)} VNĐ`} />
-                                                <Meta 
-                                                className="card-pro-price" 
-                                                title={`${productItem.gia} VNĐ`} />
-                                                <Meta 
-                                                className="card-pro-sale" 
-                                                title={`${productItem.giamgia}% Off`} />
-                                            </div>
-                                        </Card>
+                                                    }}
+                                                />
+                                                <Meta
+                                                    className="card-pro-name"
+                                                    title={productItem.tensp} />
+                                                <div className="price">
+                                                    <Meta
+                                                        className="card-pro-priceSale"
+                                                        title={`${productItem.gia - (productItem.gia * productItem.giamgia / 100)} VNĐ`} />
+                                                    <Meta
+                                                        className="card-pro-price"
+                                                        title={`${productItem.gia} VNĐ`} />
+                                                    <Meta
+                                                        className="card-pro-sale"
+                                                        title={`${productItem.giamgia}% Off`} />
+                                                </div>
+                                            </Card>
+                                        </Link>
                                     </Col>
                                 );
                             })}
                         </Row>
                         <Row>
                             <Col offset={12}>
-                                    <button className="btn-load">Xem thêm</button>
+                                <button className="btn-load">Xem thêm</button>
                             </Col>
-                            </Row>
+                        </Row>
                     </div>
                 </Col>
             </Row>

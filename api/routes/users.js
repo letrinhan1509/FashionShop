@@ -223,6 +223,7 @@ router.post('/api/dang-nhap', function(req, res, next) {
             console.log("OK!!! Đăng nhập thành công");
             //res.json(user);
             res.json('success');
+           
         } 
         /* if (kq) {
             console.log("OK");
