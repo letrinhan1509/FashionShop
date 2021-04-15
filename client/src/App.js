@@ -13,6 +13,7 @@ import Register from "./container/Register";
 import Login from "./container/Login";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import AllProduct from './container/All-Product';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route path="/ProductDetail/:id">
                 <ProductDetail   />
+            </Route>
+            <Route path="/AllProduct">
+                <AllProduct />
             </Route>
             <Route path="/Register">
                 <Register />

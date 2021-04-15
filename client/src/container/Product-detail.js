@@ -1,20 +1,20 @@
 import { Col, Layout, Row, Breadcrumb, Card } from "antd";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import "../container/components-css/ProductDetail.scss"
 import "../components/Select_Product"
 import SelectProduct from "../components/Select_Product";
-import axios from 'axios';
+//import axios from 'axios';
 import { useParams } from "react-router";
 const { Content } = Layout;
 
 const ProductDetail = () => {
     const { id } = useParams();
     console.log(id);
-    const [ListProductHome, setListProductHome] = useState([]);
+   /*  const [ListProductHome, setListProductHome] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:3001/san-pham/api/product'
         ).then(res => { setListProductHome(res.data) })
-    }, []);
+    }, []); */
     const menuItems = [
         {
             key: "1",
@@ -45,11 +45,11 @@ const ProductDetail = () => {
             costOld: "$450,00"
         },
     ];
-    let item = [];
+ /*    let item = [];
     item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
+        ListProductHome => ListProductHome.masp.toString() === id
 
-    )
+    ) */
 
 
     return (

@@ -4,6 +4,7 @@ import { Link,useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
 import axios from 'axios';
+import cookies from "react-cookies";
 import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
@@ -60,8 +61,15 @@ const Home = () => {
         setProductHome(filterProduct)
     };
     const [hiddenitem] = useState(12);
-    const history = useHistory();
+    //const history = useHistory();
     <ProductDetail ListProductHome ={ListProductHome}/>
+    const history = useHistory();
+    useEffect(() => {
+        if (!cookies.load('jwt')) {
+            history.push('/')
+            //window.location.reload()
+        }
+    })
     return (
         <>
             <Carousel className="slider__bg">
@@ -164,7 +172,8 @@ const Home = () => {
                         </Row>
                         <Row>
                             <Col offset={12}>
-                                <button className="btn-load">Xem thêm</button>
+                                <a href='/AllProduct' className="btn-load">Xem thêm</a>
+                              
                             </Col>
                         </Row>
                     </div>

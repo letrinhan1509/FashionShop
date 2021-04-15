@@ -1,4 +1,4 @@
-import { Col, Layout, Row, Rate, Statistic, Select, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
+import { Col, Layout, Row, Rate, Statistic, Select, Button, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
@@ -28,9 +28,9 @@ const Select_Product = () => {
 
 
     const [size/* , setSize */] = useState('large');
-    function Change(value) {
+   /*  function Change(value) {
         console.log('changed', value);
-    }
+    } */
 
 
 
@@ -148,12 +148,12 @@ const Select_Product = () => {
     );
 
 
-    const [index, setIndex] = useState(product[0].src[0].file);
+    //const [index, setIndex] = useState(product[0].src[0].file);
     const [current, setCurrent] = useState(product[0].src[0].id);
 
     /* const [images, setImages] = useState({myRef.current.children}); */
     const handleTab = (imgfile, e) => {
-        setIndex(imgfile);
+        //setIndex(imgfile);
         let currentId = e.target.name;
         console.log(current)
         setCurrent(`${current}`);
@@ -172,7 +172,7 @@ const Select_Product = () => {
     }
     let item = [];
     item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
+        ListProductHome => ListProductHome.masp.toString() === id
     )
     return (
         <Content>

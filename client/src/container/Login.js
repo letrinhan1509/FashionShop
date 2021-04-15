@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Row, Col,message } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
 import Meta from "antd/lib/card/Meta";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import cookies from "react-cookies";    
+//import cookies from "react-cookies";
+//import HeaderPage from '../components/include/HeaderPage';
 const layout = {
     labelCol: {
         xs: {
@@ -36,47 +37,36 @@ const tailLayout = {
 };
 
 const Login = () => {
-    const histor = useHistory();
-//tạo cookie
-  const validUser = async (url) => {
-    const res = await axios.post(url + 'validUser', { jwt: cookies.load('jwt') })
-      .catch(err => {
-        message.error(`Valid fail!\n ${err}`)
-        return { status: "fail" }
-      })
-    message.success("Valid user successful!")
-    return res.data
-  }
-  const login = (values) => {
-    const url = "http://localhost:3001/users/api/dang-nhap";
-    axios
-      .post(url , values)
-      .then(async (res) => {
-        if (res.data.status === "success") {
-          message.success("Login successful!")
-          cookies.save('jwt', res.data.token)
-          
-          const valided = await validUser(url);
-           
-          if (valided.status === "success") {
-            cookies.save('username', valided.user.username)
-            
-            setTimeout(async () => {
-              await histor.push("/")
-              window.location.reload()
-            }, 2000)
-          }
+    const history = useHistory();
 
-        }
-      })
-      .catch((err) => {
-        message.error(`Login fail!\n ${err}`)
-      })
-  }
+    const login = (values) => {
+        const url = "http://localhost:3001/users/api/dang-nhap";
+        axios
+            .post(url, values)
+            .then(async (res) => {
+                if (res.data.status === "success") {
+                    message.success(`Xin chào, ${res.data.data.username}`)
+                    console.log(res.data.data.username)
+                    localStorage.setItem('token',res.data.token)
+                    localStorage.setItem('username', res.data.data.username)
+                    setTimeout(() => {
+                        history.push("/")
+                        window.location.reload()
+                    }, 2000)
+                }
+                else {
+                    message.error('Login fail !')
+                }
+            })
+            .catch((err) => {
+                message.error(`Đăng nhập thất bại\n ${err}`)
+            })
+    }
+
     return (
         <Row className="login-container">
             <Col className="login-form-wrapper" offset={6} span={10}>
-            <Meta id='register-title' className="register-title" title="Đăng Nhập"/>
+                <Meta id='register-title' className="register-title" title="Đăng Nhập" />
                 <Form
                     {...layout}
                     name="basic"
