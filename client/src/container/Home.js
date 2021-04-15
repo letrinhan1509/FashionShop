@@ -3,6 +3,7 @@ import { Row, Col, Carousel, Card, Tabs, Image } from 'antd';
 import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
+import cookies from "react-cookies";
 import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
@@ -55,7 +56,14 @@ const Home = (props) => {
         setProductHome(filterProduct)
     };
     const [hiddenitem] = useState(12);
+    //const history = useHistory();
     const history = useHistory();
+    useEffect(() => {
+        if (!cookies.load('jwt')) {
+            history.push('/')
+            //window.location.reload()
+        }
+    })
     return (
         <>
             <Carousel className="slider__bg">
@@ -158,7 +166,8 @@ const Home = (props) => {
                         </Row>
                         <Row>
                             <Col offset={12}>
-                                <button className="btn-load">Xem thêm</button>
+                                <a href='/AllProduct' className="btn-load">Xem thêm</a>
+                              
                             </Col>
                         </Row>
                     </div>

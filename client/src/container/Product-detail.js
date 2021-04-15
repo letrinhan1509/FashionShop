@@ -1,5 +1,5 @@
 import { Col, Layout, Row, Breadcrumb, Card } from "antd";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import "../container/components-css/ProductDetail.scss"
 import "../components/Select_Product"
 import SelectProduct from "../components/Select_Product";

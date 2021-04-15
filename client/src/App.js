@@ -13,6 +13,7 @@ import Login from "./container/Login";
 
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import AllProduct from './container/All-Product';
 
 function App() {
   const [ListProductHome, setListProductHome] = useState([]);
