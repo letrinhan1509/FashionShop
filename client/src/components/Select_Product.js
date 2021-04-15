@@ -3,18 +3,11 @@ import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import "../components/components-css/SelectProduct.scss";
-import axios from 'axios';
 import { useParams } from "react-router";
 const { Content } = Layout;
 const { Option } = Select;
-const Select_Product = () => {
+const Select_Product = (props) => {
     const { id } = useParams();
-    console.log(id);
-    const [ListProductHome, setListProductHome] = useState([]);
-    useEffect(() => {
-        axios.get('http://localhost:3001/san-pham/api/product'
-        ).then(res => { setListProductHome(res.data) })
-    }, []);
     function handleChange(value) {
         console.log(`selected ${value}`);
     }
@@ -170,10 +163,14 @@ const Select_Product = () => {
         }
 
     }
+
+
     let item = [];
-    item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
+    item = props.ListPro.filter(
+        ListPro => ListPro.masp == id
     )
+
+
     return (
         <Content>
             <Row className="cover-one">
