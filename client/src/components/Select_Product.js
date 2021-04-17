@@ -1,7 +1,7 @@
 import { Col, Layout, Row, Rate, Statistic, Select, Button, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
-import React, { useState, useEffect } from 'react';
+import React, { useState/* , useEffect */ } from 'react';
 import "../components/components-css/SelectProduct.scss";
 import { useParams } from "react-router";
 const { Content } = Layout;
@@ -167,10 +167,8 @@ const Select_Product = (props) => {
 
     let item = [];
     item = props.ListPro.filter(
-        ListPro => ListPro.masp == id
+        ListPro => ListPro.masp.toString() === id
     )
-
-
     return (
         <Content>
             <Row className="cover-one">

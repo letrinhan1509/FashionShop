@@ -7,9 +7,11 @@ const { Content } = Layout;
 
 const ProductDetail = (props) => {
     
-    const [relatedItems, setRelatedItems] = useState(props.initRelatedItems);
+    const [relaedItems, setRelatedItems] = useState(props.initRelatedItems);
+    
     useEffect(() => {
         setRelatedItems(props.initRelatedItems);
+            // eslint-disable-next-line
     }, [])
 
     return (

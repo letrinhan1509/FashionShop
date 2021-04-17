@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
 import cookies from "react-cookies";
-import ProductDetail from "./Product-detail";
+//import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
     height: '590px',

@@ -106,7 +106,7 @@ const AllProduct = () => {
                     </div>
                     <div className="site-card-wrapper product_home">
                         <Row gutter={16} justify="space-around">
-                            {ProductHome.slice(0, hiddenitem).map((productItem) => {
+                            {ProductHome.map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
                                         <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>

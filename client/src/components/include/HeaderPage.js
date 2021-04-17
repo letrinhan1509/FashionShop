@@ -40,7 +40,7 @@ const logout = ()=>{
                 <Row>
                     <Router>
                         <div className="logo" key='/'  >
-                            <img style={logo} alt='logo' src="./images/icon/logo.svg" />
+                            <img style={logo} alt='logo' src="../images/icon/logo.svg" />
                         </div>
                         <Col className="menu" span={22} offset={1}>
                             <Menu style={contentStyle} mode="horizontal"

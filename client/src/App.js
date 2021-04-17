@@ -1,7 +1,7 @@
 //import logo from './logo.svg';
 import './App.css';
 import "antd/dist/antd.css";
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from "antd";
 import HeaderPage from './components/include/HeaderPage';
 import { Content } from 'antd/lib/layout/layout';
@@ -14,6 +14,7 @@ import Login from "./container/Login";
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllProduct from './container/All-Product';
+//import AllProduct from './container/All-Product';
 
 function App() {
   const [ListProductHome, setListProductHome] = useState([]);
@@ -43,6 +44,10 @@ function App() {
           <Route path="/Login">
             <Login />
           </Route>
+          <Route path="/AllProduct">
+            <AllProduct />
+          </Route>
+          
         </Content>
         <Footer />
       </Layout>
