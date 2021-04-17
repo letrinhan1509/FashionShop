@@ -2,7 +2,9 @@
     background: white;
 }
 .content-wrapper{
-    
+    .detail-wrapper{
+        width: 100%;
+    }
     .link-row{
         margin-top: 70px;
         height: 50px;
@@ -17,21 +19,24 @@
     .title-related{
         h1{
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             font-size: 2.2em;
             font-weight: 700;
             margin: 80px 0;
         }
     }
     .detail-related{
-       margin: 50px 30px 50px 35px;
+        margin: 50px 0px 50px 0px;
+       
+       
         .box-product{ 
+            margin-left: 20px;
             
             
-            margin: 0 20px;
             
             .card-pro{
-                height: 400px;
+                height: 450px;
+                width: 400px;
                 box-shadow: 1px 3px 5px rgba(0,0,0,0.3);
                 
                 img{
@@ -45,6 +50,7 @@
                 }
 
                 .price{
+                    width: 100%;
                     display: flex;
                     justify-content: space-around;
                     li{

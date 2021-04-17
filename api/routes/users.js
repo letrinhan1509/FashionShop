@@ -3,9 +3,10 @@ var router = express.Router();
 var db = require('../models/database')
 const modelUser = require('../models/model_user');
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 /* GET users listing. */
-router.get('/tai-khoan', function(req, res, next) {
+router.get('/tai-khoan', function (req, res, next) {
     if (req.session.User) {
         res.render("site/my-account.ejs", { user: req.session.User });
     } else {
@@ -82,15 +83,20 @@ router.post('/luu', function(req, res, next) {
 
     res.redirect("/users/thanh-cong");
 }) */
-router.get('/thanh-cong', function(req, res, next) {
+const signToken = (id) => {
+	return jwt.sign({ id }, 'nhan', {
+		expiresIn: '90d',
+	});
+};
+router.get('/thanh-cong', function (req, res, next) {
     let message = "Đăng ký thành công";
     res.render('site/thanh-cong', { message: message })
 })
-router.get('/dang-xuat', function(req, res, next) {
+router.get('/dang-xuat', function (req, res, next) {
     req.session.destroy();
     res.redirect("/users/dang-nhap");
 });
-router.post('/doi-mat-khau', function(req, res, next) {
+router.post('/doi-mat-khau', function (req, res, next) {
     let password = req.body.password;
     let newPassword = req.body.newPassword;
     let confirmPassword = req.body.confirmPassword;
@@ -120,7 +126,7 @@ router.post('/doi-mat-khau', function(req, res, next) {
 router.get('/quen-mat-khau', (req, res) => {
     res.render('site/quen-mat-khau', { message: '' });
 })
-router.post('/quen-mat-khau', async(req, res) => {
+router.post('/quen-mat-khau', async (req, res) => {
     let email = req.body.email;
     let checkEmail = await modelUser.checkEmail(email); // Kiểm tra email có trong database hay không
 
@@ -154,7 +160,7 @@ router.post('/quen-mat-khau', async(req, res) => {
       Your password: <b style="padding: 5px 7px; background: #eee; color: red"> ${newPassword} </b>`, // Nội dung thư, có thể có code html
         };
 
-        transporter.sendMail(mailOptions, function(error, info) {
+        transporter.sendMail(mailOptions, function (error, info) {
 
             if (error) console.log(error);
             else console.log('Đã gửi mail: ' + info.response);
@@ -167,21 +173,21 @@ router.post('/quen-mat-khau', async(req, res) => {
 })
 
 
-            // API
-    // Danh sách tất cả khách hàng:
-router.get('/api/khach-hang', async function(req, res) {
+// API
+// Danh sách tất cả khách hàng:
+router.get('/api/khach-hang', async function (req, res) {
     let listUsers = await modelUser.list();
     res.json(listUsers);
 });
-router.get('/api/dang-ky', async function(req, res) {
+router.get('/api/dang-ky', async function (req, res) {
     res.json('success');
 });
-    // Đăng ký tài khoản:
-router.post('/api/dang-ky', function(req, res, next) {
+// Đăng ký tài khoản:
+router.post('/api/dang-ky', function (req, res, next) {
     let ten = req.body.tenkh;
     let em = req.body.email;
     let mk = req.body.matkhau;
-    let rmk = req.body.nhaplaimk; 
+    let rmk = req.body.nhaplaimk;
     let sdt = req.body.sodienthoai;
     let dc = req.body.diachi;
 
@@ -198,11 +204,11 @@ router.post('/api/dang-ky', function(req, res, next) {
         });
     } else {
         res.json('fail');
-    }  
+    }
     res.json('success');
 })
-    // Đăng nhập tài khoản:
-router.post('/api/dang-nhap', function(req, res, next) {
+// Đăng nhập tài khoản:
+router.post('/api/dang-nhap', function (req, res, next) {
     let em = req.body.email;
     let mk = req.body.matkhau;
 
@@ -214,17 +220,39 @@ router.post('/api/dang-nhap', function(req, res, next) {
             res.json('fail');
         }
         let user = rows[0];
-        let pass_fromdb = user.matkhau; // Lấy mật khẩu từ DB lên.
+        let pass_fromdb = user.matkhau;
+        let username = user.tenkh; // Lấy mật khẩu từ DB lên.
         console.log(user);
         console.log("Mật khẩu DB:", pass_fromdb);
+        console.log(username);
         var kq = bcrypt.compareSync(mk, pass_fromdb); //
         console.log(kq);
+        ////
+         const token = signToken(user._id);
+        const cookieOptions = {
+            expires: new Date(
+                Date.now() + 90 * 24 * 60 * 60 * 1000
+            ),
+            httpOnly: true,
+        }; 
+
+        res.cookie("jwt", token, cookieOptions);
+
+         //Remove password from output
+        //user.password = undefined;
+
         if (mk === pass_fromdb) {
             console.log("OK!!! Đăng nhập thành công");
             //res.json(user);
-            res.json('success');
-           
-        } 
+            res.json({
+                status: "success",
+                data: {
+                    username
+                },
+                token
+            });
+
+        }
         /* if (kq) {
             console.log("OK");
             res.json(user);
@@ -235,8 +263,8 @@ router.post('/api/dang-nhap', function(req, res, next) {
         }
     });
 });
-    // Tìm khách hàng bằng tên:
-router.get('/api/chi-tiet-khach-hang/:name', async function(req, res) {
+// Tìm khách hàng bằng tên:
+router.get('/api/chi-tiet-khach-hang/:name', async function (req, res) {
     let nameUser = req.params.name;
     let User = await modelUser.detailByName(nameUser);
     console.log(User);

@@ -1,21 +1,14 @@
-import { Col, Layout, Row, Rate, Statistic, Select, Button, InputNumber, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
+import { Col, Layout, Row, Rate, Statistic, Select, Button, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
-import React, { useState, useEffect } from 'react';
+import React, { useState/* , useEffect */ } from 'react';
 import "../components/components-css/SelectProduct.scss";
-import axios from 'axios';
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 const { Content } = Layout;
 const { Option } = Select;
-const Select_Product = () => {
+const Select_Product = (props) => {
     const { id } = useParams();
-    console.log(id);
-    const [ListProductHome, setListProductHome] = useState([]);
-    useEffect(() => {
-        axios.get('http://localhost:3001/san-pham/api/product'
-        ).then(res => { setListProductHome(res.data) })
-    }, []);
     function handleChange(value) {
         console.log(`selected ${value}`);
     }
@@ -29,9 +22,9 @@ const Select_Product = () => {
 
 
     const [size/* , setSize */] = useState('large');
-    function Change(value) {
+   /*  function Change(value) {
         console.log('changed', value);
-    }
+    } */
 
 
 
@@ -149,12 +142,12 @@ const Select_Product = () => {
     );
 
 
-    const [index, setIndex] = useState(product[0].src[0].file);
+    //const [index, setIndex] = useState(product[0].src[0].file);
     const [current, setCurrent] = useState(product[0].src[0].id);
 
     /* const [images, setImages] = useState({myRef.current.children}); */
     const handleTab = (imgfile, e) => {
-        setIndex(imgfile);
+        //setIndex(imgfile);
         let currentId = e.target.name;
         console.log(current)
         setCurrent(`${current}`);
@@ -171,9 +164,11 @@ const Select_Product = () => {
         }
 
     }
+
+
     let item = [];
-    item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
+    item = props.ListPro.filter(
+        ListPro => ListPro.masp.toString() === id
     )
     return (
         <Content>

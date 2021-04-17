@@ -1,59 +1,21 @@
 import { Col, Layout, Row, Breadcrumb, Card } from "antd";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import "../container/components-css/ProductDetail.scss"
 import "../components/Select_Product"
 import SelectProduct from "../components/Select_Product";
-import axios from 'axios';
-import { useParams } from "react-router";
 const { Content } = Layout;
 
-const ProductDetail = () => {
-    const { id } = useParams();
-    console.log(id);
-    const [ListProductHome, setListProductHome] = useState([]);
+const ProductDetail = (props) => {
+    
+    const [relaedItems, setRelatedItems] = useState(props.initRelatedItems);
+    
     useEffect(() => {
-        axios.get('http://localhost:3001/san-pham/api/product'
-        ).then(res => { setListProductHome(res.data) })
-    }, []);
-    const menuItems = [
-        {
-            key: "1",
-            img: "iconGray.jpg",
-            name: "IconGray",
-            costNew: "$100,00",
-            costOld: "$200,00"
-        },
-        {
-            key: "2",
-            img: "lacoste.jpg",
-            name: "Lacoste",
-            costNew: "$200,00",
-            costOld: "$250,00"
-        },
-        {
-            key: "3",
-            img: "mlbNY.jpg",
-            name: "mlbNY",
-            costNew: "$200,00",
-            costOld: "$340,00"
-        },
-        {
-            key: "4",
-            img: "pumathunder.jpg",
-            name: "Pumathunder",
-            costNew: "$300,00",
-            costOld: "$450,00"
-        },
-    ];
-    let item = [];
-    item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
-
-    )
-
+        setRelatedItems(props.initRelatedItems);
+            // eslint-disable-next-line
+    }, [])
 
     return (
-        <Content >
+        <Content className="detail-wrapper">
             <Row className="link-row">
                 <Col className="link-col" offset={10} >
                     <Breadcrumb>
@@ -69,34 +31,35 @@ const ProductDetail = () => {
             </Row>
             <Row>
                 <Col offset={2}>
-                    <SelectProduct />
+                    <SelectProduct ListPro={props.ListProductHome} />
                 </Col>
             </Row>
             <Row className="related">
-                <Col>
+                <Col offset={1}>
                     <Row className="title-related">
-                        <Col offset={9}>
+                        <Col offset={9} span={8}>
                             <h1>Related Products</h1>
                         </Col>
                     </Row>
                     <Row className="detail-related">
-                        {menuItems.map((Items) => {
+                        {props.initRelatedItems.map((Items) => {
                             return (
-                                <Col className="box-product" key={Items.key}>
+                                <Col className="box-product" key={Items.masp}>
                                     <Card className="card-pro"
-                                        key={Items.key}
+                                        key={Items.masp}
                                         bordered={false}
                                         style={{ width: 320 }}>
 
                                         <div>
-                                            <img alt='img' src={`../images/giay/${Items.img}`} />
+                                            <img alt='img' src={`../images/test/${Items.hinh}`} />
                                         </div>
                                         <p>
-                                            {Items.name}
+                                            {Items.tensp}
                                         </p>
                                         <ul className="price">
-                                            <li className="new">{Items.costNew}</li>
-                                            <li className="old">{Items.costOld}</li>
+                                            <li className="new">{`${Items.gia - (Items.gia * Items.giamgia / 100)} VNĐ`}</li>
+                                            <li className="old">{Items.gia}VNĐ</li>
+                                            <li className="percent">{Items.giamgia}% OFF</li>
                                         </ul>
                                     </Card>
                                 </Col>

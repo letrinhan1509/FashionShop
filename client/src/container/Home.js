@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Carousel, Card, Tabs, Image } from 'antd';
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
-import axios from 'axios';
-import ProductDetail from "./Product-detail";
+import cookies from "react-cookies";
+//import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
     height: '590px',
@@ -37,31 +37,33 @@ const button = [
     { name: "bl", value: "Balo" },
     { name: "giay", value: "Giày" }
 ]
-const Home = () => {
-    const [ListProductHome, setListProductHome] = useState([]);
-    useEffect(() => {
-        axios.get('http://localhost:3001/san-pham/api/product'
-        ).then(res => { setListProductHome(res.data) })
-    }, []);
+const Home = (props) => {
+    console.log(props)
     const [ProductHome, setProductHome] = useState([]);
     useEffect(() => {
-        setProductHome(ListProductHome)
-    }, [ListProductHome]);
+        setProductHome(props.ListProductHome)
+    }, [props.ListProductHome])
     const handleClick = (e) => {
-        setProductHome(ListProductHome);
+        setProductHome(props.ListProductHome);
         let filterProduct = [];
         if (e === "all") {
-            filterProduct = ListProductHome;
+            filterProduct = props.ListProductHome;
         } else {
-            filterProduct = ListProductHome.filter(
+            filterProduct = props.ListProductHome.filter(
                 ListProductHome => ListProductHome.maloai === e
             )
         }
         setProductHome(filterProduct)
     };
     const [hiddenitem] = useState(12);
+    //const history = useHistory();
     const history = useHistory();
-    <ProductDetail ListProductHome ={ListProductHome}/>
+    useEffect(() => {
+        if (!cookies.load('jwt')) {
+            history.push('/')
+            //window.location.reload()
+        }
+    })
     return (
         <>
             <Carousel className="slider__bg">
@@ -105,7 +107,7 @@ const Home = () => {
                 <Col span={22} offset={1}>
                     <div className="menu_filter">
                         <h3>Best Seller</h3>
-                        <Tabs onChange={handleClick} centered="true" >
+                        <Tabs defaultActiveKey={'all'} onChange={handleClick} centered="true" >
                             {button.map(({ name, value }) => (
                                 <TabPane
                                     tab={value}
@@ -120,7 +122,7 @@ const Home = () => {
                             {ProductHome.slice(0, hiddenitem).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
-                                        <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>
+                                        <Link to={`/ProductDetail/${productItem.masp}`}>
                                             <Card
                                                 width={'100%'}
                                                 key={productItem.masp}
@@ -164,7 +166,8 @@ const Home = () => {
                         </Row>
                         <Row>
                             <Col offset={12}>
-                                <button className="btn-load">Xem thêm</button>
+                                <a href='/AllProduct' className="btn-load">Xem thêm</a>
+                              
                             </Col>
                         </Row>
                     </div>
