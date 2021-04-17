@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import "../components/components-css/SelectProduct.scss";
 import axios from 'axios';
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 const { Content } = Layout;
 const { Option } = Select;
 const Select_Product = () => {
@@ -272,9 +273,11 @@ const Select_Product = () => {
                                 <div className="add-cart">
                                     <Row>
                                         <Col offset={13} span={4}>
+                                            <Link to={`ProductDetail/${e.masp}/cart`}>
                                             <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
                                                 Add To Cart
                                 </Button>
+                                </Link>
                                         </Col>
                                         <Col offset={4} span={2}>
                                             <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />

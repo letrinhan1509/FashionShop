@@ -11,6 +11,7 @@ import Home from "./container/Home";
 import Footer from "./components/include/Footer";
 import Register from "./container/Register";
 import Login from "./container/Login";
+import Cart from "./container/Cart";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/ProductDetail/:id">
                 <ProductDetail   />
             </Route>
+          
             <Route path="/Register">
                 <Register />
             </Route>
@@ -34,6 +36,9 @@ function App() {
                 <Login />
             </Route>
           </Content>
+          <Route path="/cart">
+                <Cart   />
+            </Route>
           <Footer />
         </Layout>
       </Router>

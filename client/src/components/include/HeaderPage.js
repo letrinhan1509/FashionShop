@@ -44,7 +44,7 @@ const Header_page = () => {
                             <Menu.Item key="app">
                                 <Badge size="small" count={5}>
                                     <a href="#/" className="head-example" >
-                                        <ShoppingCartOutlined style={{ fontSize: '26px' }}>
+                                        <ShoppingCartOutlined count={6} style={{ fontSize: '26px' }}>
                                         </ShoppingCartOutlined>
                                     </a>
                                 </Badge>
