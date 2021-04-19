@@ -27,6 +27,10 @@ function App() {
   }, []);
   const shuffled = ListProductHome.sort(() => 0.5 - Math.random());
   const randomItem = shuffled.slice(0, 4);
+
+  
+  
+
   return (
     <Router>
       <Layout>
@@ -51,7 +55,9 @@ function App() {
             <AllProduct />
           </Route>
           <Route path="/cart">
-            <Cart />
+            <Cart
+            ListProductHome={ListProductHome}
+             />
           </Route>
         </Content>
         <Footer />

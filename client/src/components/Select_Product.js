@@ -1,13 +1,21 @@
 import { Col, Layout, Row, Rate, Statistic, Select, Button, Card, Carousel, Tabs, Comment, Tooltip, List } from "antd";
 import moment from 'moment';
 import { ShoppingCartOutlined, HeartOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
-import React, { useState/* , useEffect */ } from 'react';
+import React, { createContext, useState/* , useEffect */ } from 'react';
 import "../components/components-css/SelectProduct.scss";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import create from "@ant-design/icons/lib/components/IconFont";
 const { Content } = Layout;
 const { Option } = Select;
+
+export const DataContext = createContext()
 const Select_Product = (props) => {
+    const [cart,setCart] = useState([])
+
+   
+
+    
     const { id } = useParams();
     function handleChange(value) {
         console.log(`selected ${value}`);
@@ -102,6 +110,7 @@ const Select_Product = (props) => {
     ];
 
     const TabsProduct = () => (
+        
         <Tabs defaultActiveKey="1" style={{ width: 900 }}>
             <TabPane tab="Product Infomation" key="1">
                 <p>
@@ -170,7 +179,9 @@ const Select_Product = (props) => {
     item = props.ListPro.filter(
         ListPro => ListPro.masp.toString() === id
     )
+
     return (
+        
         <Content>
             <Row className="cover-one">
                 {item.map((e) => {
@@ -235,6 +246,7 @@ const Select_Product = (props) => {
                                 </Radio.Group> */}
                                             {
                                                 product.map((items) => {
+                                                    
                                                     return (
                                                         <div >
                                                             {items.color.map((item) => {
@@ -268,11 +280,11 @@ const Select_Product = (props) => {
                                 <div className="add-cart">
                                     <Row>
                                         <Col offset={13} span={4}>
-                                            <Link to={`ProductDetail/${e.masp}/cart`}>
+                                          
                                             <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
                                                 Add To Cart
                                 </Button>
-                                </Link>
+                 
                                         </Col>
                                         <Col offset={4} span={2}>
                                             <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />

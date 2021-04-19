@@ -2,8 +2,12 @@ import { Row, Col, Layout, Badge, Menu} from 'antd';
 import React, { useState } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import '../Select_Product';
 
 import "../components-css/Header.scss"
+import Cart from '../../container/Cart';
+
+
 
 const { Header } = Layout;
 const contentStyle = {
@@ -16,7 +20,9 @@ const menu = {
 const logo = {
     textAlign: 'left'
 }
-const Header_page = (user) => {
+const Header_page = (user, props) => {
+
+
     const history = useHistory();
     const [current, setCurrent] = useState("home");
     const handClick = (e) => {
@@ -34,9 +40,14 @@ const logout = ()=>{
     window.location.reload()
 
 }
+
+
     return (
+        
         <>
+        
             <Header className="header">
+           
                 <Row>
                     <Router>
                         <div className="logo" key='/'  >
@@ -48,7 +59,8 @@ const logout = ()=>{
                                 selectedKeys={[current]}>
 
                                 <Menu.Item key="app">
-                                    <Badge size="small" count={5}>
+                                    <Badge size="small" count={5 /* cart.length */}>
+                                     
                                         <a href="#/" className="head-example" >
                                             <ShoppingCartOutlined style={{ fontSize: '26px' }}>
                                             </ShoppingCartOutlined>

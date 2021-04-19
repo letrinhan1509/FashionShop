@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 import Payments from "./Payments";
 const { Content } = Layout;
 
-const Cart = () => {
+const Cart = (props) => {
     const { id } = useParams();
     console.log(id);
     const [ListProductHome, setListProductHome] = useState([]);
@@ -53,25 +53,6 @@ const Cart = () => {
     )
     return (
         <Content >
-        <Row className="link-row">
-            <Col className="link-col" offset={10} >
-                <Breadcrumb>
-                    <Breadcrumb.Item>
-                        <a href="#/">Home</a>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <a href="#/">Hot Deal</a>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>BIGBALL CHUNKY P BOSTON RED SOX</Breadcrumb.Item>
-                </Breadcrumb>
-            </Col>
-        </Row>
-        <Row>
-            <Col offset={2}>
-                <SelectProduct />
-             <Payments/>
-            </Col>
-        </Row>
         
 
     </Content>

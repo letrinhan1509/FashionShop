@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import { Row, Col, Card, Tabs, Image } from 'antd';
 import { Link,useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
@@ -36,6 +36,7 @@ const button = [
     { name: "giay", value: "Giày" }
 ]
 const AllProduct = () => {
+ 
     const [ListProductHome, setListProductHome] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:3001/san-pham/api/product'
