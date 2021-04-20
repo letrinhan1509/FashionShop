@@ -22,12 +22,23 @@ exports.checkUsername = (username) => {
         }
     )
 }
+//Danh sách khách hàng
 exports.list = () => {
     return new Promise( (hamOK, hamLoi) => {
         let sql = 'SELECT * FROM khachhang'
         db.query(sql, (err, result) => {
             console.log('List All Users Success!');
             hamOK(result);
+        });
+    });
+};
+//Danh sách admin
+exports.listAdmin = () => {
+    return new Promise( (hamOK, hamLoi) => {
+        let sql = 'SELECT * FROM admin'
+        db.query(sql, (err, ad) => {
+            console.log('List All Users Success!');
+            hamOK(ad);
         });
     });
 };
@@ -40,3 +51,16 @@ exports.detailByName = (nameUser) => {
         })
     });
 }
+///UserName
+//Tất cả thành tài khoảng khách hàng
+/* exports.listUserKH = () => {
+    return new Promise( (hamOK, hamLoi) => {
+        let sql = "SELECT * FROM khachhang";
+        db.query(sql, (err, d) => {
+            console.log('List success');
+            dataList = d;
+            hamOK(dataListUser);
+        })
+        }
+    )
+} */
