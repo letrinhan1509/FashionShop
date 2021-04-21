@@ -1,8 +1,7 @@
-import { Row, Col, Layout, Badge, Menu} from 'antd';
-import React, { useState } from "react";
+import { Row, Col, Layout, Badge, Menu } from 'antd';
+import React, { useState, useEffect } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
-
+import { BrowserRouter as Router, useHistory, Link } from "react-router-dom";
 import "../components-css/Header.scss"
 
 const { Header } = Layout;
@@ -16,27 +15,30 @@ const menu = {
 const logo = {
     textAlign: 'left'
 }
-const Header_page = (user) => {
+const HeaderPage = (user, props) => {
+    const {CountCart} = props;
+
     const history = useHistory();
     const [current, setCurrent] = useState("home");
     const handClick = (e) => {
-        console.log("click", e.key);
         setCurrent(e.key);
         if (e.key === '/') {
             history.push('/')
         }
         else history.push(`/${e.key}`);
     }
-const logout = ()=>{
-    localStorage.removeItem("token")
-    localStorage.removeItem("username")
-    //history.push('/');
-    window.location.reload()
+    const logout = () => {
+        localStorage.removeItem("token")
+        localStorage.removeItem("username")
+        //history.push('/');
+        window.location.reload()
 
-}
+    }
+    console.log(CountCart);
     return (
         <>
             <Header className="header">
+            <p>{props.CountCart}</p>
                 <Row>
                     <Router>
                         <div className="logo" key='/'  >
@@ -46,13 +48,15 @@ const logout = ()=>{
                             <Menu style={contentStyle} mode="horizontal"
                                 onClick={handClick}
                                 selectedKeys={[current]}>
-
-                                <Menu.Item key="app">
+                                <Menu.Item>
+                                   
+                                    <p>{props.CountCart}</p>
+                                    
+                                </Menu.Item>
+                                <Menu.Item key="cart">
                                     <Badge size="small" count={5}>
-                                        <a href="#/" className="head-example" >
-                                            <ShoppingCartOutlined style={{ fontSize: '26px' }}>
-                                            </ShoppingCartOutlined>
-                                        </a>
+                                        <ShoppingCartOutlined style={{ fontSize: '26px' }}>
+                                        </ShoppingCartOutlined>
                                     </Badge>
                                 </Menu.Item>
                                 <Menu.Item key="item">
@@ -116,4 +120,4 @@ const logout = ()=>{
         </>
     );
 };
-export default Header_page;
+export default HeaderPage;
