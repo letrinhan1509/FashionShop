@@ -1,8 +1,13 @@
 import { Row, Col, Layout, Badge, Menu } from 'antd';
 import React, { useState, useEffect } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, useHistory, Link } from "react-router-dom";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import '../Select_Product';
+
 import "../components-css/Header.scss"
+import Cart from '../../container/Cart';
+
+
 
 const { Header } = Layout;
 const contentStyle = {
@@ -36,7 +41,9 @@ const HeaderPage = (user, props) => {
     }
     console.log(CountCart);
     return (
+        
         <>
+        
             <Header className="header">
             <p>{props.CountCart}</p>
                 <Row>
