@@ -2,7 +2,7 @@ import { Col, Layout, Row, Button, Modal, Space } from "antd";
 import React, { useState, useEffect } from 'react';
 import "../container/components-css/cart.scss"
 import { DeleteOutlined } from '@ant-design/icons';
-
+import Payments from "./Payments";
 const { Content } = Layout;
 const { confirm } = Modal;
 const Cart = (props) => {
@@ -29,12 +29,12 @@ const Cart = (props) => {
         });
     }
 
-    
+
 
     console.log(props.cart);
     return (
         <Content className="cart-wrapper">
-            
+
             {
                 props.cart.length !== 0 ? (
                     <>
@@ -83,14 +83,22 @@ const Cart = (props) => {
                 )
             }
             {props.cart.length !== 0 && (
-                <Row className="cart-sum">
-                    <Col className="line" offset={19}>
-                        <h3>Tổng Hóa đơn</h3>
-                        <div>
-                            {sumPrice.toFixed(2)}đ
-                        </div>
-                    </Col>
-                </Row>
+                <>
+                    <Row className="cart-sum">
+                        <Col className="line" offset={19}>
+                            <h3>Tổng Hóa đơn</h3>
+                            <div>
+                                {sumPrice.toFixed(2)}đ
+                            </div>
+                        </Col>
+
+                    </Row>
+                    <Row>
+                        <Col offset={19} className="payments">
+                            <Payments />
+                        </Col>
+                    </Row>
+                </>
             )}
 
         </Content>

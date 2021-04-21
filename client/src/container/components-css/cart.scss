@@ -86,7 +86,9 @@
             
         }
         .cart-sum{
-            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             font-size: 20px;
             text-transform: uppercase;
             
@@ -95,17 +97,10 @@
             h3{
                 padding-top: 20px;
             }
-            /* &::after{
-                position: absolute;
-                content: "";
-                height: 1px;
-                width: 600px;
-                background: #333;
-                
-                left: 50%;
-                
-                transform: translateY(-50%);
-            } */
+            
+        }
+        .payments{
+            margin-bottom: 30px;
         }
     }
 }
