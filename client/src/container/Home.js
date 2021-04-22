@@ -140,7 +140,7 @@ const Home = (props) => {
                                                     visible: false,
                                                     /* onVisibleChange: () => { onClick() }, */
                                                     mask: <div>
-                                                        <div onClick={() => props.addCart(productItem)}>
+                                                        <div onClick={() => props.Thongbao_Them(productItem)}>
                                                             <ShoppingCartOutlined
                                                                 style={{ fontSize: '36px' }} />
                                                         </div>

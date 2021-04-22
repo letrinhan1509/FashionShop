@@ -1,4 +1,4 @@
-import { Col, Layout, Row, Button, Modal, Space } from "antd";
+import { Col, Layout, Row, Button, Modal} from "antd";
 import React, { useState, useEffect } from 'react';
 import "../container/components-css/cart.scss"
 import { DeleteOutlined } from '@ant-design/icons';
@@ -8,7 +8,6 @@ const { confirm } = Modal;
 const Cart = (props) => {
 
     const sumPrice = props.cart.reduce((a, c) => a + c.gia * c.qty, 0);
-    const Sum_qty = props.cart.reduce((a, c) => a + c.gia * c.qty, 0);
     useEffect(() => {
         localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
     }, [props.cart]);
@@ -29,6 +28,8 @@ const Cart = (props) => {
         });
     }
 
+
+    
 
 
     console.log(props.cart);
@@ -69,15 +70,17 @@ const Cart = (props) => {
                             </Col>
                             <Col className="quantity-price">
                                 <div className="quantity-box">
-                                    <button onClick={() => props.addCart(item)} className="add">+</button>
-                                    {item.qty}
+                                    
                                     <button onClick={() => props.removeCart(item)} className="remove">-</button>
-
+                                    {item.qty}
+                                    <button onClick={() => props.addCart(item)} className="add">+</button>
+                                    
                                 </div>
                             </Col>
                             <Col className="price-box">
                                 <div>${item.qty * item.gia.toFixed(2)}Đ</div>
                             </Col>
+                            
                         </Row>
                     ))
                 )
@@ -88,7 +91,7 @@ const Cart = (props) => {
                         <Col className="line" offset={19}>
                             <h3>Tổng Hóa đơn</h3>
                             <div>
-                                {sumPrice.toFixed(2)}đ
+                                {props.PriceCart.toFixed(2)}Đ
                             </div>
                         </Col>
 

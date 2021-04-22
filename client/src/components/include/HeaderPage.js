@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import '../Select_Product';
-
+import Payments from "../../container/Payments";
 import "../components-css/Header.scss"
 import Cart from '../../container/Cart';
 
@@ -20,8 +20,8 @@ const menu = {
 const logo = {
     textAlign: 'left'
 }
-const HeaderPage = (user, props) => {
-    const {CountCart} = props;
+const HeaderPage = (props) => {
+    
 
     const history = useHistory();
     const [current, setCurrent] = useState("home");
@@ -39,13 +39,15 @@ const HeaderPage = (user, props) => {
         window.location.reload()
 
     }
-    console.log(CountCart);
+
+    
+    
+    console.log(props.CountCart);
     return (
         
         <>
         
             <Header className="header">
-            <p>{props.CountCart}</p>
                 <Row>
                     <Router>
                         <div className="logo" key='/'  >
@@ -55,22 +57,17 @@ const HeaderPage = (user, props) => {
                             <Menu style={contentStyle} mode="horizontal"
                                 onClick={handClick}
                                 selectedKeys={[current]}>
-                                <Menu.Item>
-                                   
-                                    <p>{props.CountCart}</p>
-                                    
-                                </Menu.Item>
                                 <Menu.Item key="cart">
-                                    <Badge size="small" count={5}>
+                                    <Badge size="small" count={props.CountCart}>
                                         <ShoppingCartOutlined style={{ fontSize: '26px' }}>
                                         </ShoppingCartOutlined>
                                     </Badge>
                                 </Menu.Item>
-                                <Menu.Item key="item">
+                                {/* <Menu.Item key="item">
                                     Item
-                            </Menu.Item>
+                                </Menu.Item> */}
                                 <Menu.Item key="price">
-                                    $ 00.0
+                                    {props.PriceCart}Đ
                             </Menu.Item>
                                 <Menu.Item key="sreach">
                                     <SearchOutlined />

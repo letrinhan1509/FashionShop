@@ -27,63 +27,81 @@ function App() {
   const shuffled = ListProductHome.sort(() => 0.5 - Math.random());
   const randomItem = shuffled.slice(0, 4);
 
-  
+
   const storageItem = JSON.parse(localStorage.getItem("cart") || "[]");
   const [cart, setCart] = useState(storageItem);
-    
+
   const addCart = (productItem) => {
     const exist = cart.find((x) => x.masp === productItem.masp);
-      if(exist){
-        setCart(
-          cart.map((x)=> x.masp === productItem.masp ? {...exist, qty: exist.qty + 1} : x)
-        );
-      }else{
-        setCart([...cart, {...productItem, qty: 1}]);
-      }
+    if (exist) {
+      setCart(
+        cart.map((x) => x.masp === productItem.masp ? { ...exist, qty: exist.qty + 1 } : x)
+      );
+    } else {
+      setCart([...cart, { ...productItem, qty: 1 }]);
+    }
   };
   const removeCart = (productItem) => {
     const exist = cart.find((x) => x.masp === productItem.masp);
-      if(exist.qty === 1){
-        showDeleteProduct(productItem);
-      }else{
-        setCart(
-          cart.map((x)=> x.masp === productItem.masp ? {...exist, qty: exist.qty - 1} : x)
-        );
-      }
+    if (exist.qty === 1) {
+      showDeleteProduct(productItem);
+    } else {
+      setCart(
+        cart.map((x) => x.masp === productItem.masp ? { ...exist, qty: exist.qty - 1 } : x)
+      );
+    }
   };
   function showDeleteProduct(productItem) {
     confirm({
-        title: 'Bạn muốn xóa sản phẩm khỏi giỏ hàng?',
-        okText: 'Xóa',
-        okType: 'danger',
-        cancelText: 'Không',
-        onOk() {
-          setCart(
-            cart.filter((x) => x.masp !== productItem.masp)
-          );
-            
-        },
-        onCancel() {
-            console.log('Cancel');
-        },
+      title: 'Bạn muốn xóa sản phẩm khỏi giỏ hàng?',
+      okText: 'Xóa',
+      okType: 'danger',
+      cancelText: 'Không',
+      onOk() {
+        setCart(
+          cart.filter((x) => x.masp !== productItem.masp)
+        );
+
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
     });
-}
+  }
+
+  function Thongbao_Them(productItem) {
+    
+    const exist = cart.find((x) => x.masp === productItem.masp);
+    if (exist) {
+      setCart(
+        cart.map((x) => x.masp === productItem.masp ? { ...exist, qty: exist.qty + 1 } : x)
+      );
+      Modal.success({
+        content: 'Bạn đã thêm 1 sản phẩm vào giỏ hàng !',
+      });
+    } else {
+      setCart([...cart, { ...productItem, qty: 1 }]);
+      Modal.success({
+        content: 'Bạn đã thêm 1 sản phẩm vào giỏ hàng !',
+      });
+    }
+  }
+
   const removeProduct = (productItem) => {
     setCart(
       cart.filter((x) => x.masp !== productItem.masp)
     );
   };
 
-  const CountCart = cart.length;
-  console.log(CountCart);
-  
+  const sumPrice = cart.reduce((a, c) => a + c.gia * c.qty, 0);
+
   return (
     <Router>
       <Layout>
-        <HeaderPage />
+        <HeaderPage CountCart={cart.length} PriceCart={sumPrice}/>
         <Content className="content-wrapper">
           <Route exact path="/">
-            <Home ListProductHome={ListProductHome} cart={cart} addCart={addCart} />
+            <Home ListProductHome={ListProductHome} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
           </Route>
           <Route exact path="/ProductDetail/:id">
             <ProductDetail
@@ -102,7 +120,7 @@ function App() {
             <AllProduct />
           </Route>
           <Route path="/cart">
-            <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct}/>
+            <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>
           </Route>
         </Content>
         <Footer />
