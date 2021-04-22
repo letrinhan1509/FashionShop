@@ -53,7 +53,7 @@ const Cart = (props) => {
     )
     return (
         <Content >
-        
+        <Payments />
 
     </Content>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from "react";
-import { Row, Col, Card, Tabs, Image } from 'antd';
+import { Row, Col, Card, Tabs, Image,Button } from 'antd';
 import { Link,useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
@@ -36,6 +36,11 @@ const button = [
     { name: "giay", value: "Giày" }
 ]
 const AllProduct = () => {
+    const [visible, setVisible] = useState(8)
+    const showMoreProduct = () =>{
+        setVisible((preValueProduct) => preValueProduct + 8);
+    };
+
  
     const [ListProductHome, setListProductHome] = useState([]);
     useEffect(() => {
@@ -63,6 +68,7 @@ const AllProduct = () => {
     <ProductDetail ListProductHome ={ListProductHome}/>
     return (
         <>
+        <p style={{marginTop:"150px"}}></p>
             <Row>
                 <Col span={22} offset={1}>
                     <div className="site-card-wrapper">
@@ -107,7 +113,7 @@ const AllProduct = () => {
                     </div>
                     <div className="site-card-wrapper product_home">
                         <Row gutter={16} justify="space-around">
-                            {ProductHome.map((productItem) => {
+                            {ProductHome.slice(0,visible).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
                                         <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>
@@ -154,7 +160,7 @@ const AllProduct = () => {
                         </Row>
                         <Row>
                             <Col offset={12}>
-                                <button className="btn-load">Xem thêm</button>
+                                <Button type="primary" onClick={showMoreProduct} className="btn-load">Xem thêm</Button>
                             </Col>
                         </Row>
                     </div>
