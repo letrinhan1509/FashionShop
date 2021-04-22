@@ -15,7 +15,7 @@ const Payments = () => {
   return (
     <>
       <Button type="primary" onClick={() => setVisible(true)}>
-        Payments
+        Thanh Toán
       </Button>
       <Modal
         title="Payments"
@@ -106,7 +106,7 @@ const Payments = () => {
             </Col>
           </Row>
           <div style={{paddingLeft:"78%"}}>
-         <Payments2/>
+         <Payments2 />
        </div>
           </form>
         </div>

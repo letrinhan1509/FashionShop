@@ -270,5 +270,37 @@ router.get('/api/chi-tiet-khach-hang/:name', async function (req, res) {
     console.log(User);
     res.json(User);
 });
+//Admin
+//Danh sách tai khoảng Admin
+router.get('/api/admin', async function (req, res) {
+    let listAdmin = await modelUser.listAdmin();
+    res.json(listAdmin);
+});
+///Đăng kí tk admin
+router.post('/api/dang-ky-admin', function (req, res, next) {
+    let ten = req.body.tennv;//
+    let em = req.body.email;//
+    let mk = req.body.matkhau;//
+    let rmk = req.body.nhaplaimk;//
+    let sdt = req.body.sodienthoai;//
+    let dc = req.body.diachi;//
+    let pq = req.body.maquyen
 
+    if (mk === rmk && mk != "") {
+        // Mã hoá mật khẩu:
+        //var salt = bcrypt.genSaltSync(10);
+        //var pass_mahoa = bcrypt.hashSync(mk, salt);
+
+        let kh_info = { admin: em, matkhau: mk, tennv: ten, diachi: dc ,sodienthoai: sdt,
+            maquyen: pq };
+
+        let sql = 'INSERT INTO admin SET ?';
+        db.query(sql, kh_info, (err, d) => {
+            console.log('Insert User success');
+        });
+    } else {
+        res.json('fail');
+    }
+    res.json('success');
+})
 module.exports = router;

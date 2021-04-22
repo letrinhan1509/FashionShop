@@ -1,0 +1,106 @@
+.content-wrapper{
+    .cart-wrapper{
+        
+        
+        width: 100%;
+        h1{
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 40px 0px;
+        }
+        .cart-empty{
+            margin: 60px 0;
+            text-align: center;
+            font-weight: 700;
+            font-size: 30px;
+        }
+        .cart-title{
+            display: flex;
+            justify-content: space-evenly;
+            width: 80%;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            margin-left: 20%;
+        }
+        .cart-product{
+            border-bottom: 1px solid #333;
+            
+            width: 80%;
+            margin-bottom: 20px;
+            margin-left: 10%;
+            .cart-imgProduct{
+                padding: 20px;
+                button{
+                    margin-right: 10px;
+                }
+                img{
+                    border-radius: 15px;
+                    box-shadow: 0px 3px 10px rgba(0,0,0,0.8);
+                    width: 180px;
+                }
+            }
+            .cart-deProduct{
+                width: 40%;
+                padding-top: 20px;
+                p{
+                    font-size: 20px;
+                    
+                    
+                }  
+            }
+            .quantity-price{
+                width: 25%;
+                padding-top: 20px;
+                .quantity-box{
+                    font-size: 20px;
+                    
+                    display: flex;
+                    button{
+                        margin: 0 10px;
+                        outline: none;
+                        border-radius: 50%;
+                        color: #333;
+                        font-weight: 700;
+                        width: 35px;
+                        
+                        background: rgb(255, 255, 255);
+                        transition: 0.5s;
+                        &:hover{
+                            transform: translateY(-5px);
+                            box-shadow: 0px 3px 10px rgba(0,0,0,0.8);
+                            transition: 0.5s;
+                        }
+                    }
+                }
+            }
+            .price-box{
+                padding-top: 20px;
+                font-size: 20px;
+                
+                display: flex;
+            }
+            
+        }
+        .cart-sum{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 20px;
+            text-transform: uppercase;
+            
+            
+            margin: 50px 0;
+            h3{
+                padding-top: 20px;
+            }
+            
+        }
+        .payments{
+            margin-bottom: 30px;
+        }
+    }
+}
