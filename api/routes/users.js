@@ -14,75 +14,7 @@ router.get('/tai-khoan', function (req, res, next) {
         res.redirect("/users/dang-nhap");
     }
 });
-/* router.get('/dang-nhap', function(req, res, next) {
-    res.render('site/dang-nhap.ejs')
-});
-router.post('/dang-nhap', function(req, res, next) {
-    let u = req.body.username;
-    let p = req.body.password;
-    let sql = `SELECT * FROM user WHERE username = '${u}' OR email = '${u}'`;
-    db.query(sql, (err, rows) => {
-        if (rows.length <= 0) {
-            res.redirect("/users/dang-nhap");
-            return;
-        }
-        let user = rows[0];
-        let pass_fromdb = user.password;
-        console.log(pass_fromdb);
-        var kq = bcrypt.compareSync(p, pass_fromdb);
-        console.log(kq)
-        if (kq) {
-            req.session.User = {
-                id: user.idUser,
-                username: user.username,
-                ho: user.ho,
-                ten: user.ten,
-                phone: user.phone,
-                email: user.email,
-                address: user.address,
-                logIn: true
-            };
-            console.log("OK");
-            if (req.session.back) {
-                console.log(req.session.back);
-                res.redirect(req.session.back);
-            } else {
-                res.redirect("/");
-            }
-        } else {
-            console.log("Not OK");
-            res.redirect("/users/dang-nhap");
-        }
-    });
-});
-router.get('/dang-ky', function(req, res, next) {
-    res.render('site/dang-ky.ejs')
-});
-router.post('/luu', function(req, res, next) {
-    let ho = req.body.ho;
-    let ten = req.body.ten;
-    let u = req.body.username;
-    let em = req.body.email;
-    let phone = req.body.phone;
-    let p = req.body.password;
-    let rp = req.body.retypePassword;
-    let address = req.body.address;
 
-    if (p === rp && p != "") {
-
-        var salt = bcrypt.genSaltSync(10);
-        var pass_mahoa = bcrypt.hashSync(p, salt);
-
-        let user_info = { ho: ho, ten: ten, email: em, username: u, password: pass_mahoa, phone: phone, address: address };
-
-        let sql = 'INSERT INTO user SET ?';
-        db.query(sql, user_info);
-    } else {
-        res.redirect("/users/dang-ky");
-    }
-
-    res.redirect("/users/thanh-cong");
-}) */
 const signToken = (id) => {
 	return jwt.sign({ id }, 'nhan', {
 		expiresIn: '90d',
@@ -212,7 +144,7 @@ router.post('/api/dang-nhap', function (req, res, next) {
     let em = req.body.email;
     let mk = req.body.matkhau;
 
-    let sql = `SELECT * FROM khachhang WHERE email = '${em}'`;
+    let sql = `SELECT tenkh, email, sodienthoai, diachi FROM khachhang WHERE email = '${em}'`;
     db.query(sql, (err, rows) => {
         if (rows.length <= 0) {
             //res.redirect("/users/dang-nhap");
@@ -247,7 +179,7 @@ router.post('/api/dang-nhap', function (req, res, next) {
             res.json({
                 status: "success",
                 data: {
-                    username
+                    user
                 },
                 token
             });
