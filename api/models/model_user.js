@@ -25,7 +25,7 @@ exports.checkUsername = (username) => {
 //Danh sách khách hàng
 exports.list = () => {
     return new Promise( (hamOK, hamLoi) => {
-        let sql = 'SELECT * FROM khachhang'
+        let sql = 'SELECT tenkh, email, sodienthoai, diachi FROM khachhang'
         db.query(sql, (err, result) => {
             console.log('List All Users Success!');
             hamOK(result);
@@ -35,7 +35,7 @@ exports.list = () => {
 //Danh sách admin
 exports.listAdmin = () => {
     return new Promise( (hamOK, hamLoi) => {
-        let sql = 'SELECT * FROM admin'
+        let sql = 'SELECT A.admin, A.tennv, A.diachi, A.sodienthoai, Q.Ten FROM admin A JOIN quyen Q ON A.maquyen = Q.maquyen'
         db.query(sql, (err, ad) => {
             console.log('List All Users Success!');
             hamOK(ad);
@@ -44,7 +44,7 @@ exports.listAdmin = () => {
 };
 exports.detailByName = (nameUser) => {
     return new Promise( (hamOK, hamLoi) => {
-        let sql = `SELECT * FROM khachhang WHERE tenkh='${nameUser}'`;
+        let sql = `SELECT tenkh, email, sodienthoai, diachi FROM khachhang WHERE tenkh='${nameUser}'`;
         db.query(sql, (err, result) => {
             console.log('User Success!');
             hamOK(result[0]);

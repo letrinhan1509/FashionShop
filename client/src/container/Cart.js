@@ -1,62 +1,114 @@
-import { Col, Layout, Row, Breadcrumb, Card } from "antd";
+import { Col, Layout, Row, Button, Modal} from "antd";
 import React, { useState, useEffect } from 'react';
-import "../container/components-css/ProductDetail.scss"
-import "../components/Select_Product"
-import SelectProduct from "../components/Select_Product";
-import axios from 'axios';
-import { useParams } from "react-router";
+import "../container/components-css/cart.scss"
+import { DeleteOutlined } from '@ant-design/icons';
 import Payments from "./Payments";
 const { Content } = Layout;
-
+const { confirm } = Modal;
 const Cart = (props) => {
-    const { id } = useParams();
-    console.log(id);
-    const [ListProductHome, setListProductHome] = useState([]);
+
+    const sumPrice = props.cart.reduce((a, c) => a + c.gia * c.qty, 0);
     useEffect(() => {
-        axios.get('http://localhost:3001/san-pham/api/product'
-        ).then(res => { setListProductHome(res.data) })
-    }, []);
-    const menuItems = [
-        {
-            key: "1",
-            img: "iconGray.jpg",
-            name: "IconGray",
-            costNew: "$100,00",
-            costOld: "$200,00"
-        },
-        {
-            key: "2",
-            img: "lacoste.jpg",
-            name: "Lacoste",
-            costNew: "$200,00",
-            costOld: "$250,00"
-        },
-        {
-            key: "3",
-            img: "mlbNY.jpg",
-            name: "mlbNY",
-            costNew: "$200,00",
-            costOld: "$340,00"
-        },
-        {
-            key: "4",
-            img: "pumathunder.jpg",
-            name: "Pumathunder",
-            costNew: "$300,00",
-            costOld: "$450,00"
-        },
-    ];
-    let item = [];
-    item = ListProductHome.filter(
-        ListProductHome => ListProductHome.masp == id
+        localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
+    }, [props.cart]);
 
-    )
+
+    function showDeleteConfirm(item) {
+        confirm({
+            title: 'Bạn muốn xóa sản phẩm khỏi giỏ hàng?',
+            okText: 'Xóa',
+            okType: 'danger',
+            cancelText: 'Không',
+            onOk() {
+                props.removeProduct(item);
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
+
+    
+
+
+    console.log(props.cart);
     return (
-        <Content >
-        
+        <Content className="cart-wrapper">
 
-    </Content>
+            {
+                props.cart.length !== 0 ? (
+                    <>
+                        <h1>Giỏ Hàng</h1>
+                        <Row className="cart-title">
+                            <Col>SẢN PHẨM</Col>
+                            <Col offset={2}>SỐ LƯỢNG</Col>
+                            <Col>GIÁ</Col>
+                        </Row>
+                    </>
+                ) : ("")
+            }
+
+            {props.cart.length === 0 ? (
+                <div className="cart-empty">
+                    <p>Giỏ hàng của bạn chưa có sản phẩm nào !</p>
+                    <img src="https://chillydraji.files.wordpress.com/2015/08/empty_cart.jpeg" alt="empty" />
+                </div>
+            ) :
+                (
+                    props.cart.map((item) => (
+                        <Row className="cart-product">
+                            <Col className="cart-imgProduct" key={item.masp} span={6}>
+                                <Button onClick={() => showDeleteConfirm(item)} type="primary" danger>
+                                    <DeleteOutlined />
+                                </Button>
+                                <img src={`./images/test/${item.hinh}`} />
+                            </Col>
+                            <Col className="cart-deProduct">
+                                <p>{item.tensp}</p>
+                                <p>Giá: {item.gia}Đ</p>
+                            </Col>
+                            <Col className="quantity-price">
+                                <div className="quantity-box">
+                                    
+                                    <button onClick={() => props.removeCart(item)} className="remove">-</button>
+                                    {item.qty}
+                                    <button onClick={() => props.addCart(item)} className="add">+</button>
+                                    
+                                </div>
+                            </Col>
+                            <Col className="price-box">
+                                <div>${item.qty * item.gia.toFixed(2)}Đ</div>
+                            </Col>
+                            
+                        </Row>
+                    ))
+                )
+            }
+            {props.cart.length !== 0 && (
+                <>
+                    <Row className="cart-sum">
+                        <Col className="line" offset={19}>
+                            <h3>Tổng Hóa đơn</h3>
+                            <div>
+                                {props.PriceCart.toFixed(2)}Đ
+                            </div>
+                        </Col>
+
+                    </Row>
+                    <Row>
+                        <Col offset={19} className="payments">
+                            <Payments />
+                        </Col>
+                    </Row>
+                </>
+            )}
+
+        </Content>
     );
 }
 
 export default Cart;
+
+
+

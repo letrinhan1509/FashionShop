@@ -9,14 +9,15 @@ import {
   Input,
   Space,
   BackTop,
+  Steps  
 } from "antd";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import {  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined  } from "@ant-design/icons";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import Payments3 from './Payments3';
 import Payments from './Payments';
 
-
+const { Step } = Steps;
 const { TextArea } = Input;
 
 const Payments2 = () => {
@@ -44,20 +45,14 @@ const Payments2 = () => {
       
         /* cancelText={<Payments/>}
         okText={<Payments3/>} */
-      >
-           <Timeline>
-          <Timeline.Item
-            
-          >
-            Select Payment Method
-          </Timeline.Item>
-          <Timeline.Item dot={<ClockCircleOutlined className="timeline-clock-icon" />}
-            color="red">
-            Credit Cart Infomation
-          </Timeline.Item>
-          <Timeline.Item>Successfully</Timeline.Item>
-        
-        </Timeline>
+      >       <div>
+      <Steps>
+   <Step status="finish" title="Make Payment"  />
+   <Step status="process" title="Card Infomation" icon={<LoadingOutlined />} />
+   <Step status="wait" title="Done" icon={<SmileOutlined />} />
+ </Steps>
+ </div>
+ <div style={{marginTop:"100px"}}>
         <form>
           <Row>
             <Col span={12}>
@@ -121,6 +116,7 @@ const Payments2 = () => {
           </Row>
           
         </form>
+        </div>
 
       </Modal>
     </>

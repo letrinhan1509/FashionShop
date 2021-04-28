@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
 import cookies from "react-cookies";
+import Cart from "./Cart";
 //import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
@@ -38,7 +39,6 @@ const button = [
     { name: "giay", value: "Giày" }
 ]
 const Home = (props) => {
-    console.log(props)
     const [ProductHome, setProductHome] = useState([]);
     useEffect(() => {
         setProductHome(props.ListProductHome)
@@ -64,6 +64,10 @@ const Home = (props) => {
             //window.location.reload()
         }
     })
+
+    useEffect(() => {
+        localStorage.setItem(...['cart' ,JSON.stringify(props.cart)]);
+      }, [props.cart]);
     return (
         <>
             <Carousel className="slider__bg">
@@ -122,44 +126,47 @@ const Home = (props) => {
                             {ProductHome.slice(0, hiddenitem).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
-                                        <Link to={`/ProductDetail/${productItem.masp}`}>
-                                            <Card
+
+                                        <Card
+                                            width={'100%'}
+                                            key={productItem.masp}
+                                            className="card-pro card_product_home"
+                                            bordered={false}
+                                            hoverable >
+                                            <Image
                                                 width={'100%'}
-                                                key={productItem.masp}
-                                                className="card-pro card_product_home"
-                                                bordered={false}
-                                                hoverable >
-                                                <Image
-                                                    width={'100%'}
-                                                    src={`./images/test/${productItem.hinh}`}
-                                                    preview={{
-                                                        visible: false,
-                                                        /* onVisibleChange: () => { onClick() }, */
-                                                        mask: <div>
+                                                src={`./images/test/${productItem.hinh}`}
+                                                preview={{
+                                                    visible: false,
+                                                    /* onVisibleChange: () => { onClick() }, */
+                                                    mask: <div>
+                                                        <div onClick={() => props.Thongbao_Them(productItem)}>
                                                             <ShoppingCartOutlined
                                                                 style={{ fontSize: '36px' }} />
+                                                        </div>
+                                                        <Link to={`/ProductDetail/${productItem.masp}`}>
                                                             <EyeOutlined
                                                                 style={{ fontSize: '36px' }}
                                                             />
-                                                        </div>
-                                                    }}
-                                                />
+                                                        </Link>
+                                                    </div>
+                                                }}
+                                            />
+                                            <Meta
+                                                className="card-pro-name"
+                                                title={productItem.tensp} />
+                                            <div className="price">
                                                 <Meta
-                                                    className="card-pro-name"
-                                                    title={productItem.tensp} />
-                                                <div className="price">
-                                                    <Meta
-                                                        className="card-pro-priceSale"
-                                                        title={`${productItem.gia - (productItem.gia * productItem.giamgia / 100)} VNĐ`} />
-                                                    <Meta
-                                                        className="card-pro-price"
-                                                        title={`${productItem.gia} VNĐ`} />
-                                                    <Meta
-                                                        className="card-pro-sale"
-                                                        title={`${productItem.giamgia}% Off`} />
-                                                </div>
-                                            </Card>
-                                        </Link>
+                                                    className="card-pro-priceSale"
+                                                    title={`${productItem.gia - (productItem.gia * productItem.giamgia / 100)} VNĐ`} />
+                                                <Meta
+                                                    className="card-pro-price"
+                                                    title={`${productItem.gia} VNĐ`} />
+                                                <Meta
+                                                    className="card-pro-sale"
+                                                    title={`${productItem.giamgia}% Off`} />
+                                            </div>
+                                        </Card>
                                     </Col>
                                 );
                             })}
@@ -167,7 +174,7 @@ const Home = (props) => {
                         <Row>
                             <Col offset={12}>
                                 <a href='/AllProduct' className="btn-load">Xem thêm</a>
-                              
+
                             </Col>
                         </Row>
                     </div>

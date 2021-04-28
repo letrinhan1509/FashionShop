@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { Row, Col, Checkbox, Modal, Button, Timeline, Input } from "antd";
+import { Row, Col, Checkbox, Modal, Button, Timeline, Input, Steps } from "antd";
 import Payments2 from "./Payments2";
 import {
   ClockCircleOutlined,
   BankOutlined,
   CreditCardOutlined,
   DollarCircleOutlined,
+  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined 
 } from "@ant-design/icons";
+const { Step } = Steps;
 const { TextArea } = Input;
 const Payments = () => {
   const [visible, setVisible] = useState(false);
   return (
     <>
       <Button type="primary" onClick={() => setVisible(true)}>
-        Payments
+        Thanh Toán
       </Button>
       <Modal
         title="Payments"
@@ -22,23 +24,16 @@ const Payments = () => {
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         width={1000}
-       /*  okText={<Payments2/>} */
        footer={null}
       >
-        <Timeline>
-          <Timeline.Item
-            dot={<ClockCircleOutlined className="timeline-clock-icon" />}
-            color="red"
-          >
-            Select Payment Method
-          </Timeline.Item>
-          <Timeline.Item>
-            Credit Cart Infomation
-          </Timeline.Item>
-          <Timeline.Item>Successfully</Timeline.Item>
-        
-        </Timeline>
         <div>
+       <Steps>
+    <Step status="finish" title="Make Payment" icon={<LoadingOutlined />} />
+    <Step status="process"  title="Card Infomation" />
+    <Step status="wait" title="Done" icon={<SmileOutlined />} />
+  </Steps>
+  </div>
+        <div style={{marginTop:"100px"}}>
           <form>
           <Row>
             <Col span={10} offset={1}>
@@ -111,7 +106,7 @@ const Payments = () => {
             </Col>
           </Row>
           <div style={{paddingLeft:"78%"}}>
-         <Payments2/>
+         <Payments2 />
        </div>
           </form>
         </div>

@@ -30,9 +30,9 @@ const Select_Product = (props) => {
 
 
     const [size/* , setSize */] = useState('large');
-   /*  function Change(value) {
-        console.log('changed', value);
-    } */
+    /*  function Change(value) {
+         console.log('changed', value);
+     } */
 
 
 
@@ -186,25 +186,21 @@ const Select_Product = (props) => {
             <Row className="cover-one">
                 {item.map((e) => {
                     return (
-                        <Col className="img-box" key={e.key}>
-                            <Row>
-                                <Col>
-                                    <img src={`../images/test/${e.hinh}`} alt="product" />
-                                </Col>
-                            </Row>
-                            <Row className="img-change">
-                                {item.map((e) => {
-                                    return (
-                                        <Col className="hinh"><img name={e.id} src={`../images/test/${e.hinh}`} alt="product" onClick={(e) => handleTab(e.file, e)} /></Col>
-                                    );
-                                })}
-                            </Row>
-                        </Col>
-                    );
-                })}
-                {item.map((e) => {
-                    return (
                         <>
+                            <Col className="img-box" key={e.key}>
+                                <Row>
+                                    <Col>
+                                        <img src={`../images/test/${e.hinh}`} alt="product" />
+                                    </Col>
+                                </Row>
+                                <Row className="img-change">
+                                    {item.map((e) => {
+                                        return (
+                                            <Col className="hinh"><img name={e.id} src={`../images/test/${e.hinh}`} alt="product" onClick={(e) => handleTab(e.file, e)} /></Col>
+                                        );
+                                    })}
+                                </Row>
+                            </Col>
                             <Col className="imfo-col">
                                 <h1>{e.tensp}</h1>
                                 <ul className="vote-star">
@@ -268,9 +264,6 @@ const Select_Product = (props) => {
                                             <Select defaultValue="S" style={{ width: 120 }} onChange={handleChange}>
                                                 <Option value="S">S</Option>
                                                 <Option value="M">M</Option>
-                                                {/* <Option value="disabled" disabled>
-                                Disabled
-                            </Option> */}
                                                 <Option value="L">L</Option>
                                                 <Option value="XL">XL</Option>
                                             </Select>
@@ -280,11 +273,11 @@ const Select_Product = (props) => {
                                 <div className="add-cart">
                                     <Row>
                                         <Col offset={13} span={4}>
-                                          
-                                            <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
-                                                Add To Cart
+                                            <Link to={`ProductDetail/${e.masp}/cart`}>
+                                                <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
+                                                    Add To Cart
                                 </Button>
-                 
+                                            </Link>
                                         </Col>
                                         <Col offset={4} span={2}>
                                             <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />
@@ -306,9 +299,8 @@ const Select_Product = (props) => {
                                     </Row>
                                 </div>
                             </Col>
-
                         </>
-                    )
+                    );
                 })}
 
                 <Col className="best-seller">
