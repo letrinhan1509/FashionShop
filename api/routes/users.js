@@ -144,7 +144,7 @@ router.post('/api/dang-nhap', function (req, res, next) {
     let em = req.body.email;
     let mk = req.body.matkhau;
 
-    let sql = `SELECT tenkh, email, sodienthoai, diachi FROM khachhang WHERE email = '${em}'`;
+    let sql = `SELECT * FROM khachhang WHERE email = '${em}'`;
     db.query(sql, (err, rows) => {
         if (rows.length <= 0) {
             //res.redirect("/users/dang-nhap");
@@ -153,9 +153,10 @@ router.post('/api/dang-nhap', function (req, res, next) {
         }
         let user = rows[0];
         let pass_fromdb = user.matkhau;
-        let username = user.tenkh;
-        
-        // Lấy mật khẩu từ DB lên.
+        let username = user.tenkh; // Lấy mật khẩu từ DB lên.
+        let email = user.email;
+        let sdt = user.sodienthoai;
+        let diachi = user.diachi;
         console.log(user);
         console.log("Mật khẩu DB:", pass_fromdb);
         console.log(username);
@@ -181,7 +182,10 @@ router.post('/api/dang-nhap', function (req, res, next) {
             res.json({
                 status: "success",
                 data: {
-                    user
+                    username,
+                    email,
+                    sdt,
+                    diachi
                 },
                 token
             });
