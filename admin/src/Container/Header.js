@@ -1,5 +1,7 @@
 import { Row, Col, Menu } from 'antd';
 import React from "react";
+import { Avatar, Image } from 'antd';
+
 /* import {  LoginOutlined } from '@ant-design/icons'; */
 import { BrowserRouter as Router} from "react-router-dom";
 import "./scss/Header.scss"
@@ -15,7 +17,7 @@ const HeaderPage = () => {
                         <Col span={22} offset={1}>
                         <Menu  mode="horizontal">
                                 <Menu.Item key="app">
-                                    Xin chào Quách Trọng Nhân
+                                <Avatar>N</Avatar>
                                 </Menu.Item>
                                 <Menu.Item key="item">
                                     Đăng xuất

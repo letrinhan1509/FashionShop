@@ -221,7 +221,9 @@ router.post('/api/dang-nhap', function (req, res, next) {
         }
         let user = rows[0];
         let pass_fromdb = user.matkhau;
-        let username = user.tenkh; // Lấy mật khẩu từ DB lên.
+        let username = user.tenkh;
+        
+        // Lấy mật khẩu từ DB lên.
         console.log(user);
         console.log("Mật khẩu DB:", pass_fromdb);
         console.log(username);
@@ -247,7 +249,10 @@ router.post('/api/dang-nhap', function (req, res, next) {
             res.json({
                 status: "success",
                 data: {
-                    username
+                    username: user.tenkh,
+                    diachi: user.diachi,
+
+
                 },
                 token
             });

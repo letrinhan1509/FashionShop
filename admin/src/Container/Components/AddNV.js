@@ -58,9 +58,9 @@ const AddNV = (props) => {
                 message.error(`Login fail!\n ${err.response.data.message}`)
             })
     };
-    const loadpage= ()=>{
+   /*  const loadpage= ()=>{
         props.handleCreateUser();
-    }
+    } */
     return (
         <Row className="register-container">
         <Col className="register-form-wrapper" offset={6} span={10}>
@@ -172,7 +172,7 @@ const AddNV = (props) => {
                     <Input />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button onClick={ loadpage }type="primary" htmlType="submit">
+                    <Button onClick={()=>  props.handleCreateUser() }type="primary" htmlType="submit">
                         Đăng kí
                     </Button>
                 </Form.Item>
