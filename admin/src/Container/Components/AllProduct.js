@@ -47,21 +47,23 @@ const AllProduct = (props) => {
             dataIndex: 'maloai',
             key: 'maloai',
             filters: [
-                { text: 'Áo sơ mi', value: 'asm' },
-                { text: 'Áo thun', value: 'at' },
-                { text: 'Áo khoác', value: 'ak' },
+                { text: 'asm', value: 'asm' },
+                { text: 'at', value: 'at' },
+                { text: 'ak', value: 'ak' },
                 { text: 'Balo', value: 'bl' },
                 { text: 'Dép', value: 'dep' },
                 { text: 'Giày', value: 'giay' },
                 { text: 'Nón', value: 'no' },
               ],
-            filteredValue: filteredInfo.name || null,
-        onFilter: (value, record) => record.name.includes(value),
-        sorter: (a, b) => a.name.length - b.name.length,
-        sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+            filteredValue: filteredInfo.maloai || null,
+        onFilter: (value, record) => record.maloai.includes(value),
+        //onFilter: (value, record) => record.maloai.indexOf(value) === 0,
+       /*  sorter: (a, b) => a.maloai.length - b.maloai.length,
+        sortOrder: sortedInfo.columnKey === 'maloai' && sortedInfo.order, */
         ellipsis: true,
         },
       ];
+      
     return (
         <>
         <Table dataSource={props.ListProductHome} columns={columns} />

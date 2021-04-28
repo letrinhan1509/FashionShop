@@ -51,6 +51,7 @@ const RegisterForm = () => {
         </Form.Item>
       );
     const register = (values) => {
+        console.log(values)
         const url = "http://localhost:3001/users/api/dang-ky"
         axios.post(url, values).then((res) => {
             message.success("Register successfully!")

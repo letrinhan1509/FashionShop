@@ -12,8 +12,8 @@ import {
   Steps  
 } from "antd";
 import {  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined  } from "@ant-design/icons";
-import Card from "react-credit-cards";
-import "react-credit-cards/es/styles-compiled.css";
+// import Card from "react-credit-cards";
+ //import "react-credit-cards/es/styles-compiled.css";
 import Payments3 from './Payments3';
 import Payments from './Payments';
 
@@ -52,7 +52,7 @@ const Payments2 = () => {
    <Step status="wait" title="Done" icon={<SmileOutlined />} />
  </Steps>
  </div>
- <div style={{marginTop:"100px"}}>
+ {/* <div style={{marginTop:"100px"}}>
         <form>
           <Row>
             <Col span={12}>
@@ -116,7 +116,7 @@ const Payments2 = () => {
           </Row>
           
         </form>
-        </div>
+        </div> */}
 
       </Modal>
     </>
