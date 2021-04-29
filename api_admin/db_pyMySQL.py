@@ -1,12 +1,7 @@
-import pymysql.cursors
+import database
 
-connection = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='',
-    database='fashion_shop',
-    cursorclass=pymysql.cursors.DictCursor #con trỏ trả về dưới dạng từ điển
-)
+connection = database.connection
+
 
 # Danh sách tất cả tài khoản "user":
 def get_all_user():
@@ -16,41 +11,31 @@ def get_all_user():
         users = cur.fetchall()
         return users
 
+
 # Tài khoản "user" theo tên:
 def get_name_user(user_name):
     with connection.cursor() as cur:
         sql = '''
         SELECT `tenkh`, `email`, `sodienthoai`, `diachi` 
         FROM `khachhang`
-        WHERE `tenkh` = "%s"
+        WHERE `tenkh` = %s
         '''
         cur.execute(sql, (user_name,))
         user = cur.fetchmany()
         return user
 
 
-
-# Thêm tài khoản "user":
-def add_user():
-    with connection.cursor() as cur:
-        sql = '''
-        INSERT INTO khachhang(tenkh, email, matkhau, sodienthoai, diachi)
-        VALUES (%s, %s, %s, %s, %s)
-        '''
-        #cur.execute(sql, )
-        #connection.commit()
-
-
 def get_all_admin():
     with connection.cursor() as cur:
         sql = '''
-        SELECT A.admin, A.tennv, A.diachi, A.sodienthoai, Q.Ten 
+        SELECT A.admin, A.tennv, A.diachi, A.trangthai, A.sodienthoai, Q.Ten 
         FROM `admin` A JOIN `quyen` Q 
         ON A.maquyen = Q.maquyen
         '''
         cur.execute(sql)
         ad = cur.fetchall()
         return ad
+
 
 # Tài khoản "Admin" theo số điện thoại:
 def get_phone_admin(admin_phone):
@@ -65,28 +50,6 @@ def get_phone_admin(admin_phone):
         ad = cur.fetchone()
         return ad
 
-# Tài khoản "Admin" theo tên:
-def get_name_admin(admin_name):
-    with connection.cursor() as cur:
-        sql = '''
-        SELECT A.admin, A.tennv, A.diachi, A.sodienthoai, Q.Ten 
-        FROM `admin` A JOIN `quyen` Q 
-        ON A.maquyen = Q.maquyen
-        WHERE A.tennv = "%s" 
-        '''
-        cur.execute(sql, (admin_name,))
-        ad = cur.fetchall()
-        return ad
-
-# Thêm tài khoản "admin":
-def insert_admin(permission_id, ):
-    with connection.cursor() as cur:
-        sql = '''
-        INSERT INTO admin(tennv, email, matkhau, sodienthoai, diachi)
-        VALUES (%s, %s, %s, %s, %s)
-        '''
-        #cur.execute(sql, )
-        #connection.commit()
 
 # Danh sách "nhà sản xuất":
 def get_all_producer():
@@ -95,6 +58,7 @@ def get_all_producer():
         cur.execute(sql)
         producer = cur.fetchall()
         return producer
+
 
 # Tìm "nhà sản xuất" theo id:
 def get_producer_id(producer_id):
@@ -108,8 +72,6 @@ def get_producer_id(producer_id):
         producer = cur.fetchall()
         return producer
 
-# Thêm "nhà sản xuất":
-
 
 # Danh sách "danh mục" sản phẩm:
 def get_all_category():
@@ -119,8 +81,6 @@ def get_all_category():
         category = cur.fetchall()
         return category
 
-# Thêm "danh mục" sản phẩm:
-
 
 # Danh sách "loại" sản phẩm:
 def get_all_type():
@@ -129,8 +89,6 @@ def get_all_type():
         cur.execute(sql)
         type = cur.fetchall()
         return type
-
-# Thêm "loại" sản phẩm:
 
 
 # Danh sách sản phẩm:
@@ -147,8 +105,6 @@ def get_all_product():
         products = cur.fetchall()
         return products
 
-# Thêm "sản phẩm":
-
 
 # Danh sách "đơn hàng":
 def get_all_order():
@@ -157,6 +113,7 @@ def get_all_order():
         cur.execute(sql)
         order = cur.fetchall()
         return order
+
 
 # Danh sách "chi tiết đơn hàng":
 def get_all_detailOrder():
@@ -174,7 +131,6 @@ def get_permission():
         cur.execute(sql)
         permission = cur.fetchall()
         return permission
-# Thêm mới "Quyền hạn - chức vụ":
 
 
 # Danh sách "Trạng thái":

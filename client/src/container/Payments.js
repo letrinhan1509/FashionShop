@@ -17,11 +17,7 @@ import {
   BankOutlined,
   CreditCardOutlined,
   DollarCircleOutlined,
-  UserOutlined,
-  SolutionOutlined,
-  LoadingOutlined,
-  SmileOutlined,
-  DeleteOutlined,
+LoadingOutlined, SmileOutlined 
 } from "@ant-design/icons";
 import "./Cart";
 const { Step } = Steps;
