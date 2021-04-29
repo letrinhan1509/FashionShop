@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Row, Col, Checkbox, Modal, Button, Timeline, Input, Steps } from "antd";
+import { Row, Col, Checkbox, Modal, Button, Input, Steps } from "antd";
 import Payments2 from "./Payments2";
 import {
-  ClockCircleOutlined,
   BankOutlined,
   CreditCardOutlined,
   DollarCircleOutlined,
-  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined 
+LoadingOutlined, SmileOutlined 
 } from "@ant-design/icons";
 const { Step } = Steps;
 const { TextArea } = Input;

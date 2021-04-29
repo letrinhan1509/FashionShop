@@ -5,20 +5,17 @@ import {
   Checkbox,
   Modal,
   Button,
-  Timeline,
   Input,
   Space,
-  BackTop,
   Steps  
 } from "antd";
-import {  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined  } from "@ant-design/icons";
-// import Card from "react-credit-cards";
- //import "react-credit-cards/es/styles-compiled.css";
+import {LoadingOutlined, SmileOutlined } from "@ant-design/icons";
+import Card from "react-credit-cards";
+import "react-credit-cards/es/styles-compiled.css";
 import Payments3 from './Payments3';
-import Payments from './Payments';
+
 
 const { Step } = Steps;
-const { TextArea } = Input;
 
 const Payments2 = () => {
   const [number, setNumber] = useState("");

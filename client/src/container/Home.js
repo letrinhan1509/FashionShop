@@ -4,12 +4,15 @@ import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
 import cookies from "react-cookies";
-import Cart from "./Cart";
+import Swiper from 'swiper';
+import 'swiper/swiper-bundle.css';
 //import ProductDetail from "./Product-detail";
 const { TabPane } = Tabs;
 const contentStyle = {
     height: '590px',
 };
+
+
 const { Meta } = Card;
 const ListProduct = [
     {
@@ -65,17 +68,50 @@ const Home = (props) => {
         }
     })
 
+    const swiper = new Swiper('.swiper-container', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            autoplay: 2,
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: true,
+        },
+        loop: true,
+    });
+
+    const info_sale = {
+        height: '300px',
+        color: '#fff',
+        textAlign: 'center',
+      };
+
     useEffect(() => {
-        localStorage.setItem(...['cart' ,JSON.stringify(props.cart)]);
-      }, [props.cart]);
+        localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
+    }, [props.cart]);
     return (
         <>
             <Carousel className="slider__bg">
                 <Row className="slider__bg" >
                     <Col style={contentStyle} className="menu " span={22} offset={1}>
-                        <h3 className="slider__bg__title">
+                        {/* <h3 className="slider__bg__title">
                             Super Flash Sale 50% Off
-                        </h3>
+                        </h3> */}
+                        <Carousel className="slider__bg__title" autoplay>
+                            <div>
+                                <h3 style={info_sale}>Super Flash Sale 50% Off</h3>
+                            </div>
+                            <div>
+                                <h3 style={info_sale}>Giảm 10% cho hóa đơn trên 700k</h3>
+                            </div>
+                            <div>
+                                <h3 style={info_sale}>Summer Collection <p>26-05-2021</p></h3>
+                            </div>
+                        </Carousel>
                     </Col>
                 </Row>
             </Carousel>
@@ -133,25 +169,29 @@ const Home = (props) => {
                                             className="card-pro card_product_home"
                                             bordered={false}
                                             hoverable >
-                                            <Image
-                                                width={'100%'}
-                                                src={`./images/test/${productItem.hinh}`}
-                                                preview={{
-                                                    visible: false,
-                                                    /* onVisibleChange: () => { onClick() }, */
-                                                    mask: <div>
-                                                        <div onClick={() => props.Thongbao_Them(productItem)}>
-                                                            <ShoppingCartOutlined
-                                                                style={{ fontSize: '36px' }} />
+                                            <div className="img-box">
+                                                <Image
+                                                    width={'100%'}
+                                                    src={`./images/test/${productItem.hinh}`}
+                                                    preview={{
+                                                        visible: false,
+                                                        /* onVisibleChange: () => { onClick() }, */
+                                                        mask: <div className="icon_product">
+                                                            <span onClick={() => props.Thongbao_Them(productItem)}>
+                                                                <ShoppingCartOutlined
+                                                                    style={{ fontSize: '36px' }} />
+                                                            </span>
+                                                            <span>
+                                                                <Link to={`/ProductDetail/${productItem.masp}`}>
+                                                                    <EyeOutlined
+                                                                        style={{ fontSize: '36px' }}
+                                                                    />
+                                                                </Link>
+                                                            </span>
                                                         </div>
-                                                        <Link to={`/ProductDetail/${productItem.masp}`}>
-                                                            <EyeOutlined
-                                                                style={{ fontSize: '36px' }}
-                                                            />
-                                                        </Link>
-                                                    </div>
-                                                }}
-                                            />
+                                                    }}
+                                                />
+                                            </div>
                                             <Meta
                                                 className="card-pro-name"
                                                 title={productItem.tensp} />
@@ -178,6 +218,51 @@ const Home = (props) => {
                             </Col>
                         </Row>
                     </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    {/* <Carousel autoplay>
+                        <div className="slider">
+                            <div className="img-box">
+                                <img src="./images/slider/slider1.jpeg"/>
+                            </div>
+                        </div>
+                        <div className="slider">
+                            <div className="img-box">
+                                <img src="./images/slider/slider2.jpeg"/>
+                            </div>
+                        </div>
+                        <div className="slider">
+                            <div className="img-box">
+                                <img src="./images/slider/slider3.jpeg"/>
+                            </div>
+                        </div>
+                        <div className="slider">
+                            <div className="img-box">
+                                <img src="./images/slider/slider4.jpg"/>
+                            </div>
+                        </div>
+                    </Carousel> */}
+                    <div className="four">
+                        <div className="texttitle">
+                            <h1>Something Special</h1>
+                        </div>
+                        <div className="swiper-container">
+                            <div className="swiper-wrapper">
+                                <div className="swiper-slide"><img src="./images/slider/slider1.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider2.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider3.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider4.jpg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider1.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider2.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider3.jpeg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider4.jpg" /></div>
+                            </div>
+                            <div className="swiper-pagination"></div>
+                        </div>
+                    </div>
+
                 </Col>
             </Row>
         </>

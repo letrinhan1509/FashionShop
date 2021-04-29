@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Checkbox, Modal, Button, Timeline, Input,Progress, Steps } from "antd";
-import Payments2 from "./Payments2";
-import {
-  ClockCircleOutlined,
-  BankOutlined,
-  CreditCardOutlined,
-  DollarCircleOutlined,
-  UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined 
-} from "@ant-design/icons";
-import Payments from './Payments'
-const { TextArea } = Input;
+import {Modal, Button,Progress, Steps } from "antd";
 const { Step } = Steps;
 const Payments3 = () => {
   const [visible, setVisible] = useState(false);
