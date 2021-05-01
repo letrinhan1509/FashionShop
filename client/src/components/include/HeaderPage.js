@@ -27,14 +27,12 @@ const HeaderPage = (props) => {
     }
     const logout = () => {
         localStorage.removeItem("token")
-        localStorage.removeItem("username")
+        localStorage.removeItem("user")
         //history.push('/');
         window.location.reload()
 
     }
-
-
-
+    const User = JSON.parse(localStorage.getItem('user'));
     console.log(props.CountCart);
     return (
         <>
@@ -61,7 +59,7 @@ const HeaderPage = (props) => {
                         <Menu.Item key="sreach">
                             <SearchOutlined />
                         </Menu.Item>
-                        {localStorage.getItem('username') === null ? (
+                        {JSON.parse(localStorage.getItem('user')) === null ? (
                             <>
                                 <Menu.Item key="register" style={menu} icon={<UserAddOutlined style={{ fontSize: 20 }} />}>
                                 </Menu.Item>
@@ -71,7 +69,7 @@ const HeaderPage = (props) => {
                         ) : (
                             <>
                                 <Menu.Item key="profile" icon={<UserOutlined />}>
-                                    {localStorage.getItem('username')}
+                                    {User.username}
                                 </Menu.Item>
                                 <Menu.Item key="logout" onClick={logout} icon={<LogoutOutlined />}>
                                     Log out
