@@ -16,6 +16,7 @@ import ListUserAdmin from "./Container/Components/ListUserAdmin";
 import AddNV from "./Container/Components/AddNV";
 import Login from "./Container/Login";
 import { storage } from "./Container/Components/firebase/firebase";
+import renderEmpty from "antd/lib/config-provider/renderEmpty";
 function App() {
   const [ListProductHome, setListProductHome] = useState([]);
   const [ListNameImg, setListNameImg] = useState([]);
@@ -58,31 +59,55 @@ function App() {
     const element = ListNameImg[index]
     console.log(element);
   } */
-  let i = 0;
-  let storageRef = storage.ref();
-  var gsReference = storage.refFromURL('gs://fashionshop-11d42.appspot.com/img_product/adidas.jpg');
-  let starsRef = storageRef.child('img_product/');
-  starsRef.listAll().then(function (result) {
-    result.items.forEach(function (imageRef) {
-      i++;
-      displayImage(i, imageRef)
-    })
-  })
-const [links, setLinks]= useState([])
-  function displayImage(row, images) {
-    images.getDownloadURL().then(function (url) {
-      console.log(url);
-      /* console.log(link) */
-    })
-  }
 
-//console.log(a);
-console.log(links);
+
+
+
+
+  const [link, setLink] = useState([]);
+  useEffect(() => {
+    const fetchImages = async () => {
+      let i = 0;
+      let storageRef = storage.ref();
+      let starsRef = await storageRef.child('img_product/').listAll();
+      let urlPromises = starsRef.items.map(imageRef => imageRef.getDownloadURL());
+      /* starsRef.listAll().then(function (result) {
+        result.items.forEach(function (imageRef) {
+          i++;
+          displayImage(i, imageRef)
+        })
+      })
+      let result = await storageRef.child('images').listAll();
+      let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL()); */
+
+      return Promise.all(urlPromises);
+
+    }
+    /* function displayImage(row, images) {
+      images.getDownloadURL().then(function (url) {
+
+      })
+    } */
+    const loadImages = async () => {
+      const urls = await fetchImages();
+      setLink(urls);
+    }
+    loadImages();
+  }, []);
+
+  console.log(link);
+  /*   link.map((item)=>{
+      console.log(item);
+    }) */
+  //console.log(typeof(a));
+  //console.log(" link hinh:"+a.values());
 
   //console.log(ListNameImg)
   /* console.log(ListProductHome[0]) */
   return (
     <>
+    
+
       <Router>
         <Layout>
           <HeaderPage />
@@ -113,17 +138,7 @@ console.log(links);
                 <Route path="/Login">
                   <Login />
                 </Route>
-               {/*  {link.forEach((item)=>{
-                  console.log(item)
-                  return(
-                    <Image
-                    width={200}
-                    src={{item}}
-                  />
-                  )
-                
-                })} */}
-                
+
               </Content>
             </Col>
           </Row>
