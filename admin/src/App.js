@@ -39,7 +39,7 @@ function App() {
     axios.get("http://127.0.0.1:5000/api/v1/user").then((res)=>{
       setListUser(res.data.data);
     })
-  },[]); */
+  }, []);
   //Admin
  /*  useEffect(() => {
    axios.get("http://127.0.0.1:5000/api/v1/admin").then((res)=>{
@@ -64,23 +64,8 @@ function App() {
       let storageRef = storage.ref();
       let starsRef = await storageRef.child('img_product/').listAll();
       let urlPromises = starsRef.items.map(imageRef => imageRef.getDownloadURL());
-      /* starsRef.listAll().then(function (result) {
-        result.items.forEach(function (imageRef) {
-          i++;
-          displayImage(i, imageRef)
-        })
-      })
-      let result = await storageRef.child('images').listAll();
-      let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL()); */
-
       return Promise.all(urlPromises);
-
     }
-    /* function displayImage(row, images) {
-      images.getDownloadURL().then(function (url) {
-
-      })
-    } */
     const loadImages = async () => {
       const urls = await fetchImages();
       setLink(urls);
@@ -88,56 +73,58 @@ function App() {
     loadImages();
   }, []);
 
-  console.log(link);
-  /*   link.map((item)=>{
-      console.log(item);
-    }) */
-  //console.log(typeof(a));
-  //console.log(" link hinh:"+a.values());
-
-  //console.log(ListNameImg)
-  /* console.log(ListProductHome[0]) */
   return (
     <>
-    
+      {localStorage.getItem('user') === null ? (
+        <>
+          <Layout>
+            <Content className="content-wrapper">
+              <Login />
+            </Content>
 
-      <Router>
-        <Layout>
-          <HeaderPage />
-          <Row >
-            <Col>
-              <Navigation ListProductHome={ListProductHome} />
-            </Col>
-            <Col span={18} push={1} width={'100%'}>
-              <Content className="content-wrapper">
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route path="/all">
-                  <AllProduct ListProductHome={ListProductHome} />
-                </Route>
-                <Route path="/Themsanpham">
-                  <AddProduct />
-                </Route>
-                <Route path="/Danhsachkhachhang">
-                  <ListUserKH ListUser={ListUser} />
-                </Route>
-                <Route path="/DanhsachAdmin">
-                  <ListUserAdmin ListAdmin={ListAdmin} />
-                </Route>
-                <Route path="/Themnhanvien">
-                  <AddNV handleCreateUser={handleCreateUser} />
-                </Route>
-                <Route path="/Login">
-                  <Login />
-                </Route>
+          </Layout>
+        </>
+      ) : (
+        <>
+          <Router>
+            <Layout>
+              <HeaderPage />
+              <Row >
+                <Col>
+                  <Navigation ListProductHome={ListProductHome} />
+                </Col>
+                <Col span={18} push={1} width={'100%'}>
+                  <Content className="content-wrapper">
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                    <Route path="/all">
+                      <AllProduct ListProductHome={ListProductHome} />
+                    </Route>
+                    <Route path="/Themsanpham">
+                      <AddProduct />
+                    </Route>
+                    <Route path="/Danhsachkhachhang">
+                      <ListUserKH ListUser={ListUser} />
+                    </Route>
+                    <Route path="/DanhsachAdmin">
+                      <ListUserAdmin ListAdmin={ListAdmin} />
+                    </Route>
+                    <Route path="/Themnhanvien">
+                      <AddNV handleCreateUser={handleCreateUser} />
+                    </Route>
+                    <Route path="/Login">
+                      <Login />
+                    </Route>
+                  </Content>
+                </Col>
+              </Row>
+              <Footer />
+            </Layout>
+          </Router>
+        </>
+      )}
 
-              </Content>
-            </Col>
-          </Row>
-          <Footer />
-        </Layout>
-      </Router>
     </>
   );
 }
