@@ -24,6 +24,11 @@ const { Step } = Steps;
 const { TextArea } = Input;
 const { Content } = Layout;
 const { confirm } = Modal;
+
+
+
+
+
 const Payments = (props) => {
   useEffect(() => {
     localStorage.setItem(...["cart", JSON.stringify(props.cart)]);
@@ -103,7 +108,7 @@ const Payments = (props) => {
                           </Col>
                           <Col span={20}>Credit Cart Or Debit</Col>
                           <Col>
-                            <Checkbox value="Credit"></Checkbox>
+                            <Checkbox id="Credit" value="Credit"><div hidden id="Credit"></div></Checkbox>
                           </Col>
                         </Row>
                       </Col>
@@ -116,7 +121,7 @@ const Payments = (props) => {
                           </Col>
                           <Col span={20}>Paypal</Col>
                           <Col>
-                            <Checkbox value="Paypal"></Checkbox>
+                            <Checkbox id="Paypal" value="Paypal"></Checkbox>
                           </Col>
                         </Row>
                       </Col>

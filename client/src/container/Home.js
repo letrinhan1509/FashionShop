@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Carousel, Card, Tabs, Image } from 'antd';
+import { Row, Col, Carousel, Card, Tabs, Image, Checkbox } from 'antd';
 import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
@@ -88,11 +88,26 @@ const Home = (props) => {
         height: '300px',
         color: '#fff',
         textAlign: 'center',
-      };
+    };
 
     useEffect(() => {
         localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
     }, [props.cart]);
+
+
+    var CB = document.querySelectorAll("#Credit");
+    console.log(CB);
+    const [ck, setCk] = useState(false);
+
+    const onChange = () => {
+        if (ck == false) {
+            setCk(true);
+        } else {
+            setCk(false);
+        }
+    };
+
+    console.log(props.link);
     return (
         <>
             <Carousel className="slider__bg">
@@ -120,26 +135,31 @@ const Home = (props) => {
                     <div className="site-card-wrapper">
                         <Row gutter={16} >
                             {ListProduct.map((productItem) => {
-                                return (
-                                    <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
-                                        <Card
+                                props.link.map((hinh) => {
+                                    return (
+                                        <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
+                                            <Card
 
-                                            className="card-pro"
-                                            bordered={false}
-                                            hoverable
-                                            style={{ width: "100%" }}>
-                                            <img
-                                                alt="ao"
-                                                src={`./images/aoKhoac/${productItem.img}`} />
-                                            <Meta
-                                                className="card-pro-name"
-                                                title={productItem.title} />
-                                            <Meta
-                                                className="card-pro-price"
-                                                title={`$ ${productItem.price}`} />
-                                        </Card>
-                                    </Col>
+                                                className="card-pro"
+                                                bordered={false}
+                                                hoverable
+                                                style={{ width: "100%" }}>
+                                                <img
+                                                    alt="ao"
+                                                    src={hinh} />
+                                                <Meta
+                                                    className="card-pro-name"
+                                                    title={productItem.title} />
+                                                <Meta
+                                                    className="card-pro-price"
+                                                    title={`$ ${productItem.price}`} />
+                                            </Card>
+                                        </Col>
+                                    );
+                                }
+
                                 );
+
                             })}
                         </Row>
                     </div>
@@ -265,6 +285,18 @@ const Home = (props) => {
 
                 </Col>
             </Row>
+
+
+            {/* 
+            <Row>
+                <Col><h1>Kết quả: {ck ? "Yes" : "No"}</h1></Col>
+                <Col>
+                    <Checkbox value="Credit" checked={ck} onChange={onChange}></Checkbox>
+                </Col>
+
+            </Row> */}
+
+
         </>
     )
 }

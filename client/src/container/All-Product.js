@@ -35,7 +35,7 @@ const button = [
     { name: "bl", value: "Balo" },
     { name: "giay", value: "Giày" }
 ]
-const AllProduct = () => {
+const AllProduct = (props) => {
     const [visible, setVisible] = useState(8)
     const showMoreProduct = () =>{
         setVisible((preValueProduct) => preValueProduct + 8);
@@ -74,25 +74,29 @@ const AllProduct = () => {
                     <div className="site-card-wrapper">
                         <Row gutter={16} >
                             {ListProduct.map((productItem) => {
-                                return (
-                                    <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
-                                        <Card
+                                props.link.map((hinh) => {
+                                    return (
+                                        <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
+                                            <Card
 
-                                            className="card-pro"
-                                            bordered={false}
-                                            hoverable
-                                            style={{ width: "100%" }}>
-                                            <img
-                                                alt="ao"
-                                                src={`./images/aoKhoac/${productItem.img}`} />
-                                            <Meta
-                                                className="card-pro-name"
-                                                title={productItem.title} />
-                                            <Meta
-                                                className="card-pro-price"
-                                                title={`$ ${productItem.price}`} />
-                                        </Card>
-                                    </Col>
+                                                className="card-pro"
+                                                bordered={false}
+                                                hoverable
+                                                style={{ width: "100%" }}>
+                                                <img
+                                                    alt="ao"
+                                                    src={hinh} />
+                                                <Meta
+                                                    className="card-pro-name"
+                                                    title={productItem.title} />
+                                                <Meta
+                                                    className="card-pro-price"
+                                                    title={`$ ${productItem.price}`} />
+                                            </Card>
+                                        </Col>
+                                    );
+                                }
+
                                 );
                             })}
                         </Row>

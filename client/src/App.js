@@ -14,6 +14,7 @@ import Cart from "./container/Cart";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllProduct from "./container/All-Product";
+import {storage} from "./container/firebase"
 //import AllProduct from './container/All-Product';
 
 function App() {
@@ -95,13 +96,50 @@ function App() {
 
   const sumPrice = cart.reduce((a, c) => a + c.gia * c.qty, 0);
 
+
+
+  //Firebase get image
+  const [link, setLink] = useState([]);
+  useEffect(() => {
+    const fetchImages = async () => {
+      let i = 0;
+      let storageRef = storage.ref();
+      let starsRef = await storageRef.child('img_product/').listAll();
+      let urlPromises = starsRef.items.map(imageRef => imageRef.getDownloadURL());
+      /* starsRef.listAll().then(function (result) {
+        result.items.forEach(function (imageRef) {
+          i++;
+          displayImage(i, imageRef)
+        })
+      })
+      let result = await storageRef.child('images').listAll();
+      let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL()); */
+
+      return Promise.all(urlPromises);
+
+    }
+    /* function displayImage(row, images) {
+      images.getDownloadURL().then(function (url) {
+
+      })
+    } */
+    const loadImages = async () => {
+      const urls = await fetchImages();
+      setLink(urls);
+    }
+    loadImages();
+  }, []);
+
+
+
+
   return (
     <Router>
       <Layout>
         <HeaderPage CountCart={cart.length} PriceCart={sumPrice}/>
         <Content className="content-wrapper">
           <Route exact path="/">
-            <Home ListProductHome={ListProductHome} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
+            <Home ListProductHome={ListProductHome} link={link} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
           </Route>
           <Route exact path="/ProductDetail/:id">
             <ProductDetail
@@ -117,7 +155,7 @@ function App() {
             <Login />
           </Route>
           <Route path="/AllProduct">
-            <AllProduct />
+            <AllProduct link={link}/>
           </Route>
           <Route path="/cart">
             <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>

@@ -29,32 +29,25 @@ function App() {
     setLoad(a);
     console.log(load);
   };
-  /*   useEffect(() => {
+    useEffect(() => {
       axios.get("http://127.0.0.1:5000/api/v1/product").then((res) => {
         setListProductHome(res.data.data);
        
       });
-    }, []); */
-  /* useEffect (()=>{
+    }, []);
+  useEffect (()=>{
     axios.get("http://127.0.0.1:5000/api/v1/user").then((res)=>{
       setListUser(res.data.data);
     })
-  },[]); */
+  },[]);
   //Admin
-  /* useEffect(() => {
+  useEffect(() => {
    axios.get("http://127.0.0.1:5000/api/v1/admin").then((res)=>{
      setListAdmin(res.data.data);
    })
-  }, []); */
+  }, []);
   //tai hinh
-  useEffect(() => {
-    axios.get("http://127.0.0.1:5000/api/v1/img").then((res) => {
-      let temp = [];
-      temp = res.data.data;
-      setListNameImg(res.data.data)
-
-    })
-  }, [])
+  /*  */
   /* for (let index = 0; index < ListNameImg.length; index++) {
     const element = ListNameImg[index]
     console.log(element);
