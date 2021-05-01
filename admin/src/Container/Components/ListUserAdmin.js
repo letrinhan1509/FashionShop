@@ -52,7 +52,7 @@ const ListUserAdmin = (props) => {
         }, */
       ];
       
-      console.log(props.ListAdmin);
+    
 
 
 

@@ -56,8 +56,6 @@ def check_login():
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
 @app.route("/test")
 def test():
     try:
@@ -129,6 +127,11 @@ def get_status():
     return jsonify({"status": "success", "data": dataStt})
 
 
+@app.route("/api/v1/img", methods=["GET"])
+def get_img():
+    dataImg = db_pyMySQL.get_img()
+    return jsonify({"status": "success", "data": dataImg})
+
 # API tìm ADMIN theo số điện thoại:
 @app.route("/api/v1/admin/<int:admin_phone>", methods=["GET"])
 def get_phone_admin(admin_phone):
@@ -145,16 +148,19 @@ def get_phone_admin(admin_phone):
 # API Thêm Admin:
 @app.route("/api/v1/add-admin", methods=["POST"])
 def insert_admin():
-    if request.form.get("admin"):
-        admin = request.form["admin"]
-        name = request.form["name"]
-        pas = request.form["pass"]
-        phone = request.form["phone"]
-        address = request.form["address"]
-        permission = request.form["permission"]
-        model_insert.insert_admin(admin, name, pas, phone, address, permission)
-        return jsonify({"status": "success", "message": "Thêm Admin thành công!!!"})
-    return jsonify({"status": "fail", "message": "Form rỗng không có dữ liệu!!!"})
+    try:
+        if request.method == 'POST':
+            print(request.json['admin'])
+            admin = request.json["admin"]
+            name = request.json["name"]
+            pas = request.json["pass"]
+            phone = request.json["phone"]
+            address = request.json["address"]
+            permission = request.json["permission"]
+            model_insert.insert_admin(admin, pas, name, address, phone, permission)
+            return jsonify({"status": "success", "message": "Thêm Admin thành công!!!"})
+    except Exception as ex :
+        return jsonify(ex)
 
 
 # API Thêm khách hàng:
@@ -174,17 +180,20 @@ def insert_user():
 # API Thêm sản phẩm:
 @app.route("/api/v1/add-product", methods=["POST"])
 def insert_product():
-    if request.form.get("code"):
-        code = request.form["code"]
-        name = request.form["ten"]
-        price = request.form["gia"]
-        redPrice = request.form["giagiam"]
-        img = request.form["img"]
-        nsx = request.form["msx"]
-        type = request.form["loai"]
-        model_insert.insert_product(code, name, price, redPrice, img, nsx, type)
-        return jsonify({"status": "success", "message": "Thêm sản phẩm thành công!!!"})
-    return jsonify({"status": "fail", "message": "Form rỗng không có dữ liệu!!!"})
+    try:
+        if request.method == 'POST':
+            print(request.json['img'])
+            code = request.json["code"]
+            name = request.json["ten"]
+            price = request.json["gia"]
+            redPrice = request.json["giamgia"]
+            img = request.json["img"]
+            nsx = request.json["msx"]
+            type = request.json["loai"]
+            model_insert.insert_product(code, name, price, redPrice, img, nsx, type)
+            return jsonify({"status": "success", "message": "Thêm sản phẩm thành công!!!"})
+    except Exception as ex :
+        return jsonify(ex)
 
 
 # API Thêm danh mục:

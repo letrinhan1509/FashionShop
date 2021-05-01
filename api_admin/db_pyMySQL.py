@@ -140,3 +140,12 @@ def get_status():
         cur.execute(sql)
         status = cur.fetchall()
         return status
+# Danh sách hình ảnh:
+
+
+def get_img():
+    with connection.cursor() as cur:
+        sql = "SELECT hinh FROM `sanpham`"
+        cur.execute(sql)
+        status = cur.fetchall()
+        return status

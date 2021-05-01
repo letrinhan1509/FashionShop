@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2021 at 06:51 AM
+-- Generation Time: Apr 29, 2021 at 04:04 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -34,19 +34,22 @@ CREATE TABLE `admin` (
   `tennv` varchar(50) NOT NULL,
   `diachi` varchar(100) NOT NULL,
   `sodienthoai` varchar(11) NOT NULL,
-  `maquyen` int(10) NOT NULL
+  `maquyen` int(10) NOT NULL,
+  `trangthai` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`manv`, `admin`, `matkhau`, `tennv`, `diachi`, `sodienthoai`, `maquyen`) VALUES
-(1, 'admin@gmail.com', '123456', 'Admin', '155 PNT q8', '098564715', 1),
-(3, 'nhhy@gmail.com', '123456', 'Yen Nhan', '15/2 HHH q1', '098547136', 2),
-(4, 'mhth@gmail.com', '123456', 'Mong Ha Trung Huyen', '11 TTT q11', '0906548444', 2),
-(5, NULL, NULL, 'Tran Van Ka', '196 TVH q9', '098564123', 3),
-(6, NULL, NULL, 'Ho Van Cuong', '152 HQL q6', '0965753304', 3);
+INSERT INTO `admin` (`manv`, `admin`, `matkhau`, `tennv`, `diachi`, `sodienthoai`, `maquyen`, `trangthai`) VALUES
+(1, 'admin@gmail.com', '123456', 'Admin', '155 PNT q8', '8498564715', 1, 1),
+(3, 'nhhy@gmail.com', '123456', 'Yen Nhan', '15/2 HHH q1', '098547136', 2, 1),
+(4, 'mhth@gmail.com', '123456', 'Mong Ha Trung Huyen', '11 TTT q11', '0906548444', 2, 1),
+(5, NULL, NULL, 'Tran Van Ka', '196 TVH q9', '098564123', 3, 1),
+(6, NULL, NULL, 'Ho Van Cuong', '152 HQL q6', '0965753304', 3, 1),
+(7, 'nhan@gmail.com', '123456', 'Lê Trí Nhân', '180 Cao Lỗ', '1234567898', 2, 0),
+(10, 'hao@gmail.com', '123456@^!^@', 'Nhật Hào', '0909666555', '182 Cao Lỗ', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -81,19 +84,22 @@ CREATE TABLE `danhmuc` (
 
 INSERT INTO `danhmuc` (`madm`, `tendm`) VALUES
 ('DMA', 'Áo'),
+('DMB', 'Balo-Túi'),
+('DMD', 'Dép'),
+('DMG', 'Giày'),
 ('DMPK', 'Phụ kiện'),
 ('DMQ', 'Quần');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dm-loai`
+-- Table structure for table `dm-sanpham`
 --
 
-CREATE TABLE `dm-loai` (
-  `ma` int(10) NOT NULL,
+CREATE TABLE `dm-sanpham` (
+  `madmsp` int(10) NOT NULL,
   `madm` varchar(50) NOT NULL,
-  `maloai` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `masp` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -111,10 +117,18 @@ CREATE TABLE `donhang` (
   `ma` varchar(50) NOT NULL,
   `ngaydat` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ngaygiao` date DEFAULT NULL,
-  `trangthai` int(11) NOT NULL DEFAULT 0,
+  `trangthai` int(11) DEFAULT 0,
   `manv` int(11) DEFAULT NULL,
   `manvgh` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donhang`
+--
+
+INSERT INTO `donhang` (`madonhang`, `masp`, `makh`, `soluong`, `gia`, `ma`, `ngaydat`, `ngaygiao`, `trangthai`, `manv`, `manvgh`) VALUES
+(44, 35, 4, 2, 700000, '', '2021-04-27 11:44:06', '2021-04-29', 0, 7, 5),
+(45, 36, 5, 2, 600000, '', '2021-04-27 11:44:06', '2021-04-29', 0, 7, 6);
 
 -- --------------------------------------------------------
 
@@ -141,19 +155,22 @@ CREATE TABLE `khachhang` (
   `makh` int(10) NOT NULL,
   `tenkh` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `matkhau` varchar(20) NOT NULL,
+  `matkhau` varchar(200) NOT NULL,
   `sodienthoai` varchar(20) NOT NULL,
-  `diachi` varchar(100) NOT NULL
+  `diachi` varchar(100) NOT NULL,
+  `trangthai` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `khachhang`
 --
 
-INSERT INTO `khachhang` (`makh`, `tenkh`, `email`, `matkhau`, `sodienthoai`, `diachi`) VALUES
-(1, 'Nguyễn Văn Nhất', 'nvn@gmail.com', '123456', '069741120', '15 HTK p5 q8'),
-(2, 'Đông Văn Hưng', 'dvh@gmail.com', '123456', '069743365', '15 afg q6 q8'),
-(3, 'Phan Thiện Nghĩa', 'ptn@gmail.com', '123456', '09575333', '156 acf p5 q8');
+INSERT INTO `khachhang` (`makh`, `tenkh`, `email`, `matkhau`, `sodienthoai`, `diachi`, `trangthai`) VALUES
+(1, 'Nguyễn Văn Nhất', 'nvn@gmail.com', '123456', '069741120', '15 HTK p5 q8', NULL),
+(2, 'Đông Văn Hưng', 'dvh@gmail.com', '123456', '069743365', '15 afg q6 q8', NULL),
+(3, 'Phan Thiện Nghĩa', 'ptn@gmail.com', '123456', '09575333', '156 acf p5 q8', NULL),
+(4, 'Lê Trí Nhân', 'nhan@gmail.com', '123456789', '069741120', '180 Cao Lỗ', 0),
+(5, 'Lý Nhật Hào', 'hao@gmail.com', '123456', '069741120', '180 Cao Lỗ', 0);
 
 -- --------------------------------------------------------
 
@@ -163,28 +180,28 @@ INSERT INTO `khachhang` (`makh`, `tenkh`, `email`, `matkhau`, `sodienthoai`, `di
 
 CREATE TABLE `loaisp` (
   `maloai` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `tenloai` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `madm` varchar(50) DEFAULT NULL
+  `tenloai` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `loaisp`
 --
 
-INSERT INTO `loaisp` (`maloai`, `tenloai`, `madm`) VALUES
-('ak', 'ÁO KHOÁC', NULL),
-('asm', 'ÁO SƠ MI', NULL),
-('at', 'ÁO THUN', NULL),
-('bl', 'BALO - TÚI SÁCH', NULL),
-('dep', 'DÉP', NULL),
-('giay', 'GIÀY', NULL),
-('no', 'NÓN', NULL),
-('qj', 'QUẦN JEAN', NULL),
-('qk', 'QUẦN KAKI', NULL),
-('qs', 'QUẦN SHORT', NULL),
-('qt', 'QUẦN TÂY', NULL),
-('tl', 'THẮT LƯNG', NULL),
-('vo', 'VỚ', NULL);
+INSERT INTO `loaisp` (`maloai`, `tenloai`) VALUES
+('ak', 'ÁO KHOÁC'),
+('asm', 'ÁO SƠ MI'),
+('at', 'ÁO THUN'),
+('bl', 'BALO - TÚI SÁCH'),
+('dep', 'DÉP'),
+('giay', 'GIÀY'),
+('no', 'NÓN'),
+('qj', 'QUẦN JEAN'),
+('qk', 'QUẦN KAKI'),
+('qs', 'QUẦN SHORT'),
+('qt', 'QUẦN TÂY'),
+('táo', 'Túii'),
+('tl', 'THẮT LƯNG'),
+('vo', 'VỚ');
 
 -- --------------------------------------------------------
 
@@ -216,8 +233,7 @@ INSERT INTO `nhasx` (`mansx`, `tennsx`, `xuatxu`) VALUES
 ('nm', 'NOMOUS', 'Việt Nam'),
 ('pm', 'PUMA', 'Đức'),
 ('sp', 'SUPREME', 'Mỹ'),
-('tm', 'T.MAN', 'Việt Nam'),
-('zr', 'ZARA', 'Tây Ban Nha');
+('tm', 'T.MAN', 'Việt Nam');
 
 -- --------------------------------------------------------
 
@@ -361,12 +377,12 @@ ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`madm`);
 
 --
--- Indexes for table `dm-loai`
+-- Indexes for table `dm-sanpham`
 --
-ALTER TABLE `dm-loai`
-  ADD PRIMARY KEY (`ma`),
-  ADD KEY `dm-loai_ibfk_1` (`madm`),
-  ADD KEY `dm-loai_ibfk_2` (`maloai`);
+ALTER TABLE `dm-sanpham`
+  ADD PRIMARY KEY (`madmsp`),
+  ADD KEY `dm-sanpham_ibfk_1` (`madm`),
+  ADD KEY `dm-sanpham_ibfk_2` (`masp`);
 
 --
 -- Indexes for table `donhang`
@@ -396,8 +412,7 @@ ALTER TABLE `khachhang`
 -- Indexes for table `loaisp`
 --
 ALTER TABLE `loaisp`
-  ADD PRIMARY KEY (`maloai`),
-  ADD KEY `loaisp_ibfk_1` (`madm`);
+  ADD PRIMARY KEY (`maloai`);
 
 --
 -- Indexes for table `nhasx`
@@ -433,7 +448,7 @@ ALTER TABLE `trangthai`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `manv` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `manv` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `chitietdh`
@@ -442,16 +457,16 @@ ALTER TABLE `chitietdh`
   MODIFY `mact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT for table `dm-loai`
+-- AUTO_INCREMENT for table `dm-sanpham`
 --
-ALTER TABLE `dm-loai`
-  MODIFY `ma` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `dm-sanpham`
+  MODIFY `madmsp` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `madonhang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `madonhang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `giohang`
@@ -463,7 +478,7 @@ ALTER TABLE `giohang`
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `makh` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `makh` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
@@ -489,11 +504,11 @@ ALTER TABLE `chitietdh`
   ADD CONSTRAINT `chitietdh_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `dm-loai`
+-- Constraints for table `dm-sanpham`
 --
-ALTER TABLE `dm-loai`
-  ADD CONSTRAINT `dm-loai_ibfk_1` FOREIGN KEY (`madm`) REFERENCES `danhmuc` (`madm`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `dm-loai_ibfk_2` FOREIGN KEY (`maloai`) REFERENCES `loaisp` (`maloai`);
+ALTER TABLE `dm-sanpham`
+  ADD CONSTRAINT `dm-sanpham_ibfk_1` FOREIGN KEY (`madm`) REFERENCES `danhmuc` (`madm`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `dm-sanpham_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `donhang`
@@ -510,12 +525,6 @@ ALTER TABLE `donhang`
 --
 ALTER TABLE `giohang`
   ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
-
---
--- Constraints for table `loaisp`
---
-ALTER TABLE `loaisp`
-  ADD CONSTRAINT `loaisp_ibfk_1` FOREIGN KEY (`madm`) REFERENCES `danhmuc` (`madm`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanpham`
