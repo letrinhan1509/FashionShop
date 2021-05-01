@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios"
-import { Form, Input, Button, Upload, message,Image } from 'antd';
+import { Form, Input, Button, Upload, message, Image } from 'antd';
 import { useHistory } from "react-router-dom"
 import { UploadOutlined, } from '@ant-design/icons';
 import { storage } from "./firebase/firebase";
@@ -27,6 +27,7 @@ const tailFormItemLayout = {
         },
     },
 };
+
 const normFile = (e: any) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
@@ -37,7 +38,6 @@ const normFile = (e: any) => {
 const Balo = () => {
     const [form] = Form.useForm();
     const history = useHistory();
-    
     const addProduct = (values) => {
         let nameImg = values['img'][0].name;
         console.log(nameImg);
@@ -56,68 +56,34 @@ const Balo = () => {
             })
     };
 
-    const [link, setLink] = useState("");
-    const [antPics, setAntPics] = useState([]);
+  
+const [fileList, setFileList] = useState([]);
+const meta = {
+	title: 'title 1',
+  	contents: 'contents 1',
+}
 
-    const [urls, setUrls] = useState([]);
-    const handleAnt = e => {
-        console.log(e.file.originFileObj);
-        setAntPics(e.file.originFileObj);
-    };
-    const sendAnt = async e => {
-
-        console.log("uploading...");
-
-        storage
-            .ref("img_product/" + antPics.name)
-            .put(antPics)
-            .then(snapshot => {
-                return snapshot.ref.getDownloadURL();
-            })
-            .then(url => {
-                console.log(url);
-                setUrls([...urls, url]);
-
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
-    const dowimg = () => {
-        let storageRef = storage.ref();
-        var gsReference = storage.refFromURL('gs://fashionshop-11d42.appspot.com/img_product/adidas.jpg');
-        let starsRef = storageRef.child('img_product/tam.png');
-        gsReference.getDownloadURL()
-            .then((url) => {
-               setLink(url)
-            })
-            .catch((error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                    case 'storage/object-not-found':
-                        // File doesn't exist
-                        break;
-                    case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
-                        break;
-                    case 'storage/canceled':
-                        // User canceled the upload
-                        break;
-                    // ...
-                    case 'storage/unknown':
-                        // Unknown error occurred, inspect the server response
-                        break;
-                }
-            });
-    };
-    console.log(link);
+const handleUpload = () => {
+	const formData = new FormData();
+  	fileList.forEach(file => formData.append('img', file));
+  	for(let key in meta) {
+    	formData.append(key, meta[key]);
+    }
+  
+  	axios.post('http://127.0.0.1:5000/api/v1/add-img', formData, {
+    	header: { 'Content-Type': 'multipart/form-data'}
+    });
+}
+const beforeUpload= file => {
+    setFileList(fileList.concat(file));
+    return false;
+}
     return (
         <>
             <h2 style={{ textAlign: 'center' }}> Nhập thông tin sản phẩm</h2>
             <Form
                 {...formItemLayout}
+
                 form={form}
                 name="register"
                 onFinish={addProduct}
@@ -183,35 +149,40 @@ const Balo = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                 >
-                    <Upload name="logo" action="/upload.do" listType="picture"
-                        onChange={handleAnt}
+                    <Upload 
+                        listType="picture"
+                        name='img'
+                        multiple= 'true'
+                        action= 'http://127.0.0.1:5000/api/v1/add-img'
+                        beforeUpload={beforeUpload}
+                        fileList
                     >
                         <Button icon={<UploadOutlined />}>Click to upload</Button>
                     </Upload>
                 </Form.Item>
-                <Form.Item
-                    name="msx"
-                    label="Mã nhà sản xuất"
-                    rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
-                >
-                    <Input />
-                </Form.Item>
+            <Form.Item
+                name="msx"
+                label="Mã nhà sản xuất"
+                rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
+            >
+                <Input />
+            </Form.Item>
 
-                <Form.Item
-                    name="loai"
-                    label="Nhập mã loại"
-                    rules={[{ required: true, message: 'Nhập mã loại!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" onClick={sendAnt} htmlType="submit">
-                        Thêm sảm phẩm
+            <Form.Item
+                name="loai"
+                label="Nhập mã loại"
+                rules={[{ required: true, message: 'Nhập mã loại!' }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item {...tailFormItemLayout}>
+                <Button type="primary" onClick={handleUpload} htmlType="submit">
+                    Thêm sảm phẩm
               </Button>
-                </Form.Item>
-                <Button onClick={dowimg}> Tải ảnh</Button>
-               
-            </Form>
+            </Form.Item>
+            <Button onClick={handleUpload}> Tải ảnh</Button>
+
+        </Form>
             
         </>
     );

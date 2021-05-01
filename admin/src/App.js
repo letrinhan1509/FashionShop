@@ -35,17 +35,17 @@ function App() {
        
       });
     }, []);
-  useEffect (()=>{
+/*   useEffect (()=>{
     axios.get("http://127.0.0.1:5000/api/v1/user").then((res)=>{
       setListUser(res.data.data);
     })
-  },[]);
+  },[]); */
   //Admin
-  useEffect(() => {
+ /*  useEffect(() => {
    axios.get("http://127.0.0.1:5000/api/v1/admin").then((res)=>{
      setListAdmin(res.data.data);
    })
-  }, []);
+  }, []); */
   //tai hinh
   /*  */
   /* for (let index = 0; index < ListNameImg.length; index++) {
