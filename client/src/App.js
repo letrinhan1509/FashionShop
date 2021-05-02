@@ -25,6 +25,29 @@ function App() {
       setListProductHome(res.data);
     });
   }, []);
+  const ak = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "ak" || ListProductHome.maloai === "asm" || ListProductHome.maloai === "at");
+  let Ao = [];
+  Ao = ak;
+  const bl = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "bl");
+  let Balo = [];
+  Balo = bl;
+  const giay = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "giay");
+  let Giay = [];
+  Giay = giay;
+  const pk = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "no" || ListProductHome.maloai === "tl" || ListProductHome.maloai === "vo");
+  let Phukien = [];
+  Phukien = pk;
+  /* const tam = (ListProductHome) => {
+    setListAo(ListProductHome);
+    let filterProduct = [];
+    if (ListProductHome.maloai === "ak") {
+        filterProduct = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "ak");
+    } 
+    setListAo(filterProduct);
+    console.log(listAo);
+  }; */
+  
+  console.log(Phukien);
   const shuffled = ListProductHome.sort(() => 0.5 - Math.random());
   const randomItem = shuffled.slice(0, 4);
 
@@ -155,7 +178,7 @@ function App() {
             <Login />
           </Route>
           <Route path="/AllProduct">
-            <AllProduct link={link}/>
+            <AllProduct link={link} Ao={Ao} Balo={Balo} Giay={Giay} Phukien={Phukien}/>
           </Route>
           <Route path="/cart">
             <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>
