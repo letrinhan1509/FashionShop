@@ -29,6 +29,8 @@ const { confirm } = Modal;
 
 
 
+
+
 const Payments = (props) => {
   useEffect(() => {
     localStorage.setItem(...["cart", JSON.stringify(props.cart)]);

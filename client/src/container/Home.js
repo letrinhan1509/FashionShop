@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Carousel, Card, Tabs, Image } from 'antd';
+import { Row, Col, Carousel, Card, Tabs, Image, Checkbox } from 'antd';
 import { Link, useHistory } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import "./components-css/Home.scss";
@@ -17,21 +17,21 @@ const { Meta } = Card;
 const ListProduct = [
     {
         id: '1',
-        title: 'Áo KhoácCaro',
-        img: 'iconCaro.jpg',
-        price: '200000',
+        title: 'Áo',
+        img: 'sale_off_1.jpg',
+        sale: '30',
     },
     {
         id: '2',
-        title: 'Áo Khoác Panda',
-        img: 'boutonPanda.jpg',
-        price: '300000',
+        title: 'Balo',
+        img: 'sale_off_2.jpg',
+        sale: '10',
     },
     {
         id: '3',
-        title: 'Áo sơ mi',
-        img: 'nomousSticker.jpg',
-        price: '150000',
+        title: 'Giày',
+        img: 'sale_off_3.jpeg',
+        sale: '20',
     }
 ]
 const button = [
@@ -42,7 +42,7 @@ const button = [
     { name: "giay", value: "Giày" }
 ]
 const Home = (props) => {
-    const [ProductHome, setProductHome] = useState([]);
+    const [ProductHome, setProductHome] = useState(props.ListProductHome);
     useEffect(() => {
         setProductHome(props.ListProductHome)
     }, [props.ListProductHome])
@@ -88,11 +88,23 @@ const Home = (props) => {
         height: '300px',
         color: '#fff',
         textAlign: 'center',
-      };
+    };
 
     useEffect(() => {
         localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
     }, [props.cart]);
+
+
+
+    /* const [ck, setCk] = useState(false);
+    const onChange = () => {
+        if(ck== false){
+            setCk(true);
+        }else{
+            setCk(false);
+        }
+    }; */
+
     return (
         <>
             <Carousel className="slider__bg">
@@ -103,13 +115,13 @@ const Home = (props) => {
                         </h3> */}
                         <Carousel className="slider__bg__title" autoplay>
                             <div>
-                                <h3 style={info_sale}>Super Flash Sale 50% Off</h3>
+                                <h3 style={info_sale}>Super Flash Sale 30% Off</h3>
                             </div>
                             <div>
                                 <h3 style={info_sale}>Giảm 10% cho hóa đơn trên 700k</h3>
                             </div>
                             <div>
-                                <h3 style={info_sale}>Summer Collection <p>26-05-2021</p></h3>
+                                <h3 style={info_sale}>Summer Collection<p>26-05-2021</p></h3>
                             </div>
                         </Carousel>
                     </Col>
@@ -124,19 +136,30 @@ const Home = (props) => {
                                     <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
                                         <Card
 
-                                            className="card-pro"
+                                            className="card-sale"
                                             bordered={false}
-                                            hoverable
-                                            style={{ width: "100%" }}>
-                                            <img
-                                                alt="ao"
-                                                src={`./images/aoKhoac/${productItem.img}`} />
-                                            <Meta
-                                                className="card-pro-name"
-                                                title={productItem.title} />
-                                            <Meta
-                                                className="card-pro-price"
-                                                title={`$ ${productItem.price}`} />
+                                            style={{ width: "100%" }}
+                                            back
+                                        >
+                                            <div className="img-box">
+                                                <Image
+                                                    className="sale_img"
+                                                    width={'100%'}
+                                                    src={`./images/slider/${productItem.img}`}
+                                                    preview={{
+                                                        visible: false,
+                                                        /* onVisibleChange: () => { onClick() }, */
+                                                        mask: <div className="link_product">
+                                                            <Link to={`/ProductDetail/${productItem.masp}`}>
+                                                                <span>
+                                                                    {productItem.title} - Sale Off {productItem.sale}%
+                                                            </span>
+                                                            </Link>
+
+                                                        </div>
+                                                    }}
+                                                />
+                                            </div>
                                         </Card>
                                     </Col>
                                 );
@@ -211,12 +234,12 @@ const Home = (props) => {
                                 );
                             })}
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <Col offset={12}>
                                 <a href='/AllProduct' className="btn-load">Xem thêm</a>
 
                             </Col>
-                        </Row>
+                        </Row> */}
                     </div>
                 </Col>
             </Row>
@@ -246,7 +269,7 @@ const Home = (props) => {
                     </Carousel> */}
                     <div className="four">
                         <div className="texttitle">
-                            <h1>Something Special</h1>
+                            <h1>Hot Detail</h1>
                         </div>
                         <div className="swiper-container">
                             <div className="swiper-wrapper">
@@ -254,10 +277,10 @@ const Home = (props) => {
                                 <div className="swiper-slide"><img src="./images/slider/slider2.jpeg" /></div>
                                 <div className="swiper-slide"><img src="./images/slider/slider3.jpeg" /></div>
                                 <div className="swiper-slide"><img src="./images/slider/slider4.jpg" /></div>
-                                <div className="swiper-slide"><img src="./images/slider/slider1.jpeg" /></div>
-                                <div className="swiper-slide"><img src="./images/slider/slider2.jpeg" /></div>
-                                <div className="swiper-slide"><img src="./images/slider/slider3.jpeg" /></div>
-                                <div className="swiper-slide"><img src="./images/slider/slider4.jpg" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider5.png" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider6.png" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider7.png" /></div>
+                                <div className="swiper-slide"><img src="./images/slider/slider8.png" /></div>
                             </div>
                             <div className="swiper-pagination"></div>
                         </div>
@@ -265,6 +288,18 @@ const Home = (props) => {
 
                 </Col>
             </Row>
+
+
+            {/* 
+            <Row>
+                <Col><h1>Kết quả: {ck ? "Yes" : "No"}</h1></Col>
+                <Col>
+                    <Checkbox value="Credit" checked={ck} onChange={onChange}></Checkbox>
+                </Col>
+
+            </Row> */}
+
+
         </>
     )
 }

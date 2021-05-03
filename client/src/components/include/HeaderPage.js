@@ -34,7 +34,6 @@ const HeaderPage = (props) => {
 
     }
     const User = JSON.parse(localStorage.getItem('user'));
-    console.log(props.CountCart);
     return (
         <>
             <Row className="menu1-wrapper">
@@ -95,7 +94,7 @@ const HeaderPage = (props) => {
                         <Menu.Item key="ao" style={menu}>
                             Áo
                                         </Menu.Item>
-                        <Menu.Item key="balo" style={menu}>
+                        <Menu.Item key="bl" style={menu}>
                             Balo
                                         </Menu.Item>
                         <Menu.Item key="giay" style={menu}>
