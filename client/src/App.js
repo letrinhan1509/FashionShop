@@ -15,6 +15,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllProduct from "./container/All-Product";
 //import AllProduct from './container/All-Product';
+import UserInfo from "./container/UserInfo";
 
 function App() {
   const [ListProductHome, setListProductHome] = useState([]);
@@ -118,6 +119,9 @@ function App() {
           </Route>
           <Route path="/AllProduct">
             <AllProduct />
+          </Route>
+          <Route path="/UserInfo">
+            <UserInfo />
           </Route>
           <Route path="/cart">
             <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>

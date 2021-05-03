@@ -11,6 +11,7 @@ import {
   Layout,
   BackTop,
   Divider,
+  
 } from "antd";
 import Payments2 from "./Payments2";
 import {
@@ -20,10 +21,14 @@ import {
 LoadingOutlined, SmileOutlined 
 } from "@ant-design/icons";
 import "./Cart";
+import Payments3 from './Payments3'
 const { Step } = Steps;
 const { TextArea } = Input;
 const { Content } = Layout;
 const { confirm } = Modal;
+
+
+
 const Payments = (props) => {
   useEffect(() => {
     localStorage.setItem(...["cart", JSON.stringify(props.cart)]);
@@ -34,6 +39,11 @@ const Payments = (props) => {
   console.log(props.payCart);
   const [visible, setVisible] = useState(false);
 
+  const [isCitizen, setisCitizen] = useState(false)
+  const onChange = e =>{
+    setisCitizen(e.target.checked)
+  }
+  
   /* const userlog = localStorage.getItem() */
   return (
     <>
@@ -61,6 +71,7 @@ const Payments = (props) => {
           </Steps>
         </div>
 
+      
         <div style={{ marginTop: "100px" }}>
           <form>
             <p>
@@ -92,6 +103,7 @@ const Payments = (props) => {
                   <h1>Select Method Of Payment</h1>
                 </p>
                 <p>
+                  
                   <Checkbox.Group style={{ width: "100%" }}>
                     <Row>
                       <Col span={24}>
@@ -103,23 +115,14 @@ const Payments = (props) => {
                           </Col>
                           <Col span={20}>Credit Cart Or Debit</Col>
                           <Col>
-                            <Checkbox value="Credit"></Checkbox>
+                            <Checkbox value="Credit"
+                             checked={isCitizen}
+                             onChange={onChange}
+                            ></Checkbox>
                           </Col>
                         </Row>
                       </Col>
-                      <Col span={24}>
-                        <Row>
-                          <Col span={2}>
-                            <DollarCircleOutlined
-                              style={{ fontSize: "20px", color: "blue" }}
-                            />
-                          </Col>
-                          <Col span={20}>Paypal</Col>
-                          <Col>
-                            <Checkbox value="Paypal"></Checkbox>
-                          </Col>
-                        </Row>
-                      </Col>
+                      
                       <Col span={24}>
                         <Row>
                           <Col span={2}>
@@ -127,7 +130,7 @@ const Payments = (props) => {
                               style={{ fontSize: "20px", color: "blue" }}
                             />
                           </Col>
-                          <Col span={20}>Bank Tranfer</Col>
+                          <Col span={20}>Thanh toán sau khi nhận hàng</Col>
                           <Col>
                             <Checkbox value="Bank"></Checkbox>
                           </Col>
@@ -152,7 +155,9 @@ const Payments = (props) => {
               </Col>
             </Row>
             <div style={{ paddingLeft: "78%" }}>
-              <Payments2 />
+             
+            <h1>{isCitizen ? <Payments2 /> : <Payments3 />}</h1>
+         
             </div>
           </form>
         </div>

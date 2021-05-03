@@ -1,11 +1,12 @@
 import { Row, Col, Layout, Badge, Menu } from 'antd';
 import React, { useState, useEffect } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import '../Select_Product';
 import Payments from "../../container/Payments";
 import "../components-css/Header.scss"
 import Cart from '../../container/Cart';
+import UserInfo from "../../container/UserInfo";
 
 
 const menu = {
@@ -68,9 +69,11 @@ const HeaderPage = (props) => {
                             </>
                         ) : (
                             <>
-                                <Menu.Item key="profile" icon={<UserOutlined />}>
+                      
+                                <Menu.Item key="UserInfo" icon={<UserOutlined />}>
                                     {User.username}
                                 </Menu.Item>
+                          
                                 <Menu.Item key="logout" onClick={logout} icon={<LogoutOutlined />}>
                                     Log out
                                         </Menu.Item>
