@@ -1,5 +1,6 @@
 import database
 
+
 conn = database.connection
 
 with conn.cursor() as cur:

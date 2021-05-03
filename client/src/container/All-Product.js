@@ -74,29 +74,25 @@ const AllProduct = (props) => {
                     <div className="site-card-wrapper">
                         <Row gutter={16} >
                             {ListProduct.map((productItem) => {
-                                props.link.map((hinh) => {
-                                    return (
-                                        <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
-                                            <Card
+                                return (
+                                    <Col key={productItem.id} span={6} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} >
+                                        <Card
 
-                                                className="card-pro"
-                                                bordered={false}
-                                                hoverable
-                                                style={{ width: "100%" }}>
-                                                <img
-                                                    alt="ao"
-                                                    src={hinh} />
-                                                <Meta
-                                                    className="card-pro-name"
-                                                    title={productItem.title} />
-                                                <Meta
-                                                    className="card-pro-price"
-                                                    title={`$ ${productItem.price}`} />
-                                            </Card>
-                                        </Col>
-                                    );
-                                }
-
+                                            className="card-pro"
+                                            bordered={false}
+                                            hoverable
+                                            style={{ width: "100%" }}>
+                                            <img
+                                                alt="ao"
+                                                src={`./images/aoKhoac/${productItem.img}`} />
+                                            <Meta
+                                                className="card-pro-name"
+                                                title={productItem.title} />
+                                            <Meta
+                                                className="card-pro-price"
+                                                title={`$ ${productItem.price}`} />
+                                        </Card>
+                                    </Col>
                                 );
                             })}
                         </Row>
@@ -117,7 +113,7 @@ const AllProduct = (props) => {
                     </div>
                     <div className="site-card-wrapper product_home">
                         <Row gutter={16} justify="space-around">
-                            {ProductHome.slice(0,visible).map((productItem) => {
+                            {props.Ao.slice(0,visible).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
                                         <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>

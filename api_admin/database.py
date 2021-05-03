@@ -1,5 +1,5 @@
 import pymysql.cursors
-from cryptography.fernet import Fernet  # Câu lệnh istall: pip install cryptography
+# from cryptography.fernet import Fernet  # Câu lệnh istall: pip install cryptography
 
 connection = pymysql.connect(
         host='localhost',
@@ -12,5 +12,5 @@ connection = pymysql.connect(
 
 mysecret_key = "@^!^@"
 
-cipher_key = Fernet.generate_key()
-cipher = Fernet(cipher_key)
+# cipher_key = Fernet.generate_key()
+# cipher = Fernet(cipher_key)

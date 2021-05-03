@@ -1,11 +1,12 @@
 import { Row, Col, Layout, Badge, Menu } from 'antd';
 import React, { useState, useEffect } from "react";
 import { ShoppingCartOutlined, SearchOutlined, UserOutlined, UserAddOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import '../Select_Product';
 import Payments from "../../container/Payments";
 import "../components-css/Header.scss"
 import Cart from '../../container/Cart';
+import UserInfo from "../../container/UserInfo";
 
 
 const menu = {
@@ -33,7 +34,6 @@ const HeaderPage = (props) => {
 
     }
     const User = JSON.parse(localStorage.getItem('user'));
-    console.log(props.CountCart);
     return (
         <>
             <Row className="menu1-wrapper">
@@ -68,9 +68,11 @@ const HeaderPage = (props) => {
                             </>
                         ) : (
                             <>
-                                <Menu.Item key="profile" icon={<UserOutlined />}>
+                      
+                                <Menu.Item key="UserInfo" icon={<UserOutlined />}>
                                     {User.username}
                                 </Menu.Item>
+                          
                                 <Menu.Item key="logout" onClick={logout} icon={<LogoutOutlined />}>
                                     Log out
                                         </Menu.Item>
@@ -92,7 +94,7 @@ const HeaderPage = (props) => {
                         <Menu.Item key="ao" style={menu}>
                             Áo
                                         </Menu.Item>
-                        <Menu.Item key="balo" style={menu}>
+                        <Menu.Item key="bl" style={menu}>
                             Balo
                                         </Menu.Item>
                         <Menu.Item key="giay" style={menu}>
