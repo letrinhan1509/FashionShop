@@ -10,7 +10,7 @@ import Home from "./container/Home";
 import Footer from "./components/include/Footer";
 import Register from "./container/Register";
 import Login from "./container/Login";
-
+import Contact from "./container/Contact";
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllProduct from './container/All-Product';
@@ -42,6 +42,9 @@ function App() {
           </Route>
           <Route path="/Login">
             <Login />
+          </Route>
+          <Route path="/Contact">
+            <Contact />
           </Route>
         </Content>
         <Footer />

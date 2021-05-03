@@ -61,7 +61,7 @@ const AllProduct = () => {
     const history = useHistory();
     <ProductDetail ListProductHome ={ListProductHome}/>
     return (
-        <>
+        
             <Row>
                 <Col span={22} offset={1}>
                     <div className="site-card-wrapper">
@@ -159,7 +159,7 @@ const AllProduct = () => {
                     </div>
                 </Col>
             </Row>
-        </>
+    
     )
 }
 export default AllProduct;
