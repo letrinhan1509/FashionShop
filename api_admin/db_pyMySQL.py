@@ -6,7 +6,7 @@ connection = database.connection
 # Danh sách tất cả tài khoản "user":
 def get_all_user():
     with connection.cursor() as cur:
-        sql = "SELECT `tenkh`, `email`, `sodienthoai`, `diachi` FROM `khachhang`"
+        sql = "SELECT `tenkh`, `makh`, `email`, `sodienthoai`, `diachi` FROM `khachhang`"
         cur.execute(sql)
         users = cur.fetchall()
         return users
@@ -96,7 +96,7 @@ def get_all_product():
     with connection.cursor() as cur:
         #sql = "SELECT * FROM `sanpham`"
         sql = '''
-        SELECT sanpham.code, sanpham.tensp, sanpham.gia, sanpham.hinh, nhasx.tennsx as TenNSX, loaisp.tenloai as TenLoai
+        SELECT sanpham.masp, sanpham.code, sanpham.tensp, sanpham.gia, sanpham.giamgia, sanpham.soluong, sanpham.hinh, nhasx.tennsx as TenNSX, loaisp.tenloai as TenLoai
         FROM ((sanpham
         JOIN nhasx ON sanpham.mansx = nhasx.mansx)
         JOIN loaisp ON sanpham.maloai = loaisp.maloai)

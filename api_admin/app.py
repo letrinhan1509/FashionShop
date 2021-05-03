@@ -20,10 +20,12 @@ CORS(app)
 # trạng thái:   0 -> "khoá", 1 -> "Ko khoá"
 @app.route("/api/v1/login-admin", methods=["POST"])
 def check_login():
-    if request.form.get("pass"):
-        email = request.form["email"]
-        mk = request.form["pass"]
-        pas_check = mk + database.mysecret_key
+    if request.method == 'POST':
+        email = request.json["email"]
+        mk = request.json["Password"]
+        print(request.json["email"])
+        print(request.json["Password"])
+        pas_check = mk #+database.mysecret_key
         with database.connection.cursor() as cur:
             sql = '''
             SELECT * FROM admin
@@ -31,6 +33,7 @@ def check_login():
             '''
             cur.execute(sql, (email,))
             admin = cur.fetchone()
+            print(admin)
             pas_fromDB = admin['matkhau']
             email = admin['admin']
             name = admin['tennv']
@@ -43,17 +46,15 @@ def check_login():
             if pas_check == pas_fromDB:     # mk == pas_decrypt:
                 if stt == 1:
                     return jsonify({
-                        "status": "Login Success",
+                        "status": "Success",
                         "message": "Đăng nhập thành công!!!",
                         "admin": admin
                     })
-                else:
-                    return jsonify({"status": "Login Fail",
-                                    "message": "Đăng nhập không thành công do tài khoản của bạn đã bị khoá!!!"})
+                if stt == 0:
+                    return jsonify({"status": "lockUser",
+                                    "message": "Đăng nhập thất bại, do tài khoản của bạn đã bị khoá, liên hệ Admin biết thêm chi tiết !!!"})
             else:
-                return jsonify({"status": "Login Fail", "message": "Đăng nhập không thành công!!!"})
-    return jsonify({"status": "Login Fail", "message": "Lỗi!!! Server không nhận được dữ liệu."})
-
+                return jsonify({"status": "error", "message": "Sai tài khoản hoặc mật khẩu !!!"})
     # API GET
 
 
@@ -131,11 +132,6 @@ def get_status():
     dataStt = db_pyMySQL.get_status()
     return jsonify({"status": "success", "data": dataStt})
 
-
-@app.route("/api/v1/img", methods=["GET"])
-def get_img():
-    dataImg = db_pyMySQL.get_img()
-    return jsonify({"status": "success", "data": dataImg})
 
 # API tìm ADMIN theo số điện thoại:
 @app.route("/api/v1/admin/<int:admin_phone>", methods=["GET"])
@@ -222,7 +218,6 @@ def insert_product():
             type = request.json["loai"]
             model_insert.insert_product(code, name, price, redPrice, img, nsx, type)
             return jsonify({"status": "success", "message": "Thêm sản phẩm thành công!!!"})
-
     except Exception as ex :
         return jsonify(ex)
 

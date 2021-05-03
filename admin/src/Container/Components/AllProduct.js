@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Link } from 'react-router-dom';
-
+import axios from "axios";
 const AllProduct = (props) => {
+  const [ListProductHome, setListProductHome] = useState([]);
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/api/v1/product").then((res) => {
+      setListProductHome(res.data.data);
+    });
+  }, []);
+
     let { sortedInfo, filteredInfo } = useState([]);
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -33,19 +40,24 @@ const AllProduct = (props) => {
             key: 'giamgia',
         },
         {
-            title: 'Hình',
-            dataIndex: 'hinh',
-            key: 'hinh',
+            title: 'Số lương',
+            dataIndex: 'soluong',
+            key: 'soluong',
         },
         {
-            title: 'Mã nhà sản xuất',
-            dataIndex: 'mansx',
-            key: 'mansx',
+          title: 'Hình',
+          dataIndex: 'hinh',
+          key: 'hinh',
+      },
+        {
+            title: 'Tên nhà sản xuất',
+            dataIndex: 'TenNSX',
+            key: 'TenNSX',
         },
         {
-            title: 'Mã loại',
-            dataIndex: 'maloai',
-            key: 'maloai',
+            title: 'Tên loại',
+            dataIndex: 'TenLoai',
+            key: 'TenLoai',
             filters: [
                 { text: 'asm', value: 'asm' },
                 { text: 'at', value: 'at' },
@@ -66,7 +78,7 @@ const AllProduct = (props) => {
       
     return (
         <>
-        <Table dataSource={props.ListProductHome} columns={columns} />
+        <Table dataSource={ListProductHome} columns={columns} pagination={{ pageSize: 6 }}  size="middle" />
         
         
         <Link to={'/Themsanpham'}><p className="ant-btn ant-btn-primary" type="primary">Thêm sản phẩm</p></Link>

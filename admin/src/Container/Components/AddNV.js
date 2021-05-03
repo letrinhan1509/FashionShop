@@ -54,10 +54,15 @@ const AddNV = (props) => {
         console.log(a);
         const url = "http://127.0.0.1:5000/api/v1/add-admin"
         axios.post(url, values).then((res) => {
-            message.success(res.data.message)
-            setTimeout(() => {
-                history.push('/DanhsachAdmin');
-            }, 2000)
+            if (res.data.status ==="success") {
+                message.success(res.data.message)
+                setTimeout(() => {
+                    history.push('/DanhsachAdmin');
+                }, 2000)
+            }
+            else{
+                message.error("Thêm thất bại")
+            }
         })
             .catch(err => {
                 console.log(err.response);
