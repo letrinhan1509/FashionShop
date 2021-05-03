@@ -1,66 +1,44 @@
 .ant-layout {
-    .header {
-        background: #fff;
-        position: relaftive;
-        height: 140px;
-        div {
-            .menu {
-                .menu__top {
-                    justify-content: space-between;
-                    height: 42px;
-                    .menu__top__select {
-                        div {
-                            border: 0px;
-                            outline: none;
-                        }
-                        div:focus {
-                            outline: none;
-                        }
-                    }
-                    .menu__top__profile {
-                        ul {
-                            display: flex;
-                            li {
-                                margin-left: 15px;
-                                cursor: pointer;
-                            }
-                        }
-                    }
-                }
-                .menu__bottom {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 10px;
-                    /* .logo{
-
-                    } */
-                    .menu {
-                        ul {
-                            display: flex;
-                            li {
-                                height: 0px;
-                                a {
-                                    margin: 0 25px;
-                                    text-transform: uppercase;
-                                    font-size: 18px;
-                                    color: #000;
-                                    font-weight: 600;
-                                }
-                            }
-                        }
+    width: 100%;
+    .menu1-wrapper {
+        position: fixed;
+        z-index: 99;
+        width: 100%;
+        height: 50px;
+        
+        .menu1-box{
+            width: 100%;
+            .menu1 {
+                padding-top: 10px;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: flex-end;
+                box-shadow: 0px 1px 15px rgba(0,0,0,0.1);
+                .logo{
+                    margin-right: 1000px;
+                    img{
+                        padding-bottom: 10px;
                     }
                 }
             }
         }
-        &::after {
-            content: "";
-            background: #fafafb;
-            height: 2px;
+    }
+    .menu2-wrapper{
+        margin-top: 70px;
+        position: relative;
+        width: 100%;
+        margin-bottom: 5px;
+        .menu2-box{
             width: 100%;
-            left: 0;
-            bottom: 10px;
-            position: absolute;
-            display: block;
+            display: flex;
+            justify-content: space-evenly;
+            .menu2 {
+                display: flex;
+                justify-content: space-evenly;
+                width: 90%;
+                
+            }
         }
     }
 }

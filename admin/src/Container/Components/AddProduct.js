@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Input,Button,Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import axios from "axios"
+import { Form, Input, Button, Upload, message, Image } from 'antd';
+import { useHistory } from "react-router-dom"
+import { UploadOutlined, } from '@ant-design/icons';
+import { storage } from "./firebase/firebase";
+import { Content } from 'antd/lib/layout/layout';
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -23,6 +27,7 @@ const tailFormItemLayout = {
         },
     },
 };
+
 const normFile = (e: any) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
@@ -32,27 +37,65 @@ const normFile = (e: any) => {
 };
 const Balo = () => {
     const [form] = Form.useForm();
+    const history = useHistory();
+    const addProduct = (values) => {
+        let nameImg = values['img'][0].name;
+        console.log(nameImg);
+        values["img"] = nameImg;
+        console.log(values)
+        const url = "http://127.0.0.1:5000/api/v1/add-product"
+        axios.post(url, values).then((res) => {
+            message.success(res.data.message)
+            setTimeout(() => {
+                history.push('/all');
+            }, 2000)
+        })
+            .catch(err => {
+                console.log(err.response);
+                message.error(`Login fail!\n ${err.response.data}`)
+            })
+    };
 
-    /* const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    }; */
+  
+const [fileList, setFileList] = useState([]);
+const meta = {
+	title: 'title 1',
+  	contents: 'contents 1',
+}
+
+const handleUpload = () => {
+	const formData = new FormData();
+  	fileList.forEach(file => formData.append('img', file));
+  	for(let key in meta) {
+    	formData.append(key, meta[key]);
+    }
+  
+  	axios.post('http://127.0.0.1:5000/api/v1/add-img', formData, {
+    	header: { 'Content-Type': 'multipart/form-data'}
+    });
+}
+const beforeUpload= file => {
+    setFileList(fileList.concat(file));
+    return false;
+}
     return (
         <>
-            <h2 style={{textAlign:'center'}}> Nhập thông tin sản phẩm</h2>
+            <h2 style={{ textAlign: 'center' }}> Nhập thông tin sản phẩm</h2>
             <Form
                 {...formItemLayout}
+
                 form={form}
                 name="register"
-              /*   onFinish={onFinish} */
+                onFinish={addProduct}
 
                 scrollToFirstError
             >
                 <Form.Item
-                    name="masp"
+                    name="code"
                     label="Mã sản phẩm"
                     rules={[
                         {
-                            type: 'email',
+                            type: 'string',
                             message: 'Mã sản phẩm không được để trống !',
                         },
                         {
@@ -65,7 +108,7 @@ const Balo = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="tensp"
+                    name="ten"
                     label="Tên sản phẩm"
                     rules={[
                         {
@@ -101,37 +144,45 @@ const Balo = () => {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    name="upload"
+                    name="img"
                     label="Ảnh sản phẩm"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-
                 >
-                    <Upload name="logo" action="/upload.do" listType="picture">
+                    <Upload 
+                        listType="picture"
+                        name='img'
+                        multiple= 'true'
+                        action= 'http://127.0.0.1:5000/api/v1/add-img'
+                        beforeUpload={beforeUpload}
+                        fileList
+                    >
                         <Button icon={<UploadOutlined />}>Click to upload</Button>
                     </Upload>
                 </Form.Item>
-                <Form.Item
-                    name="mansx"
-                    label="Mã nhà sản xuất"
-                    rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
-                >
-                    <Input/>
-                </Form.Item>
+            <Form.Item
+                name="msx"
+                label="Mã nhà sản xuất"
+                rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
+            >
+                <Input />
+            </Form.Item>
 
-                <Form.Item
-                    name="ml"
-                    label="Nhập mã loại"
-                    rules={[{ required: true, message: 'Nhập mã loại!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Thêm sảm phẩm
+            <Form.Item
+                name="loai"
+                label="Nhập mã loại"
+                rules={[{ required: true, message: 'Nhập mã loại!' }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item {...tailFormItemLayout}>
+                <Button type="primary" onClick={handleUpload} htmlType="submit">
+                    Thêm sảm phẩm
               </Button>
-                </Form.Item>
-            </Form>
+            </Form.Item>
+           
+        </Form>
+            
         </>
     );
 };

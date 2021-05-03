@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 const ListUserAdmin = (props) => {
+  const [ListAdmin, setListAdmin] = useState([]);
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/api/v1/admin").then((res)=>{
+      setListAdmin(res.data.data);
+    })
+   }, []);
     let { sortedInfo, filteredInfo } = useState([]);
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -51,9 +58,14 @@ const ListUserAdmin = (props) => {
         ellipsis: true,
         }, */
       ];
+      
+    
+
+
+
     return (
         <>
-        <Table dataSource={props.ListAdmin} columns={columns} />
+        <Table dataSource={ListAdmin} columns={columns} pagination={{ pageSize: 6 }}  size="middle"/>
         
       {/*   <a className="ant-btn ant-btn-primary" href='/Themnhanvien'  type="primary">Thêm nhân viên</a> */}
         <Link to={'/Themnhanvien'}><p className="ant-btn ant-btn-primary" type="primary">Thêm nhân viên</p></Link>

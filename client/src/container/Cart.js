@@ -98,7 +98,7 @@ const Cart = (props) => {
                     </Row>
                     <Row>
                         <Col offset={19} className="payments">
-                            <Payments />
+                            <Payments payCart={props.cart} />
                         </Col>
                     </Row>
                 </>

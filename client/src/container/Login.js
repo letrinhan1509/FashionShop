@@ -48,7 +48,7 @@ const Login = () => {
                     message.success(`Xin chào, ${res.data.data.username}`)
                     console.log(res.data.data.username)
                     localStorage.setItem('token',res.data.token)
-                    localStorage.setItem('username', res.data.data.username)
+                    localStorage.setItem('user', JSON.stringify(res.data.data))
                     setTimeout(() => {
                         history.push("/")
                         window.location.reload()

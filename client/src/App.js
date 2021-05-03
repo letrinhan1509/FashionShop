@@ -14,7 +14,9 @@ import Cart from "./container/Cart";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllProduct from "./container/All-Product";
+import {storage} from "./container/firebase"
 //import AllProduct from './container/All-Product';
+import UserInfo from "./container/UserInfo";
 
 function App() {
   const [ListProductHome, setListProductHome] = useState([]);
@@ -24,6 +26,29 @@ function App() {
       setListProductHome(res.data);
     });
   }, []);
+  const ak = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "ak" || ListProductHome.maloai === "asm" || ListProductHome.maloai === "at");
+  let Ao = [];
+  Ao = ak;
+  const bl = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "bl");
+  let Balo = [];
+  Balo = bl;
+  const giay = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "giay");
+  let Giay = [];
+  Giay = giay;
+  const pk = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "no" || ListProductHome.maloai === "tl" || ListProductHome.maloai === "vo");
+  let Phukien = [];
+  Phukien = pk;
+  /* const tam = (ListProductHome) => {
+    setListAo(ListProductHome);
+    let filterProduct = [];
+    if (ListProductHome.maloai === "ak") {
+        filterProduct = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "ak");
+    } 
+    setListAo(filterProduct);
+    console.log(listAo);
+  }; */
+  
+  console.log(Phukien);
   const shuffled = ListProductHome.sort(() => 0.5 - Math.random());
   const randomItem = shuffled.slice(0, 4);
 
@@ -95,13 +120,50 @@ function App() {
 
   const sumPrice = cart.reduce((a, c) => a + c.gia * c.qty, 0);
 
+
+
+  //Firebase get image
+  const [link, setLink] = useState([]);
+  useEffect(() => {
+    const fetchImages = async () => {
+      let i = 0;
+      let storageRef = storage.ref();
+      let starsRef = await storageRef.child('img_product/').listAll();
+      let urlPromises = starsRef.items.map(imageRef => imageRef.getDownloadURL());
+      /* starsRef.listAll().then(function (result) {
+        result.items.forEach(function (imageRef) {
+          i++;
+          displayImage(i, imageRef)
+        })
+      })
+      let result = await storageRef.child('images').listAll();
+      let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL()); */
+
+      return Promise.all(urlPromises);
+
+    }
+    /* function displayImage(row, images) {
+      images.getDownloadURL().then(function (url) {
+
+      })
+    } */
+    const loadImages = async () => {
+      const urls = await fetchImages();
+      setLink(urls);
+    }
+    loadImages();
+  }, []);
+
+
+
+
   return (
     <Router>
       <Layout>
         <HeaderPage CountCart={cart.length} PriceCart={sumPrice}/>
         <Content className="content-wrapper">
           <Route exact path="/">
-            <Home ListProductHome={ListProductHome} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
+            <Home ListProductHome={ListProductHome} link={link} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
           </Route>
           <Route exact path="/ProductDetail/:id">
             <ProductDetail
@@ -117,7 +179,10 @@ function App() {
             <Login />
           </Route>
           <Route path="/AllProduct">
-            <AllProduct />
+            <AllProduct link={link} Ao={Ao} Balo={Balo} Giay={Giay} Phukien={Phukien}/>
+          </Route>
+          <Route path="/UserInfo">
+            <UserInfo />
           </Route>
           <Route path="/cart">
             <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>

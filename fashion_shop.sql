@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2021 at 09:50 AM
+-- Generation Time: Apr 29, 2021 at 04:04 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -49,8 +49,7 @@ INSERT INTO `admin` (`manv`, `admin`, `matkhau`, `tennv`, `diachi`, `sodienthoai
 (5, NULL, NULL, 'Tran Van Ka', '196 TVH q9', '098564123', 3, 1),
 (6, NULL, NULL, 'Ho Van Cuong', '152 HQL q6', '0965753304', 3, 1),
 (7, 'nhan@gmail.com', '123456', 'Lê Trí Nhân', '180 Cao Lỗ', '1234567898', 2, 0),
-(10, 'hao@gmail.com', '123456@^!^@', 'Hào', '182 Cao Lỗ', '0909666555', 2, 1),
-(13, 'nguyen@gmail.com', '654321@^!^@', 'Nguyên Bùi', 'Lâm Văn Bền', '0909666555', 2, NULL);
+(10, 'hao@gmail.com', '123456@^!^@', 'Nhật Hào', '0909666555', '182 Cao Lỗ', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +103,18 @@ INSERT INTO `danhmuc` (`madm`, `tendm`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dm-sanpham`
+--
+
+CREATE TABLE `dm-sanpham` (
+  `madmsp` int(10) NOT NULL,
+  `madm` varchar(50) NOT NULL,
+  `masp` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donhang`
 --
 
@@ -117,6 +128,14 @@ CREATE TABLE `donhang` (
   `manv` int(11) DEFAULT NULL,
   `manvgh` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donhang`
+--
+
+INSERT INTO `donhang` (`madonhang`, `masp`, `makh`, `soluong`, `gia`, `ma`, `ngaydat`, `ngaygiao`, `trangthai`, `manv`, `manvgh`) VALUES
+(44, 35, 4, 2, 700000, '', '2021-04-27 11:44:06', '2021-04-29', 0, 7, 5),
+(45, 36, 5, 2, 600000, '', '2021-04-27 11:44:06', '2021-04-29', 0, 7, 6);
 
 -- --------------------------------------------------------
 
@@ -157,8 +176,8 @@ INSERT INTO `khachhang` (`makh`, `tenkh`, `email`, `matkhau`, `sodienthoai`, `di
 (1, 'Nguyễn Văn Nhất', 'nvn@gmail.com', '123456', '069741120', '15 HTK p5 q8', NULL),
 (2, 'Đông Văn Hưng', 'dvh@gmail.com', '123456', '069743365', '15 afg q6 q8', NULL),
 (3, 'Phan Thiện Nghĩa', 'ptn@gmail.com', '123456', '09575333', '156 acf p5 q8', NULL),
-(4, 'Lê Trí Nhân', 'nhan@gmail.com', '123456789', '069741120', '180 Cao Lỗ', 1),
-(5, 'Nhật Hào', 'hao@gmail.com', '123456@^!^@', '0909666555', '182 Cao Lỗ', 1);
+(4, 'Lê Trí Nhân', 'nhan@gmail.com', '123456789', '069741120', '180 Cao Lỗ', 0),
+(5, 'Lý Nhật Hào', 'hao@gmail.com', '123456', '069741120', '180 Cao Lỗ', 0);
 
 -- --------------------------------------------------------
 
@@ -365,10 +384,12 @@ ALTER TABLE `chitietdm`
   ADD KEY `dm-sanpham_ibfk_2` (`masp`);
 
 --
--- Indexes for table `danhmuc`
+-- Indexes for table `dm-sanpham`
 --
-ALTER TABLE `danhmuc`
-  ADD PRIMARY KEY (`madm`);
+ALTER TABLE `dm-sanpham`
+  ADD PRIMARY KEY (`madmsp`),
+  ADD KEY `dm-sanpham_ibfk_1` (`madm`),
+  ADD KEY `dm-sanpham_ibfk_2` (`masp`);
 
 --
 -- Indexes for table `donhang`
@@ -433,7 +454,7 @@ ALTER TABLE `trangthai`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `manv` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `manv` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `chitietdh`
@@ -442,9 +463,9 @@ ALTER TABLE `chitietdh`
   MODIFY `mact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT for table `chitietdm`
+-- AUTO_INCREMENT for table `dm-sanpham`
 --
-ALTER TABLE `chitietdm`
+ALTER TABLE `dm-sanpham`
   MODIFY `madmsp` int(10) NOT NULL AUTO_INCREMENT;
 
 --
@@ -489,11 +510,11 @@ ALTER TABLE `chitietdh`
   ADD CONSTRAINT `chitietdh_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `chitietdm`
+-- Constraints for table `dm-sanpham`
 --
-ALTER TABLE `chitietdm`
-  ADD CONSTRAINT `chitietdm_ibfk_1` FOREIGN KEY (`madm`) REFERENCES `danhmuc` (`madm`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `chitietdm_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
+ALTER TABLE `dm-sanpham`
+  ADD CONSTRAINT `dm-sanpham_ibfk_1` FOREIGN KEY (`madm`) REFERENCES `danhmuc` (`madm`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `dm-sanpham_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `donhang`

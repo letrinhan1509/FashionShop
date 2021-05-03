@@ -35,7 +35,7 @@ const button = [
     { name: "bl", value: "Balo" },
     { name: "giay", value: "Giày" }
 ]
-const AllProduct = () => {
+const AllProduct = (props) => {
     const [visible, setVisible] = useState(8)
     const showMoreProduct = () =>{
         setVisible((preValueProduct) => preValueProduct + 8);
@@ -113,7 +113,7 @@ const AllProduct = () => {
                     </div>
                     <div className="site-card-wrapper product_home">
                         <Row gutter={16} justify="space-around">
-                            {ProductHome.slice(0,visible).map((productItem) => {
+                            {props.Ao.slice(0,visible).map((productItem) => {
                                 return (
                                     <Col key={productItem.masp} span={6}>
                                         <Link onClick={() => history.push(`/${productItem.masp}`)} to={`ProductDetail/${productItem.masp}`}>

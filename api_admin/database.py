@@ -1,5 +1,5 @@
 import pymysql.cursors
-from cryptography.fernet import Fernet  # Câu lệnh istall: pip install cryptography
+# from cryptography.fernet import Fernet  # Câu lệnh istall: pip install cryptography
 from flask import jsonify
 
 try:
@@ -16,5 +16,5 @@ except Exception as ex:
 # Chuỗi cộng thêm vào password:
 mysecret_key = "@^!^@"
 
-cipher_key = Fernet.generate_key()
-cipher = Fernet(cipher_key)
+# cipher_key = Fernet.generate_key()
+# cipher = Fernet(cipher_key)

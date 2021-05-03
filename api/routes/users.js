@@ -185,7 +185,8 @@ router.post('/api/dang-nhap', function (req, res, next) {
                     username,
                     email,
                     sdt,
-                    diachi
+                    diachi,
+                
                 },
                 token
             });

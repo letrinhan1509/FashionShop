@@ -1,12 +1,22 @@
-import { Row, Col, Menu } from 'antd';
+import { Row, Col, Menu,Avatar } from 'antd';
 import React from "react";
 /* import {  LoginOutlined } from '@ant-design/icons'; */
 import { BrowserRouter as Router} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./scss/Header.scss"
 import { Layout } from 'antd';
 const { Header} = Layout;
 
 const HeaderPage = () => {
+    let history = useHistory()
+    const logout = ()=>{
+        //localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        history.push('/');
+        window.location.reload()
+    }
+
+
     return (
         <>
             <Header className="header">
@@ -15,9 +25,9 @@ const HeaderPage = () => {
                         <Col span={22} offset={1}>
                         <Menu  mode="horizontal">
                                 <Menu.Item key="app">
-                                    Xin chào Quách Trọng Nhân
+                                <Avatar>N</Avatar>
                                 </Menu.Item>
-                                <Menu.Item key="item">
+                                <Menu.Item onClick={logout} key="item">
                                     Đăng xuất
                             </Menu.Item>
                             </Menu>

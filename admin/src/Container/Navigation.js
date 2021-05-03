@@ -3,7 +3,7 @@ import {  Menu } from 'antd';
 import { AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 const { SubMenu } = Menu;
-const Navigation = (props) => {
+const Navigation = () => {
     const link = useHistory();
     const linkto = (e)=>{
         link.push(`/${e.key}`)
@@ -26,7 +26,7 @@ const Navigation = (props) => {
                                 <Menu.Item key="all">Tất cả sản phẩm</Menu.Item>
                                 <Menu.Item key="Themsanpham">Thêm sản phẩm</Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub3" title=" Quản lý tài khoảng">
+                            <SubMenu key="sub3" title=" Quản lý tài khoản">
                                 <Menu.Item key="Danhsachkhachhang">Khách hàng</Menu.Item>
                                 <Menu.Item key="DanhsachAdmin">Nhân viên</Menu.Item>
                                 <Menu.Item key="Themnhanvien">Thêm nhân viên</Menu.Item>

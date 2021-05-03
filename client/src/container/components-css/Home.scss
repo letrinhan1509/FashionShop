@@ -1,22 +1,86 @@
 /* .slider{ */
+@font-face {
+    font-family: "FS Core Magic Rough";
+    src: url("./fonts/FSCoreMagicRough.woff2") format("woff2"), url("./fonts/FSCoreMagicRough.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Love Monday';
+    src: url('./fonts/LoveMonday.woff2') format('woff2'),
+        url('./fonts/LoveMonday.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 @import "variables.scss";
 .slider__bg {
-    background-image: url("./bg/bg.svg");
+    background-image: url("./bg/poster1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     position: relative;
     &__title {
-        font-size: 64px;
-        font-weight: bold;
+        font-family: "FS Core Magic Rough";
+        font-size: 44px;
         color: #fff;
-        max-width: 560px;
+        max-width: 700px;
         position: absolute;
-        bottom: 100px;
+        text-shadow: 0px 3px 10px #333;
+        top: 230px;
+        right: 65px;
+    }
+}
+.card-sale {
+    right: 50px;
+    margin-top: -100px;
+    height: 470px;
+    width: 100%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    .ant-card-body {
+        height: 100%;
+        width: 100%;
+        padding: 7px;
+        .img-box {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
+            .ant-image {
+                width: 100%;
+                height: 100%;
+                
+                .sale_img {
+                    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                    width: 100%;
+                    height: 100%;
+                }
+                .link_product {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-evenly;
+                    
+                    span {
+                        font-size: 25px;
+                        color: white;
+                        filter: drop-shadow(0px 1px 5px white);
+                    }
+                }
+                transition: 3s;
+                &:hover {
+                    transition: 3s;
+                    transform: scale(1.3);
+                }
+            }
+        }
     }
 }
 .card-pro {
     margin-top: -100px;
-    height: 500px;
+    height: 450px;
     width: 100%;
     .ant-card-body {
         height: 300px;
@@ -36,9 +100,10 @@
             }
         }
         .card-pro-name {
+            height: 70px;
             .ant-card-meta-detail {
                 .ant-card-meta-title {
-                    margin-top: 30px;
+                    margin-top: 20px;
                     font-size: 18px;
                     font-weight: bold;
                     color: $name-color;
@@ -52,7 +117,7 @@
             .card-pro-priceSale {
                 .ant-card-meta-detail {
                     .ant-card-meta-title {
-                        margin-top: 30px;
+                        margin-top: 10px;
                         font-size: 20px;
                         font-weight: bold;
                         text-align: center;
@@ -63,7 +128,7 @@
             .card-pro-sale {
                 .ant-card-meta-detail {
                     .ant-card-meta-title {
-                        margin-top: 35px;
+                        margin-top: 15px;
                         font-size: 15px;
                         font-weight: bold;
                         text-align: center;
@@ -74,7 +139,7 @@
             .card-pro-price {
                 .ant-card-meta-detail {
                     .ant-card-meta-title {
-                        margin-top: 35px;
+                        margin-top: 15px;
                         font-size: 15px;
                         text-decoration: line-through;
                         font-weight: 200;
@@ -89,32 +154,64 @@
 .menu_filter {
     text-align: center;
     h3 {
+        text-transform: uppercase;
+        font-family: 'Love Monday';
+        letter-spacing: 10px;
         font-size: 60px;
-        margin-top: 30px;
-        font-weight: 700;
+        margin-top: 50px;
+        filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.4));
     }
-    .ant-tabs-top{
+    .ant-tabs-top {
         display: flex;
         justify-content: center;
         align-items: center;
-        .ant-tabs-nav{
-           
-            width: 100%
+        .ant-tabs-nav {
+            width: 100%;
         }
-        
     }
     .ant-tabs-tab-btn {
         font-size: 25px;
-      margin: 0 20px;
-      font-weight: 600;
+        margin: 0 20px;
+        font-weight: 600;
     }
 }
 .product_home {
     margin-top: 150px;
     width: 100%;
     .card_product_home {
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
         width: 100%;
         margin-bottom: 160px;
+        position: relative;
+
+        .img-box {
+            width: 100%;
+            overflow: hidden;
+            .ant-image {
+                position: relative;
+                transition: 0.7s;
+
+                &:hover {
+                    transition: 0.7s;
+                    transform: scale(1.3);
+                }
+            }
+        }
+
+        .icon_product {
+            width: 50%;
+            display: flex;
+            justify-content: space-evenly;
+            span {
+                color: white;
+                filter: drop-shadow(0px 1px 10px white);
+                transition: 0.5s;
+                &:hover {
+                    transition: 0.5s;
+                    transform: scale(1.2);
+                }
+            }
+        }
         /*  .ant-card-body {
             width: 100%;
             img{
@@ -137,7 +234,91 @@
         } */
     }
 }
-.btn-load{
+.btn-load {
     color: #000;
 }
+.slider {
+    width: 100%;
+    .img-box {
+        width: 100%;
+        height: 650px;
+        img {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.four {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-direction: column;
+    h1 {
+        font-size: 50px !important;
+        font-family: 'Love Monday';
+        filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.4));
+        letter-spacing: 5px;
+        position: relative;
+        &::after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            width: 600px;
+            background-color: #000;
+            top: 50%;
+            right: -620px;
+            transform: translateY(-50%);
+        }
+        &::before {
+            position: absolute;
+            content: "";
+            height: 1px;
+            width: 600px;
+            background-color: #000;
+            top: 50%;
+            left: -620px;
+            transform: translateY(-50%);
+        }
+    }
+
+    .swiper-container {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 700px;
+            height: 400px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            filter: blur(4px);
+            background: none;
+            -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #0006);
+            border-radius: 10px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 15px;
+            }
+        }
+        .swiper-slide-active {
+            filter: blur(0px);
+        }
+        .swiper-slide swiper-slide-prev,
+        .swiper-slide swiper-slide-next {
+            background-image: none;
+        }
+    }
+}
+
 /* } */

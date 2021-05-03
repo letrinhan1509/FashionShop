@@ -2,22 +2,69 @@
 
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
-
 import database
 import db_pyMySQL
 import model_delete
 import model_insert
 
+import db_pyMySQL,model_delete, model_insert
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '../client/public/images/test'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 CORS(app)
+
+
+# LOGIN:
+# trạng thái:   0 -> "khoá", 1 -> "Ko khoá"
+@app.route("/api/v1/login-admin", methods=["POST"])
+def check_login():
+    if request.method == 'POST':
+        email = request.json["email"]
+        mk = request.json["Password"]
+        print(request.json["email"])
+        print(request.json["Password"])
+        pas_check = mk #+database.mysecret_key
+        with database.connection.cursor() as cur:
+            sql = '''
+            SELECT * FROM admin
+            WHERE admin = %s
+            '''
+            cur.execute(sql, (email,))
+            admin = cur.fetchone()
+            print(admin)
+            pas_fromDB = admin['matkhau']
+            email = admin['admin']
+            name = admin['tennv']
+            address = admin['diachi']
+            phone = admin['sodienthoai']
+            permission = admin['maquyen']
+            stt = admin['trangthai']
+            # pas_decrypt = database.cipher.decrypt(pas_fromDB)
+
+            if pas_check == pas_fromDB:     # mk == pas_decrypt:
+                if stt == 1:
+                    return jsonify({
+                        "status": "Success",
+                        "message": "Đăng nhập thành công!!!",
+                        "admin": admin
+                    })
+                if stt == 0:
+                    return jsonify({"status": "lockUser",
+                                    "message": "Đăng nhập thất bại, do tài khoản của bạn đã bị khoá, liên hệ Admin biết thêm chi tiết !!!"})
+            else:
+                return jsonify({"status": "error", "message": "Sai tài khoản hoặc mật khẩu !!!"})
+    # API GET
 
 
 # Trang index:
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
 @app.route("/test")
 def test():
     try:
@@ -203,6 +250,31 @@ def insert_user():
 
 
 # API Thêm sản phẩm:
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/api/v1/add-img", methods=["POST"])
+def insert_img():
+    try:
+        if request.method == 'POST':
+            if 'img' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['img']
+            # if user does not select file, browser also
+            # submit a empty part without filename
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    except Exception as ex :
+        return jsonify(ex)
+
+
 @app.route("/api/v1/add-product", methods=["POST"])
 def insert_product():
     code = request.json["code"]
