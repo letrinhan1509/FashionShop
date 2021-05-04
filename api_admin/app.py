@@ -7,9 +7,8 @@ import db_pyMySQL
 import model_delete
 import model_insert
 
-import db_pyMySQL,model_delete, model_insert
 import os
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, redirect
 
 UPLOAD_FOLDER = '../client/public/images/test'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -19,15 +18,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
 
-# LOGIN:
-# trạng thái:   0 -> "khoá", 1 -> "Ko khoá"
-
-
-
 # Trang index:
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
 @app.route("/test")
 def test():
     try:
@@ -196,7 +192,19 @@ def get_admin_id(admin_id):
             return jsonify({"status": "fail", "message": ex})
 
 
-    # API ADD:
+# API Tìm product theo tên:
+@app.route("/api/v1/product/<string:product_name>", methods=["GET"])
+def get_product_name(product_name):
+    try:
+        data = db_pyMySQL.get_product_name(product_name)
+        if not data:
+            return jsonify({"status": "Fail", "message": "Không tìm thấy sản phẩm có tên này!!!"})
+        return jsonify({"status": "Success", "data": data})
+    except Exception as ex:
+        return jsonify({"status": "Fail", "message": ex})
+
+
+# API ADD:
 # API Thêm Admin:
 @app.route("/api/v1/add-admin", methods=["POST"])
 def insert_admin():
@@ -311,21 +319,6 @@ def insert_status():
     return jsonify({"status": "Success", "message": "Thêm trạng thái thành công!!!"})
 
 
-    # API Thêm đơn hàng:
-@app.route("/api/v1/add-order", methods=["POST"])
-def insert_order():
-    order_id = request.json['orderId']
-    product_id = request.json['productId']
-    user_id = request.json['userId']
-    amount = request.json["amount"]
-    price = request.json["price"]
-    order_date = request.json['orderDate']
-    delivery_date = request.json['deliveryDate']
-    stt = request.json["stt"]
-    # model_insert.insert_status(name, stt)
-    return jsonify({"status": "Success", "message": "Thêm đơn hàng thành công!!!"})
-
-
     # API UPDATE:
 # API Sửa thông tin admin:
 @app.route("/api/v1/update-profile-admin", methods=["POST"])
@@ -335,9 +328,10 @@ def update_profile_admin():
     name = request.json["name"]
     address = request.json["address"]
     phone = request.json["phone"]
+    permission = request.json["permission"]
     if db_pyMySQL.check_admin_id(admin_id) == 1:    # Kiểm tra admin trong DB.
         if model_insert.update_profile_admin(email, name, address, phone,
-                                             admin_id) == 1:  # Có admin trong DB và sửa thành công.
+                                             permission, admin_id) == 1:  # Có admin trong DB và sửa thành công.
             return jsonify({"status": "Success", "message": "Sửa thông tin admin thành công!!!"})
         return jsonify({"status": "Fail", "message": "Sửa thông tin admin không thành công!!!"})
     return jsonify({"status": "Fail", "message": "Không tìm thấy tài khoản admin trong Database!!!"})
@@ -579,6 +573,19 @@ def delete_order():
         if model_delete.delete_order(order_id) == 1:
             return jsonify({"status": "Success", "message": "Xoá đơn hàng thành công!!!"})
         return jsonify({"status": "Fail", "message": "Đơn hàng đã được duyệt, không thể xoá đơn hàng này!!!"})
+
+
+# API Thêm đơn hàng:
+@app.route("/api/v1/add-order", methods=["POST"])
+def insert_order():
+    user_id = request.json['userId']
+    product_id = request.json['masp']
+    product_name = request.json['tensp']
+    price = request.json["gia"]
+    amount = request.json["soluong"]
+    total = 0
+    model_insert.insert_order(user_id, total, product_id, product_name, price, amount)
+    return jsonify({"status": "Success", "message": "Thêm đơn hàng thành công!!!"})
 
 
 if __name__ == "__main__":
