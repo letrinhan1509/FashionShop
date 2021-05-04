@@ -15,6 +15,10 @@ import ListUserAdmin from "./Container/Components/ListUserAdmin";
 import AddNV from "./Container/Components/AddNV";
 import Login from "./Container/Login";
 import EditNV from "./Container/Components/EditNV";
+import CategoryProduct from "./Container/Components/CategoryProduct";
+import ListOder from "./Container/Components/ListOder";
+import ListTypeProduct from "./Container/Components/ListTypeProduct";
+import AddTypeProduct from "./Container/Components/AddTypeProduct";
 function App() {
 
 
@@ -64,6 +68,9 @@ function App() {
                   <Route path="/Themsanpham">
                     <AddProduct />
                   </Route>
+                  <Route path="/DMsanpham">
+                    <CategoryProduct />
+                  </Route>
                   <Route path="/Danhsachkhachhang">
                     <ListUserKH />
                   </Route>
@@ -78,6 +85,15 @@ function App() {
                   </Route>
                   <Route path="/EditNV">
                     <EditNV />
+                  </Route>
+                  <Route path="/Danhsachdonhang">
+                    <ListOder />
+                  </Route>
+                  <Route path="/Danhsachloai">
+                    <ListTypeProduct />
+                  </Route>
+                  <Route path="/Themloai">
+                    <AddTypeProduct />
                   </Route>
                 </Content>
               </Col>

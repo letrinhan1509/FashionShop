@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, Table } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
-import EditNV from "./EditNV";
 
-import MenuItem from 'antd/lib/menu/MenuItem';
 const ListUserAdmin = () => {
 
   const link = useHistory();

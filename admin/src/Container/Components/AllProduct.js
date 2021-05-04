@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-const AllProduct = (props) => {
+const AllProduct = () => {
   const [ListProductHome, setListProductHome] = useState([]);
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/api/v1/product").then((res) => {

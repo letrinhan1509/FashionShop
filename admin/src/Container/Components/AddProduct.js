@@ -3,8 +3,7 @@ import axios from "axios"
 import { Form, Input, Button, Upload, message, Image } from 'antd';
 import { useHistory } from "react-router-dom"
 import { UploadOutlined, } from '@ant-design/icons';
-import { storage } from "./firebase/firebase";
-import { Content } from 'antd/lib/layout/layout';
+
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -108,7 +107,7 @@ const beforeUpload= file => {
                 </Form.Item>
 
                 <Form.Item
-                    name="ten"
+                    name="name"
                     label="Tên sản phẩm"
                     rules={[
                         {
@@ -122,7 +121,7 @@ const beforeUpload= file => {
                 </Form.Item>
 
                 <Form.Item
-                    name="gia"
+                    name="price"
                     label="Giá"
 
                     rules={[
@@ -136,8 +135,16 @@ const beforeUpload= file => {
                 </Form.Item>
 
                 <Form.Item
-                    name="giamgia"
+                    name="redPrice"
                     label="Khuyến mãi"
+
+                    rules={[{ required: false }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="amount"
+                    label="Số lượng"
 
                     rules={[{ required: false }]}
                 >
@@ -161,7 +168,7 @@ const beforeUpload= file => {
                     </Upload>
                 </Form.Item>
             <Form.Item
-                name="msx"
+                name="producer"
                 label="Mã nhà sản xuất"
                 rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
             >
@@ -169,7 +176,7 @@ const beforeUpload= file => {
             </Form.Item>
 
             <Form.Item
-                name="loai"
+                name="type"
                 label="Nhập mã loại"
                 rules={[{ required: true, message: 'Nhập mã loại!' }]}
             >

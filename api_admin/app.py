@@ -21,44 +21,7 @@ CORS(app)
 
 # LOGIN:
 # trạng thái:   0 -> "khoá", 1 -> "Ko khoá"
-@app.route("/api/v1/login-admin", methods=["POST"])
-def check_login():
-    if request.method == 'POST':
-        email = request.json["email"]
-        mk = request.json["Password"]
-        print(request.json["email"])
-        print(request.json["Password"])
-        pas_check = mk #+database.mysecret_key
-        with database.connection.cursor() as cur:
-            sql = '''
-            SELECT * FROM admin
-            WHERE admin = %s
-            '''
-            cur.execute(sql, (email,))
-            admin = cur.fetchone()
-            print(admin)
-            pas_fromDB = admin['matkhau']
-            email = admin['admin']
-            name = admin['tennv']
-            address = admin['diachi']
-            phone = admin['sodienthoai']
-            permission = admin['maquyen']
-            stt = admin['trangthai']
-            # pas_decrypt = database.cipher.decrypt(pas_fromDB)
 
-            if pas_check == pas_fromDB:     # mk == pas_decrypt:
-                if stt == 1:
-                    return jsonify({
-                        "status": "Success",
-                        "message": "Đăng nhập thành công!!!",
-                        "admin": admin
-                    })
-                if stt == 0:
-                    return jsonify({"status": "lockUser",
-                                    "message": "Đăng nhập thất bại, do tài khoản của bạn đã bị khoá, liên hệ Admin biết thêm chi tiết !!!"})
-            else:
-                return jsonify({"status": "error", "message": "Sai tài khoản hoặc mật khẩu !!!"})
-    # API GET
 
 
 # Trang index:
@@ -78,8 +41,8 @@ def test():
 @app.route("/api/v1/login-admin", methods=["POST"])
 def check_login():  # request.json[""]
     email = request.json["email"]
-    mk = request.json["pass"]
-    pas_check = mk + database.mysecret_key
+    mk = request.json["Password"]
+    pas_check = mk #+database.mysecret_key
     with database.connection.cursor() as cur:
         sql = '''
             SELECT admin, matkhau, tennv, diachi, sodienthoai, maquyen, trangthai
