@@ -28,14 +28,24 @@ def get_name_user(user_name):
 def get_all_admin():
     with connection.cursor() as cur:
         sql = '''
-        SELECT A.admin, A.tennv, A.diachi, A.trangthai, A.sodienthoai, Q.Ten 
+        SELECT A.manv, A.admin, A.tennv, A.diachi, A.trangthai, A.sodienthoai, Q.Ten 
         FROM `admin` A JOIN `quyen` Q 
         ON A.maquyen = Q.maquyen
         '''
         cur.execute(sql)
         ad = cur.fetchall()
         return ad
-
+def get_code_admin(id):
+    with connection.cursor() as cur:
+        sql = '''
+        SELECT A.manv, A.admin, A.tennv, A.diachi, A.matkhau, A.trangthai, A.sodienthoai, Q.Ten, Q.maquyen 
+        FROM `admin` A JOIN `quyen` Q 
+        ON A.maquyen = Q.maquyen
+        WHERE A.manv = %s
+        '''
+        cur.execute(sql, (id,))
+        ad = cur.fetchone()
+        return ad
 
 # Tài khoản "Admin" theo số điện thoại:
 def get_phone_admin(admin_phone):

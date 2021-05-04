@@ -144,6 +144,16 @@ def get_phone_admin(admin_phone):
     except Exception as ex:
         return jsonify({"status": "fail", "message": ex})
 
+@app.route("/api/v1/admin-id/<int:admin_id>", methods=["GET"])
+def get_admin_id(admin_id):
+        try:
+            data = db_pyMySQL.get_code_admin(admin_id)
+            if not data:
+                return jsonify({"status": "fail", "message": "Không tìm thấy admin có mã số  này!!!"})
+            return jsonify({"status": "success", "data": data})
+        except Exception as ex:
+            return jsonify({"status": "fail", "message": ex})
+
 
     # API ADD:
 # API Thêm Admin:
@@ -162,6 +172,7 @@ def insert_admin():
             return jsonify({"status": "success", "message": "Thêm Admin thành công!!!"})
     except Exception as ex :
         return jsonify(ex)
+
 
 
 # API Thêm khách hàng:

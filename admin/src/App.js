@@ -14,6 +14,7 @@ import ListUserKH from "./Container/Components/ListUserKH";
 import ListUserAdmin from "./Container/Components/ListUserAdmin";
 import AddNV from "./Container/Components/AddNV";
 import Login from "./Container/Login";
+import EditNV from "./Container/Components/EditNV";
 function App() {
 
 
@@ -74,6 +75,9 @@ function App() {
                   </Route>
                   <Route path="/Login">
                     <Login />
+                  </Route>
+                  <Route path="/EditNV">
+                    <EditNV />
                   </Route>
                 </Content>
               </Col>

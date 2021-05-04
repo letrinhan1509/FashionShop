@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table,Image } from 'antd';
+import { Table,Image, Menu } from 'antd';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 const ListUserKH = (props) => {
   const [ListUser, setListUser] = useState([]);
   useEffect (()=>{
@@ -8,6 +9,9 @@ const ListUserKH = (props) => {
       setListUser(res.data.data);
     })
   }, []);
+
+
+  
     let { sortedInfo, filteredInfo } = useState([]);
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -36,7 +40,8 @@ const ListUserKH = (props) => {
             title: 'Địa chỉ',
             dataIndex: 'diachi',
             key: 'diachi',
-        }
+        },
+
         /* {
             title: 'Mã loại',
             dataIndex: 'maloai',
