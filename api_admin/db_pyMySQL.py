@@ -116,6 +116,19 @@ def get_status():
         return status
 
 
+#
+def get_product_name(name):
+    with connection.cursor() as cur:
+        sql = '''
+        SELECT * 
+        FROM sanpham
+        WHERE tensp LIKE %s
+        '''
+        cur.execute(sql, (name,))
+        ad = cur.fetchall()
+        return ad
+
+
     # CHECK IN DATABASE:
 # Check "user" bằng id:
 def check_user_id(user_id):

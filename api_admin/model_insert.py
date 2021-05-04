@@ -1,13 +1,15 @@
 import database
+from datetime import datetime
 import db_pyMySQL
 
 conn = database.connection
+
 
 # Thêm tài khoản "user": User sẽ không mã hoá mkhau do xài 2 ngôn ngữ khác nhau,
 # nên khi mã hoá xong NodeJS sẽ ko hỗ trợ để giải mã => sẽ không đăng nhập được.
 
 
-    # INSERT:
+# INSERT:
 # Thêm tài khoản khách hàng:
 def insert_user(name, email, password, phone, address):
     with conn.cursor() as cur:
@@ -99,17 +101,18 @@ def insert_status(ten, trangthai):
         cursor.execute(sql, (ten, trangthai))
         conn.commit()
 
-
     # UPDATE:
+
+
 # Sửa profile tài khoản admin:
-def update_profile_admin(email, name, address, phone, admin_id):
+def update_profile_admin(email, name, address, phone, permission, admin_id):
     with conn.cursor() as cur:
         sql = '''
         UPDATE admin 
-        SET admin = %s, tennv = %s, diachi = %s, sodienthoai = %s 
+        SET admin = %s, tennv = %s, diachi = %s, sodienthoai = %s, maquyen = %s
         WHERE manv = %s
         '''
-        cur.execute(sql, (email, name, address, phone, admin_id))
+        cur.execute(sql, (email, name, address, phone, permission, admin_id))
         conn.commit()
         return 1
 
@@ -232,12 +235,41 @@ def update_product(code, name, price, reduced_price, amount, img, producer_id, t
         conn.commit()
         return 1
 
-
     # Chức năng của khách hàng.
+
+
 # Thêm đơn hàng:
-def insert_order(order_id, product_id, user_id, amount, price, order_date, delivery_date, stt, detail_id, pro_price,
-                 pro_amount):
-    with conn.cursor() as cur:
+def insert_order(user_id, total, product_id, product_name, price, amount):
+    try:
+        with conn.cursor() as cur:
+            order_date = datetime.today()
+            sql_order = '''
+                INSERT INTO donhang(makh, tong, ngaydat)
+                VALUES (%s, %s, %s);
+            '''
+            val_order = (user_id, total, order_date)
+            sql_orderID = "SELECT LAST_INSERT_ID() as LastID;"
+            sql_detailOrder = '''
+                INSERT INTO chitietdh(masp, tensp, gia, soluong, madonhang)
+                VALUES (%s, %s, %s, %s, %s);
+            '''
+            arrayProduct = []
+            try:
+                cur.execute(sql_order, val_order)
+                conn.commit()
+                cur.execute(sql_orderID)
+                lastId = cur.fetchone()
+                order_id = lastId['LastID']     # Lấy id của đơn hàng vừa tạo.
+                for i in arrayProduct:
+                    code = i['masp']
+                    name = i['tensp']
+                    prices = i['gia']
+                    amounts = i['soluong']
+                    cur.execute(sql_detailOrder, (code, name, prices, amounts, order_id))
+                    conn.commit()
+            except:
+                conn.rollback()
+    finally:  # Ngắt kết nối DB.
         conn.close()
 
 
@@ -262,5 +294,5 @@ def update_order(amount, order_id):
             cur.execute(sql, (amount, price, order_id,))
             conn.commit()
             return 1
-        else:   # Đơn hàng đã được duyệt ko thể sửa.
+        else:  # Đơn hàng đã được duyệt ko thể sửa.
             return -1
