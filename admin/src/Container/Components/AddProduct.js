@@ -180,8 +180,7 @@ const beforeUpload= file => {
                     Thêm sảm phẩm
               </Button>
             </Form.Item>
-            <Button onClick={handleUpload}> Tải ảnh</Button>
-
+           
         </Form>
             
         </>

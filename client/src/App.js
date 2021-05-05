@@ -159,7 +159,7 @@ function App() {
   return (
     <Router>
       <Layout>
-        <HeaderPage CountCart={cart.length} PriceCart={sumPrice}/>
+        <HeaderPage ListProductHome={ListProductHome} CountCart={cart.length} PriceCart={sumPrice}/>
         <Content className="content-wrapper">
           <Route exact path="/">
             <Home ListProductHome={ListProductHome} link={link} cart={cart} addCart={addCart} Thongbao_Them={Thongbao_Them}/>
@@ -194,7 +194,7 @@ function App() {
             <UserInfo />
           </Route>
           <Route path="/cart">
-            <Cart cart={cart} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>
+            <Cart cart={cart} CountCart={cart.length} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>
           </Route>
         </Content>
         <Footer />

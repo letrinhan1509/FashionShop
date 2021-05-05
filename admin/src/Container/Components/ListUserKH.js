@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Table,Image } from 'antd';
-import { storage } from "./firebase/firebase";
+import axios from 'axios'
 const ListUserKH = (props) => {
+  const [ListUser, setListUser] = useState([]);
+  useEffect (()=>{
+    axios.get("http://127.0.0.1:5000/api/v1/user").then((res)=>{
+      setListUser(res.data.data);
+    })
+  }, []);
     let { sortedInfo, filteredInfo } = useState([]);
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -51,52 +57,12 @@ const ListUserKH = (props) => {
         ellipsis: true,
         }, */
       ];
-      const [link, setLink] = useState([]);
-      useEffect(() => {
-        const fetchImages = async () => {
-          let i = 0;
-          let storageRef = storage.ref();
-          let starsRef = await storageRef.child('img_product/').listAll();
-          let urlPromises = starsRef.items.map(imageRef => imageRef.getDownloadURL());
-          /* starsRef.listAll().then(function (result) {
-            result.items.forEach(function (imageRef) {
-              i++;
-              displayImage(i, imageRef)
-            })
-          })
-          let result = await storageRef.child('images').listAll();
-          let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL()); */
-    
-          return Promise.all(urlPromises);
-    
-        }
-        /* function displayImage(row, images) {
-          images.getDownloadURL().then(function (url) {
-    
-          })
-        } */
-        const loadImages = async () => {
-          const urls = await fetchImages();
-          setLink(urls);
-        }
-        loadImages();
-      }, []);
-
 
 
     return (
         <>
-        <Table dataSource={props.ListUser} columns={columns} />
-        {link.map((item) => {
-        console.log(item)
-        return (
-          <Image
-            width={200}
-            src={item}
-          />
-        )
-
-      })}
+        <Table dataSource={ListUser} columns={columns} pagination={{ pageSize: 6 }}  size="middle" />
+       
         {/* <a className="ant-btn ant-btn-primary" href='/Themsanpham'  type="primary">Thêm sản phẩm</a> */}
 
         </>

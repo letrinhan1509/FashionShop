@@ -41,6 +41,8 @@ const button = [
     { name: "bl", value: "Balo" },
     { name: "giay", value: "Giày" }
 ]
+
+
 const Home = (props) => {
     const [ProductHome, setProductHome] = useState(props.ListProductHome);
     useEffect(() => {
@@ -68,22 +70,24 @@ const Home = (props) => {
         }
     })
 
-    const swiper = new Swiper('.swiper-container', {
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        coverflowEffect: {
-            autoplay: 2,
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 2,
-            slideShadows: true,
-        },
-        loop: true,
-    });
 
+    useEffect(() => {
+        const swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                autoplay: 2,
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+            },
+            loop: true,
+        });
+    }, [])
     const info_sale = {
         height: '300px',
         color: '#fff',
@@ -92,6 +96,7 @@ const Home = (props) => {
 
     useEffect(() => {
         localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
+        
     }, [props.cart]);
 
 
@@ -138,7 +143,6 @@ const Home = (props) => {
 
                                             className="card-sale"
                                             bordered={false}
-                                            style={{ width: "100%" }}
                                             back
                                         >
                                             <div className="img-box">
