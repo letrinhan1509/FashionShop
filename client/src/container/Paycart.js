@@ -39,20 +39,17 @@ const Paycart = (props) => {
       .post("http://127.0.0.1:5000/api/v1/add-order", values)
       // console.log(values)
       .then(async (res) => {
-        if (res.data.status === "success") {
+        if (res.data.status === "Success") {
           message.success(`Tạo đơn hàng thành công !`);
 
-          setTimeout(() => {
-            history.push("/");
-            window.location.reload();
-          }, 2000);
+          
         } else {
           message.error("Đặt hàng thất bại");
         }
       })
-      .catch((err) => {
-        message.error(`Đạt hàng thất bại \n ${err}`);
-      });
+     /*  .catch((err) => {
+        message.error(`Đạt hàng thất bại`);
+      }); */
   };
 
   const [paycarts, setPaycart] = useState();
@@ -68,13 +65,13 @@ const Paycart = (props) => {
 
   const [isCitizen, setisCitizen] = useState(false);
   const handleFormSubmit = () => {
-		form.validateFields()
-			.then((values) => {
-				// Submit values
-				// submitValues(values);
-			})
-			.catch((errorInfo) => {});
-	};
+    form.validateFields()
+      .then((values) => {
+        // Submit values
+        // submitValues(values);
+      })
+      .catch((errorInfo) => { });
+  };
   return (
     <>
       <Button
@@ -99,14 +96,15 @@ const Paycart = (props) => {
             <>
               <Form onFinish={pay}
                 initialValues={{
-                  masp:`${item.masp}`,
-                  soluong:`${item.qty}`,
-                  gia:`${item.qty * item.gia.toFixed(2) }`
+                  userId:`${user.makh}`,
+                  nameUser:`${user.username}`,
+                  masp: `${item.masp}`,
+                  soluong: `${item.qty}`,
+                  tensp:`${item.tensp}`,
+                  gia: `${item.qty * item.gia.toFixed(2)}`
                 }}>
                 <p>
-                  <Form.Item name="userId">
-                    <Input name="userId" defaultValue="okk" />
-                  </Form.Item>
+
                   <div
                     style={{
                   /* border: "1px solid black" */ maxWidth: "100%",
@@ -115,39 +113,43 @@ const Paycart = (props) => {
                       fontWeight: "bold",
                     }}
                   >
+                    <Form.Item name="userId" label="Mã khách hàng">
+                      <Input name="userId"/>
+                    </Form.Item>
+                    <Form.Item label="Tên khách hàng" name="nameUser">
+                      <Input />
+                    </Form.Item>
                     <Form.Item label="Mã sản phẩm" name="masp">
-                      <Input
-                        defaultValue={item.masp}
-                      />
+                      <Input />
+                    </Form.Item>
+                    <Form.Item label="Tên sản phẩm" name="tensp">
+                      <Input />
                     </Form.Item>
                     <Form.Item label="Số lượng" name="soluong">
-                      <Input
-                        defaultValue={item.qty}
-                      />
+                      <Input />
                     </Form.Item>
                     <Form.Item label="Giá" name="gia">
-                      <Input defaultValue={item.qty * item.gia.toFixed(2)}
-                      />
+                      <Input />
                     </Form.Item>
-              </div>
-            </p>
-           
-           
-              {/* <div style={{ paddingLeft: "78%" }}>
+                  </div>
+                </p>
+
+
+                {/* <div style={{ paddingLeft: "78%" }}>
             <Payments  />
             </div> */}
                 <Form.Item>
                   <Button type="primary" onClick={pay} htmlType="submit">
-                Xác nhận
+                    Xác nhận
             </Button>
-            </Form.Item>
-            </Form>
+                </Form.Item>
+              </Form>
             </>
-                )
+          )
 
-                )}
-              {/*   <Button onSubmit={handleFormSubmit} ></ */}
-               
+          )}
+          {/*   <Button onSubmit={handleFormSubmit} ></ */}
+
         </div>
       </Modal>
     </>

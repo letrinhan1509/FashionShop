@@ -155,6 +155,7 @@ router.post('/api/dang-nhap', function (req, res, next) {
         let pass_fromdb = user.matkhau;
         let username = user.tenkh; // Lấy mật khẩu từ DB lên.
         let email = user.email;
+        let makh = user.makh;
         let sdt = user.sodienthoai;
         let diachi = user.diachi;
         console.log(user);
@@ -186,6 +187,7 @@ router.post('/api/dang-nhap', function (req, res, next) {
                     email,
                     sdt,
                     diachi,
+                    makh,
                 
                 },
                 token

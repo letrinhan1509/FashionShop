@@ -617,14 +617,14 @@ def delete_order(order_id):
 # API Thêm đơn hàng:
 @app.route("/api/v1/add-order", methods=["POST"])
 def insert_order():
-    import pdb
-    pdb.set_trace()
-    user_id = request.json['sp']
+    #import pdb
+    #pdb.set_trace()
+    user_id = request.json['userId']
     product_id = request.json['masp']
     product_name = request.json['tensp']
     price = request.json["gia"]
     amount = request.json["soluong"]
-    total = 0
+    total = int(price)*int(amount)
     model_insert.insert_order(user_id, total, product_id, product_name, price, amount)
     return jsonify({"status": "Success", "message": "Thêm đơn hàng thành công!!!"})
 
