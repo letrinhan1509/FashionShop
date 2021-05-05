@@ -5,30 +5,20 @@ import {
   Checkbox,
   Modal,
   Button,
-  Timeline,
   Input,
   Steps,
-  Layout,
-  BackTop,
-  Divider,
-  
+  Layout
 } from "antd";
 import Payments2 from "./Payments2";
 import {
   BankOutlined,
   CreditCardOutlined,
-  DollarCircleOutlined,
 LoadingOutlined, SmileOutlined 
 } from "@ant-design/icons";
 import "./Cart";
 import Payments3 from './Payments3'
 const { Step } = Steps;
 const { TextArea } = Input;
-const { Content } = Layout;
-const { confirm } = Modal;
-
-
-
 
 
 const Payments = (props) => {
@@ -39,18 +29,19 @@ const Payments = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   console.log(props.payCart);
-  const [visible, setVisible] = useState(false);
+  
 
   const [isCitizen, setisCitizen] = useState(false)
   const onChange = e =>{
     setisCitizen(e.target.checked)
   }
-  
+  const [visible, setVisible] = useState(false);
   /* const userlog = localStorage.getItem() */
+  console.log(props.visible);
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        Thanh Toán
+      <Button type="primary"  size={props.size} onClick={() => setVisible(true)}>
+        Thanh Toán                  
       </Button>
       <Modal
         title="Payments"
