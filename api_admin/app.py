@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+   # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
@@ -617,7 +617,9 @@ def delete_order(order_id):
 # API Thêm đơn hàng:
 @app.route("/api/v1/add-order", methods=["POST"])
 def insert_order():
-    user_id = request.json['userId']
+    import pdb
+    pdb.set_trace()
+    user_id = request.json['sp']
     product_id = request.json['masp']
     product_name = request.json['tensp']
     price = request.json["gia"]
