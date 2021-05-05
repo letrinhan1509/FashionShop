@@ -170,6 +170,9 @@ function App() {
               initRelatedItems={randomItem}
               ListProductHome={ListProductHome}
               addCart={addCart}
+              link={link} 
+              cart={cart}
+              Thongbao_Them={Thongbao_Them}
             />
           </Route>
           <Route path="/Register">
@@ -181,13 +184,13 @@ function App() {
           <Route path="/Ao">
             <Shirt ListProductHome={ListProductHome} countAo = {Ao.length} link={link} Ao={Ao} Balo={Balo} />
           </Route>
-          <Route path="/bl">
+          <Route path="/Balo">
             <Backpack ListProductHome={ListProductHome} countBalo = {Balo.length} link={link} Balo={Balo}/>
           </Route>
-          <Route path="/giay">
+          <Route path="/Giay">
             <Shoes ListProductHome={ListProductHome} countGiay = {Giay.length} link={link} Giay={Giay}/>
           </Route>
-          <Route path="/pk">
+          <Route path="/Phukien">
             <Accessories ListProductHome={ListProductHome} countPhukien = {Phukien.length} link={link} Phukien={Phukien}/>
             
           </Route>

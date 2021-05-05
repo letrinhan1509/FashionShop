@@ -20,18 +20,21 @@ const ListProduct = [
         title: 'Áo',
         img: 'sale_off_1.jpg',
         sale: '30',
+        name: 'Ao'
     },
     {
         id: '2',
         title: 'Balo',
         img: 'sale_off_2.jpg',
         sale: '10',
+        name: 'Balo'
     },
     {
         id: '3',
         title: 'Giày',
         img: 'sale_off_3.jpeg',
         sale: '20',
+        name: 'Phukien'
     }
 ]
 const button = [
@@ -96,7 +99,7 @@ const Home = (props) => {
 
     useEffect(() => {
         localStorage.setItem(...['cart', JSON.stringify(props.cart)]);
-        
+
     }, [props.cart]);
 
 
@@ -145,25 +148,27 @@ const Home = (props) => {
                                             bordered={false}
                                             back
                                         >
-                                            <div className="img-box">
-                                                <Image
-                                                    className="sale_img"
-                                                    width={'100%'}
-                                                    src={`./images/slider/${productItem.img}`}
-                                                    preview={{
-                                                        visible: false,
-                                                        /* onVisibleChange: () => { onClick() }, */
-                                                        mask: <div className="link_product">
-                                                            <Link to={`/ProductDetail/${productItem.masp}`}>
+                                            <Link to={`/${productItem.name}`}>
+                                                <div className="img-box">
+                                                    <Image
+                                                        className="sale_img"
+                                                        width={'100%'}
+                                                        src={`./images/slider/${productItem.img}`}
+                                                        preview={{
+                                                            visible: false,
+                                                            /* onVisibleChange: () => { onClick() }, */
+                                                            mask: <div className="link_product">
+                                                                
                                                                 <span>
-                                                                    {productItem.title} - Sale Off {productItem.sale}%
-                                                            </span>
-                                                            </Link>
+                                                                        {productItem.title} - Sale Off {productItem.sale}%
+                                                                </span>
+                                                                
 
-                                                        </div>
-                                                    }}
-                                                />
-                                            </div>
+                                                            </div>
+                                                        }}
+                                                    />
+                                                </div>
+                                            </Link>
                                         </Card>
                                     </Col>
                                 );
