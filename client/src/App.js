@@ -13,12 +13,19 @@ import Login from "./container/Login";
 import Cart from "./container/Cart";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import AllProduct from "./container/All-Product";
+import Shirt from "./container/Shirt";
 import {storage} from "./container/firebase"
 //import AllProduct from './container/All-Product';
 import UserInfo from "./container/UserInfo";
+import Backpack from "./container/Backpack";
+import Shoes from "./container/Shoes";
+import Accessories from "./container/Acessories";
+
 
 function App() {
+
+
+
   const [ListProductHome, setListProductHome] = useState([]);
   const { confirm } = Modal;
   useEffect(() => {
@@ -38,17 +45,9 @@ function App() {
   const pk = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "no" || ListProductHome.maloai === "tl" || ListProductHome.maloai === "vo");
   let Phukien = [];
   Phukien = pk;
-  /* const tam = (ListProductHome) => {
-    setListAo(ListProductHome);
-    let filterProduct = [];
-    if (ListProductHome.maloai === "ak") {
-        filterProduct = ListProductHome.filter(ListProductHome => ListProductHome.maloai === "ak");
-    } 
-    setListAo(filterProduct);
-    console.log(listAo);
-  }; */
   
-  console.log(Phukien);
+  
+
   const shuffled = ListProductHome.sort(() => 0.5 - Math.random());
   const randomItem = shuffled.slice(0, 4);
 
@@ -178,8 +177,18 @@ function App() {
           <Route path="/Login">
             <Login />
           </Route>
-          <Route path="/AllProduct">
-            <AllProduct link={link} Ao={Ao} Balo={Balo} Giay={Giay} Phukien={Phukien}/>
+          <Route path="/Ao">
+            <Shirt ListProductHome={ListProductHome} countAo = {Ao.length} link={link} Ao={Ao} Balo={Balo} />
+          </Route>
+          <Route path="/bl">
+            <Backpack ListProductHome={ListProductHome} countBalo = {Balo.length} link={link} Balo={Balo}/>
+          </Route>
+          <Route path="/giay">
+            <Shoes ListProductHome={ListProductHome} countGiay = {Giay.length} link={link} Giay={Giay}/>
+          </Route>
+          <Route path="/pk">
+            <Accessories ListProductHome={ListProductHome} countPhukien = {Phukien.length} link={link} Phukien={Phukien}/>
+            
           </Route>
           <Route path="/UserInfo">
             <UserInfo />

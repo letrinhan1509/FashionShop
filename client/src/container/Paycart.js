@@ -23,6 +23,7 @@ LoadingOutlined, SmileOutlined
 } from "@ant-design/icons";
 import "./Cart";
 import Payments3 from './Payments3'
+import Payments from './Payments'
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 const { Step } = Steps;
@@ -37,7 +38,7 @@ const outlineInput ={
 
 
 
-const Payments = (props) => {
+const Paycart = (props) => {
   const history = useHistory();
   
   const pay = (values) => {
@@ -84,7 +85,7 @@ const Payments = (props) => {
   return (
     <>
       <Button type="primary" onClick={() => setVisible(true)}>
-        Thanh Toán
+        Xác nhận
       </Button>
       <Modal
         title="Payments"
@@ -96,18 +97,8 @@ const Payments = (props) => {
         footer={null}
       >
         <div>
-          <Steps>
-            <Step
-              status="finish"
-              title="Make Payment"
-              icon={<LoadingOutlined />}
-            />
-            <Step status="process" title="Card Infomation" />
-            <Step status="wait" title="Done" icon={<SmileOutlined />} />
-          </Steps>
+        
         </div>
-
-      
         <div style={{ marginTop: "100px" }}>
           <Form onFinish={pay}>
             <p>
@@ -124,71 +115,8 @@ const Payments = (props) => {
                 ))}
               </div>
             </p>
-            <Row>
-              <Col span={10} offset={1}>
-                <p>
-                  <Input placeholder="Firt Name" value={user.username} />
-                </p>
-                <p>
-                  <Input placeholder="Email Address" value={user.email} />
-                </p>
-                <p>
-                  <h1>Select Method Of Payment</h1>
-                </p>
-                <p>
-                  
-                  <Checkbox.Group style={{ width: "100%" }}>
-                    <Row>
-                      <Col span={24}>
-                        <Row>
-                          <Col span={2}>
-                            <CreditCardOutlined
-                              style={{ fontSize: "20px", color: "blue" }}
-                            />
-                          </Col>
-                          <Col span={20}>Credit Cart Or Debit</Col>
-                          <Col>
-                            <Checkbox value="Credit"
-                             checked={isCitizen}
-                             onChange={onChange}
-                            ></Checkbox>
-                          </Col>
-                        </Row>
-                      </Col>
-                      
-                      <Col span={24}>
-                        <Row>
-                          <Col span={2}>
-                            <BankOutlined
-                              style={{ fontSize: "20px", color: "blue" }}
-                            />
-                          </Col>
-                          <Col span={20}>Thanh toán sau khi nhận hàng</Col>
-                          <Col>
-                            <Checkbox value="Bank"></Checkbox>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Checkbox.Group>
-                  ,
-                </p>
-              </Col>
-              <Col span={10} offset={1}>
-                <p>
-                  <TextArea
-                    placeholder="Address Delivery"
-                    rows={5}
-                    value={user.diachi}
-                  />
-                </p>
-                <p>
-                  <Input placeholder="Mobile Phone" value={user.sdt} />
-                </p>
-              </Col>
-            </Row>
             <div style={{ paddingLeft: "78%" }}>
-             
+                 
             <h1>{isCitizen ? <Payments2 /> : <Payments3 />}</h1>
          
             </div>
@@ -199,4 +127,4 @@ const Payments = (props) => {
   );
 };
 
-export default Payments;
+export default Paycart;

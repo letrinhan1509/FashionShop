@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Checkbox, Modal, Button, Input, Space, Steps } from "antd";
+import { Row, Col, Checkbox, Modal, Button, Input, Space, Steps,Form } from "antd";
 import { LoadingOutlined, SmileOutlined } from "@ant-design/icons";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
@@ -8,6 +8,9 @@ import Payments3 from "./Payments3";
 const { Step } = Steps;
 
 const Payments2 = () => {
+
+  
+  
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -50,7 +53,7 @@ const Payments2 = () => {
           </Steps>
         </div>
         <div style={{ marginTop: "100px" }}>
-          <form>
+          <Form>
             <Row>
               <Col span={12}>
                 <Card
@@ -107,7 +110,7 @@ const Payments2 = () => {
                 </p>
               </Col>
             </Row>
-          </form>
+          </Form>
         </div>
       </Modal>
     </>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import "../container/components-css/cart.scss"
 import { DeleteOutlined } from '@ant-design/icons';
 import Payments from "./Payments";
+import Paycart from "./Paycart";
 const { Content } = Layout;
 const { confirm } = Modal;
 const Cart = (props) => {
@@ -98,7 +99,10 @@ const Cart = (props) => {
                     </Row>
                     <Row>
                         <Col offset={19} className="payments">
-                            <Payments payCart={props.cart} />
+                            <Paycart payCart={props.cart} />
+                        </Col>
+                        <Col offset={19} className="payments">
+                        <Payments payCart={props.cart} />
                         </Col>
                     </Row>
                 </>

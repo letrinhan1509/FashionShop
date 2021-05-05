@@ -6,7 +6,7 @@ const Payments3 = () => {
   return (
     <>
     
-      <Button type="primary" onClick={() => setVisible(true)}>
+      <Button type="primary" htmlType="submit" onClick={() => setVisible(true)}>
         Confirm
       </Button>
      

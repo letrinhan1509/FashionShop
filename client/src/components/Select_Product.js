@@ -22,11 +22,7 @@ const Select_Product = (props) => {
         console.log(`selected ${value}`);
     }
 
-    /*  const [value, setValue] = React.useState(1);
-     const onChange = e => {
-         console.log('radio checked', e.target.value);
-         setValue(e.target.value);
-     }; */
+
 
 
 
