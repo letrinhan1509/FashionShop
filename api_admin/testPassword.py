@@ -6,7 +6,7 @@ conn = database.connection
 
 with conn.cursor() as cur:
     # trthai = "SELECT `donhang`.`madonhang`, `donhang`.`makh`, TT.`trangthai` FROM `donhang` JOIN `trangthai` TT ON `donhang`.`trangthai` = TT.`trangthai` WHERE TT.`trangthai` = %s "
-    sql = "SELECT * FROM `chitietdh` WHERE madonhang = %s"
+    sql = "SELECT * FROM `donhang` WHERE madonhang = %s"
     today = datetime.today()
     id = 5
     total = 650000
@@ -25,14 +25,13 @@ with conn.cursor() as cur:
     # print("id mới thêm vào DB", ['LastID'])
     o = 1
     for i in stt:
-        print("ok",o)
-        u = i['tensp']
-        print("chi tiet", i)
-        print("ma chi tiet", i['madonhang'])
-        print(u)
+        # u = i['tensp']
+        # print("chi tiet", i)
+        # print("ma chi tiet", i['madonhang'])
+        # print(u)
         o = o + 1
     # print(stt['madonhang'])
-    if not stt:  # stt = null
+    if stt == []:  # stt = null
         print("Ko có đơn hàng chứa trạng thái. Xoá được")
     else:   # stt != null
         print(len(stt))

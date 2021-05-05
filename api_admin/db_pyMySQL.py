@@ -129,7 +129,7 @@ def get_product_name(name):
         return ad
 
 
-    # CHECK IN DATABASE:
+    # CHECK IN DATABASE: Nếu có thì trả về.
 # Check "user" bằng id:
 def check_user_id(user_id):
     with connection.cursor() as cur:
@@ -170,9 +170,9 @@ def check_producer_id(producer_id):
         '''
         cur.execute(sql, (producer_id,))
         producer = cur.fetchone()
-        if not producer:
+        if not producer:    # Ko có nhà sản xuất trong DB.
             return -1
-        return 1
+        return producer
 
 
 # Check quyền theo id trong DB:
@@ -187,7 +187,7 @@ def check_permission_id(permission_id):
         permission = cur.fetchone()
         if not permission:
             return -1   # Ko tìm thấy trong DB.
-        return 1    # Tìm thấy trong DB.
+        return permission    # Tìm thấy trong DB.
 
 
 # Check trạng thái theo id:
@@ -198,7 +198,7 @@ def check_status_id(stt_id):
         stt = cur.fetchone()
         if not stt:  # Ko có trạng thái trong DB.
             return -1
-        return 1    # Có trạng thái trong DB.
+        return stt    # Có trạng thái trong DB.
 
 
 # Check loại theo id:
@@ -209,7 +209,7 @@ def check_type_id(type_id):
         types = cur.fetchone()
         if not types:  # Ko có loại trong DB.
             return -1
-        return 1    # Có loại trong DB.
+        return types    # Có loại trong DB.
 
 
 # Check danh mục theo id:
@@ -220,7 +220,7 @@ def check_category_id(category_id):
         category = cur.fetchone()
         if not category:  # Ko có danh mục trong DB.
             return -1
-        return 1    # Có danh mục trong DB.
+        return category    # Có danh mục trong DB.
 
 
 # Check sản phẩm theo id:
