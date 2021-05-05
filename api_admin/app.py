@@ -567,7 +567,7 @@ def delete_producer(producer_id):
 
 
 # API Xoá loại:
-@app.route("/api/v1/del-type/<int:type_id>", methods=["GET"])
+@app.route("/api/v1/del-type/<string:type_id>", methods=["GET"])
 def delete_type(type_id):
     # type_id = request.json["typeId"]
     if db_pyMySQL.check_type_id(type_id) == -1:  # Ko tìm thấy loại trong DB.

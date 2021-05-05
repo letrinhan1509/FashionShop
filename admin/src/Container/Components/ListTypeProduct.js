@@ -8,19 +8,34 @@ const ListTypeProduct = () => {
     const link = useHistory();
     //const [a, setA] = useState([]);
     const [code, setCode] = useState('')
-    const linkto = (e) => {
-        console.log(e.key);
-        localStorage.setItem('type',JSON.stringify(e.key) )
-        setTimeout(() => {
-            link.push('/EditType');
-        }, 100)
+    const [idPro, setIdPro] = useState([]);
+    const onClick = (e) => {
+        let id = e.currentTarget.dataset.id
+        setIdPro(id)
+        console.log('Content: ', e.currentTarget.dataset.id);
+        console.log(idPro);
+        setIsModalVisible(true);
     }
     const getName = (e) => {
-        setCode(e.key)
-        console.log(code);
+        let id = e.currentTarget.dataset.id
+        setCode(id);
+        setTimeout(()=>{
+            link.push('/EditType');
+           },1000) 
+       
+    }
+    let url="http://127.0.0.1:5000/api/v1/type-id/"+code
+    useEffect(() => {
+        axios.get(url).then((res) => {
+            console.log(res.data.data);
+            window.localStorage.setItem("type1",JSON.stringify(res.data.data) )
+        });
+    }, [code]);
+    const showModal =()=>{
+        setIsModalVisible(true);
     }
     let result =JSON.parse(localStorage.getItem('user'))
-    console.log(code);
+    
     const [ListType, setListType] = useState([]);
     useEffect(() => {
         axios.get("http://127.0.0.1:5000/api/v1/type").then((res) => {
@@ -42,86 +57,43 @@ const ListTypeProduct = () => {
             title: 'Action',
             dataIndex: 'maloai',
             key: 'maloai',
-            render: text =>result.maquyen===1 ?(<Menu onClick={linkto}><Menu.Item key={text} >Sửa</Menu.Item></Menu>):(<p/>) 
+          /*   render: text =>result.maquyen===1 ?(<Menu onClick={linkto}><Menu.Item key={text} >Sửa</Menu.Item></Menu>):(<p/>)  */
+            render: text =>result.maquyen ===1 ?(<Button data-id={text} onClick={onClick}>Xoá</Button>):(<p/>) 
         },
         {
             title: '',
             dataIndex: 'maloai',
             key: 'maloai',
-            render: text =>result.maquyen===1?(<Menu onClick={getName}><Menu.Item onClick={showModal} key={text} >Xoá </Menu.Item> </Menu>):(<p/>) 
+           /*  render: text =>result.maquyen===1?(<Menu onClick={getName}><Menu.Item onClick={showModal} key={text} >Xoá </Menu.Item> </Menu>):(<p/>)  */
+            render: text =>result.maquyen ===1 ?(<Button data-id={text} onClick={getName}>Sửa</Button>):(<p/>) 
         }
 
     ];
 
     //Model
-    const [visible, setVisible] = React.useState(false);
-    const [confirmLoading, setConfirmLoading] = React.useState(false);
-    const [modalText, setModalText] = React.useState('Bạn chắc chắn xoá loại sản phẩm này ?');
-    const showModal = () => {
-        setVisible(true);
-    };
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const handleOk = () => {
-        setModalText('Đang xoá...');
-        setConfirmLoading(true);
-        setTimeout(() => {
-            setVisible(false);
-            setConfirmLoading(false);
-
-        }, 2000);
+        let url = "http://127.0.0.1:5000/api/v1/del-type/"+idPro;
+        console.log(url);
+        axios.get(url).then((res) => {
+            if (res.data.status === "Success") {
+                message.success(res.data.message);
+                window.location.reload()
+            }
+            if (res.data.status === "Fail") {
+                message.error(res.data.message);
+            }
+        })
+        setIsModalVisible(false);
     };
-
     const handleCancel = () => {
-
-        setVisible(false);
+        setIsModalVisible(false);
     };
-    const del = (values) => {
-        console.log('Received values of form: ', values);
-        const url = "http://127.0.0.1:5000/api/v1/del-type";
-        axios
-            .post(url, values)
-            .then(async (res) => {
-                console.log(res.data.message);
-                
-            })
-            .catch((err) => {
-                message.error(`Sai tài khoản hoặc mật khẩu !!!`)
-            })
-
-    }
     return (
         <>
             <Table dataSource={ListType} columns={columns} pagination={{ pageSize: 6 }} size="middle" />
-            <Modal
-                title="Thông báo"
-                visible={visible}
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-            >
-                <p>{modalText}</p>
-                <Form
-
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{
-                        remember: true,
-                        typrId: `${code}`
-                    }}
-                onFinish={del}
-                >
-                    <Form.Item
-                        name="typrId"
-                    >
-                        <Input name="typrId" />
-                    </Form.Item>
-                    <Form.Item
-                    >
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Xoá
-        </Button>
-
-                    </Form.Item>
-                </Form>
+            <Modal title="Thông báo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <p>Bạn có muốn xoá loại sản phẩm này không  ?</p>
             </Modal>
         </>
     );

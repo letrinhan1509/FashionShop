@@ -38,25 +38,9 @@ const tailFormItemLayout = {
 const EditType = () => {
     const [form] = Form.useForm();
     const history = useHistory();
-    const t = JSON.parse(localStorage.getItem("type"))
-    const [type, setType] = useState([]);
-    let url ="http://127.0.0.1:5000/api/v1/type-id/"+t
-    useEffect(()=>{
-        axios.get(url).then( async(res)=>{
-            console.log(res.data.status);
-            if(res.data.status ==="success"){
-                setType(res.data.data);
-            }
-            else{
-                message.error(res.data.status)
-            }
-          
-        })
-
-
-    },[])
-    console.log("Thông tin admin:", type.maloai);
-    console.log("Thông tin admin:", type);
+    let ds =JSON.parse(localStorage.getItem("type1"))
+    console.log("Thông tin type:", ds);
+   
     const edittype = (values) => {
         console.log(values)
         let a = JSON.stringify({ admin: "adas@gmail.com" });
@@ -92,8 +76,8 @@ const EditType = () => {
                     name="register"
                     onFinish={edittype}
                     initialValues={{
-                        typeId:`${type.maloai}`,
-                        name:"đséde",
+                        typeId:`${ds.maloai}`,
+                        name:`${ds.tenloai}`,
                      
                     }}
                     scrollToFirstError
@@ -121,11 +105,11 @@ const EditType = () => {
                             },
                         ]}
                     >
-                        <Input value={type.maloai} defaultValue="đese" />
+                        <Input  />
                     </Form.Item>
                    
                     <Form.Item {...tailFormItemLayout}>
-                    <Link to={'/DanhsachAdmin'}><p   style={{marginRight:"20px",}}className="ant-btn ant-btn-dashed ">Trở về</p></Link>
+                    <Link to={'/Danhsachloai'}><p   style={{marginRight:"20px",}}className="ant-btn ant-btn-dashed ">Trở về</p></Link>
                     <Button value="submit" type="primary" htmlType="submit">
                             Xác nhận
                 </Button>
