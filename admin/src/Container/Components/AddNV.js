@@ -57,7 +57,7 @@ const AddNV = (props) => {
         console.log(a);
         const url = "http://127.0.0.1:5000/api/v1/add-admin"
         axios.post(url, values).then((res) => {
-            if (res.data.status ==="success") {
+            if (res.data.status ==="Success") {
                 message.success(res.data.message)
                 setTimeout(() => {
                     history.push('/DanhsachAdmin');

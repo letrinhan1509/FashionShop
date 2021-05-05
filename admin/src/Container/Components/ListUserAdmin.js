@@ -23,7 +23,7 @@ const ListUserAdmin = () => {
   }, [a]);
  
   localStorage.setItem('admin',JSON.stringify(Admin) )
-
+  let result =JSON.parse(localStorage.getItem('user'))
   const lickIdAdmmin =()=>{
     console.log('ádada');
 
@@ -75,7 +75,7 @@ const ListUserAdmin = () => {
       title: 'Action',
       dataIndex: 'manv',
       key: 'manv',
-      render: text => <Menu onClick={linkto}><Menu.Item key={text} >sửa</Menu.Item></Menu>
+      render: text =>result.maquyen===1?(<Menu onClick={linkto}><Menu.Item key={text} >Sửa</Menu.Item></Menu>):(<p/>) 
 
     }
     /* {

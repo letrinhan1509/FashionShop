@@ -3,11 +3,25 @@ import { Menu, Table, Modal, Button, Form, Input, message } from 'antd';
 import axios from 'axios'
 import { useHistory } from 'react-router';
 const ListProducter = () => {
-    const [producer, setProducer] = useState([]);
+    let link = useHistory();
+    const [listproducer, setListProducer] = useState([]);
+    //const [listproducer, setListProducer] = useState([]);
     const [idPro, setIdPro] = useState([]);
+    const [pr, setPr] = useState([]);
     const loadEdit = (e) => {
         let i = e.currentTarget.dataset.id;
+        setPr(i);
+      setTimeout(()=>{
+      link.push('/EditProducer');
+     },100) 
     }
+    let url="http://127.0.0.1:5000/api/v1/producer-id/"+pr
+    useEffect(() => {
+        axios.get(url).then((res) => {
+            console.log(res.data.data);
+            window.localStorage.setItem("producer",JSON.stringify(res.data.data) )
+        });
+    }, [pr]);
     const onClick = (e) => {
         let id = e.currentTarget.dataset.id
         setIdPro(id)
@@ -15,10 +29,11 @@ const ListProducter = () => {
         console.log(idPro);
         setIsModalVisible(true);
     }
+    let result =JSON.parse(localStorage.getItem('user'))
     ///Modal Xoá
     const [isModalVisible, setIsModalVisible] = useState(false);
     const handleOk = () => {
-        let url = "http://127.0.0.1:5000/api/v1/del-product/" + idPro;
+        let url = "http://127.0.0.1:5000/api/v1/del-producer/" + idPro;
         console.log(url);
         axios.get(url).then((res) => {
             if (res.data.status === "Success") {
@@ -37,7 +52,7 @@ const ListProducter = () => {
     useEffect(() => {
         axios.get("http://127.0.0.1:5000/api/v1/producer").then((res) => {
             console.log(res.data.data);
-            setProducer(res.data.data)
+            setListProducer(res.data.data)
         });
     }, []);
     const columns = [
@@ -61,20 +76,21 @@ const ListProducter = () => {
             title: 'Action',
             dataIndex: 'mansx',
             key: 'mansx',
-            render: text => <Button data-id={text} onClick={onClick}>Xoá</Button>
+            render: text =>result.maquyen ===1 ?(<Button data-id={text} onClick={onClick}>Xoá</Button>):(<p/>) 
+            
         },
         {
             title: '',
             dataIndex: 'mansx',
             key: 'mansx',
-            render: text => <Button data-id={text} onClick={onClick}>Sửa</Button>
+            render: text =>result.maquyen ===1 ?(<Button data-id={text} onClick={loadEdit}>Sửa</Button>):(<p/>) 
         }
 
     ];
     //Model
     return (
         <>
-            <Table dataSource={producer} columns={columns} pagination={{ pageSize: 6 }} size="middle" />
+            <Table dataSource={listproducer} columns={columns} pagination={{ pageSize: 6 }} size="middle" />
             <Modal title="Thông báo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <p>Bạn có muốn xoá nhà sản xuất này không  ?</p>
             </Modal>

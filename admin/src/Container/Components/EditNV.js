@@ -81,6 +81,7 @@ const EditNV = (props) => {
                         id: `${Admin.data.manv}`,
                         prefix: "86",
                         email:`${Admin.data.admin}`,
+                     
                         name:`${Admin.data.tennv}`,
                         pass:`${Admin.data.matkhau}`,
                         pass1:`${Admin.data.matkhau}`,
@@ -119,12 +120,12 @@ const EditNV = (props) => {
                     </Form.Item>
                     <Form.Item
                         name="name"
-                        id="name"
+                     
                         label="Tên nhân viên"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập tên tài khoảng !!!",
+                                message: "Vui lòng nhập tên tài khoản !!!",
                                 whitespace: true,
                             },
                         ]}
@@ -145,7 +146,7 @@ const EditNV = (props) => {
                         <Input.Password  />
                     </Form.Item>
                     <Form.Item
-                        id="pass1"
+                      
                         name="pass1"
                         label="Xác nhận mật khẩu"
                         dependencies={["password"]}

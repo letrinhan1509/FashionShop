@@ -19,6 +19,7 @@ const ListTypeProduct = () => {
         setCode(e.key)
         console.log(code);
     }
+    let result =JSON.parse(localStorage.getItem('user'))
     console.log(code);
     const [ListType, setListType] = useState([]);
     useEffect(() => {
@@ -41,15 +42,13 @@ const ListTypeProduct = () => {
             title: 'Action',
             dataIndex: 'maloai',
             key: 'maloai',
-            render: text => <Menu onClick={linkto}><Menu.Item key={text} >Sửa</Menu.Item></Menu>,
+            render: text =>result.maquyen===1 ?(<Menu onClick={linkto}><Menu.Item key={text} >Sửa</Menu.Item></Menu>):(<p/>) 
         },
         {
             title: '',
             dataIndex: 'maloai',
             key: 'maloai',
-            render: text => <Menu onClick={getName
-
-            }  ><Menu.Item onClick={showModal} key={text} >Xoá </Menu.Item> </Menu>
+            render: text =>result.maquyen===1?(<Menu onClick={getName}><Menu.Item onClick={showModal} key={text} >Xoá </Menu.Item> </Menu>):(<p/>) 
         }
 
     ];

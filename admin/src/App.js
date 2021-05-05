@@ -23,6 +23,8 @@ import AddTypeProduct from "./Container/Components/AddTypeProduct";
 import EditType from "./Container/Components/EditType";
 import ListProducter from "./Container/Components/ListProducter";
 import EditProduct from "./Container/Components/EditProduct";
+import EditProducer from "./Container/Components/EditProducer";
+import AddProducer from "./Container/Components/AddProducer";
 
 function App() {
 
@@ -41,11 +43,9 @@ function App() {
           setListType(res.data.data)
       })
   },[])
-
+ 
 
   //Admin
-
-
 
   return (
     <>
@@ -79,7 +79,7 @@ function App() {
                     <AddProduct listType={listType} />
                   </Route>
                   <Route path="/Editsanpham">
-                    <EditProduct/>
+                    <EditProduct listType={listType}  />
                   </Route>
                   <Route path="/DMsanpham">
                     <CategoryProduct />
@@ -113,6 +113,12 @@ function App() {
                   </Route>
                   <Route path="/Danhsachnhasx">
                     <ListProducter />
+                  </Route>
+                  <Route path="/Themnsx">
+                    <AddProducer />
+                  </Route>
+                  <Route path="/EditProducer">
+                    <EditProducer />
                   </Route>
                 </Content>
               </Col>

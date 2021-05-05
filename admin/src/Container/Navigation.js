@@ -8,7 +8,7 @@ const Navigation = () => {
     const linkto = (e)=>{
         link.push(`/${e.key}`)
     }
-   
+    let result =JSON.parse(localStorage.getItem('user'))  
     return (
         <>    
             <Router>
@@ -24,16 +24,20 @@ const Navigation = () => {
                             <Menu.Item key="Dashboard">Dashboard</Menu.Item>
                             <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Quản lý sản phẩm">
                                 <Menu.Item key="all">Tất cả sản phẩm</Menu.Item>
-                                <Menu.Item key="Themsanpham">Thêm sản phẩm</Menu.Item>
+                                {result.maquyen===1?(<Menu.Item key="Themsanpham">Thêm sản phẩm</Menu.Item>):(<p/>)}
                                 <Menu.Item key="DMsanpham">Danh mục sản phẩm</Menu.Item>
                                 <Menu.Item key="Danhsachloai">Danh sách loại</Menu.Item>
-                                <Menu.Item key="Themloai">Thêm loại</Menu.Item>
+                                {result.maquyen===1?(<Menu.Item key="Themloai">Thêm loại</Menu.Item>):(<p/>)}
+                                
                                 <Menu.Item key ="Danhsachnhasx">Danh sách nhà sản xuất</Menu.Item>
+                                
+                                {result.maquyen===1?(<Menu.Item key ="Themnsx">Thêm nhà sản xuất</Menu.Item>):(<p/>)}
                             </SubMenu>
                             <SubMenu key="sub3" title=" Quản lý tài khoản">
                                 <Menu.Item key="Danhsachkhachhang">Khách hàng</Menu.Item>
                                 <Menu.Item key="DanhsachAdmin">Nhân viên</Menu.Item>
-                                <Menu.Item key="Themnhanvien">Thêm nhân viên</Menu.Item>
+                               
+                                {result.maquyen===1?( <Menu.Item key="Themnhanvien">Thêm nhân viên</Menu.Item>):(<p/>)}
                             </SubMenu>
                             <SubMenu key="sub4" icon={<SettingOutlined />} title="Quản lý đơn hàng">
                                 <Menu.Item key="Danhsachdonhang">Danh sách đơn hàng</Menu.Item>

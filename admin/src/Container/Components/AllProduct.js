@@ -6,11 +6,17 @@ import { useHistory } from 'react-router';
 const AllProduct = () => {
   let link = useHistory()
   const [idPro, setIdPro]=useState([]);
+  const [a, setA] = useState([]);
+
+
   const loadEdit= (e)=>{
     let i =e.currentTarget.dataset.id;
     console.log(i);
-    window.localStorage.setItem("masp",i)
-    link.push('/Editsanpham');
+    setA(i);
+    setTimeout(()=>{
+      link.push('/Editsanpham');
+     },100) 
+   
   }
   const onClick=(e)=>{
     let id = e.currentTarget.dataset.id
@@ -20,6 +26,25 @@ const AllProduct = () => {
     setIsModalVisible(true);
   }
  
+  const masp = window.localStorage.getItem("masp");
+  const [product, setProduct] = useState([]);
+  let url = "http://127.0.0.1:5000/api/v1/product-id/" +a
+  useEffect(() => {
+      axios.get(url).then((res) => {
+          if(res.data.status ==="Success"){
+              setProduct(res.data.data)
+              console.log(res.data.data);
+          }
+         
+         
+
+      })
+
+  }, [a])
+  console.log(product.code);
+  window.localStorage.setItem('Product', JSON.stringify(product));
+  let result =JSON.parse(localStorage.getItem('user'))
+  console.log(result.maquyen);
   ///Modal Xoá
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -119,18 +144,19 @@ const AllProduct = () => {
         sortOrder: sortedInfo.columnKey === 'maloai' && sortedInfo.order, */
         ellipsis: true,
         },
+        
         {
           title: 'Action',
           dataIndex:"masp",
           key:"masp",
-          render:text =><Button data-id={text} onClick={onClick}>Xoá</Button>,
-         
+          render:text =>result.maquyen ===1 ?(<Button data-id={text} onClick={onClick}>Xoá</Button>):(<p></p>)
+          
         },
         {
           title: '',
           dataIndex:"masp",
           key:"masp",
-          render:text =><Button data-id={text} onClick={loadEdit} >Sửa</Button>
+          render:text =>result.maquyen ===1 ?(<Button data-id={text} onClick={loadEdit} >Sửa</Button>):(<p></p>)
         }
       ];
       

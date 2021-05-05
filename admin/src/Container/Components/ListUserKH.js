@@ -9,7 +9,7 @@ const ListUserKH = (props) => {
       setListUser(res.data.data);
     })
   }, []);
-
+  let result =JSON.parse(localStorage.getItem('user'))
 
   
     let { sortedInfo, filteredInfo } = useState([]);

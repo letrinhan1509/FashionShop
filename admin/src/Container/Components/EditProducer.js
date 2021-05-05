@@ -35,48 +35,33 @@ const tailFormItemLayout = {
     },
 };
 
-const EditType = () => {
+const EditProducer = () => {
     const [form] = Form.useForm();
     const history = useHistory();
-    const t = JSON.parse(localStorage.getItem("type"))
-    const [type, setType] = useState([]);
-    let url ="http://127.0.0.1:5000/api/v1/type-id/"+t
-    useEffect(()=>{
-        axios.get(url).then( async(res)=>{
-            console.log(res.data.status);
-            if(res.data.status ==="success"){
-                setType(res.data.data);
-            }
-            else{
-                message.error(res.data.status)
-            }
-          
-        })
-
-
-    },[])
-    console.log("Thông tin admin:", type.maloai);
-    console.log("Thông tin admin:", type);
-    const edittype = (values) => {
+    const t = JSON.parse(localStorage.getItem("producer"))
+   
+    console.log("Thông tin nhasx:",t.mansx);
+    //console.log("Thông tin admin:", type);
+    const editproducer = (values) => {
         console.log(values)
         let a = JSON.stringify({ admin: "adas@gmail.com" });
 
         console.log(a);
-        const url = "http://127.0.0.1:5000/api/v1/update-profile-admin"
+        const url = "http://127.0.0.1:5000/api/v1/update-producer"
         axios.post(url, values).then((res) => {
             if (res.data.status === "Success") {
                 message.success(res.data.message)
                 setTimeout(() => {
-                    history.push('/DanhsachAdmin');
+                    history.push('/Danhsachnhasx');
                 }, 2000)
             }
             else {
-                message.error("Thêm thất bại")
+                message.error("Sửa thất bại")
             }
         }) 
             .catch(err => {
                 console.log(err.response);
-                message.error(`Login fail!\n ${err.response.data}`)
+                message.error(`Error\n ${err.response.data}`)
             })
     };
     /*  const loadpage= ()=>{
@@ -85,47 +70,57 @@ const EditType = () => {
     return (
         <Row className="register-container">
             <Col className="register-form-wrapper" offset={6} span={10}>
-                <h2 style={{ textAlign: 'center' }}>Sửa Loại Sản Phẩm</h2>
+                <h2 style={{ textAlign: 'center' }}>Sửa Nhà Sản Xuất</h2>
                 <Form
                     {...formItemLayout}
                     form={form}
                     name="register"
-                    onFinish={edittype}
+                  onFinish={editproducer}
                     initialValues={{
-                        typeId:`${type.maloai}`,
-                        name:"đséde",
-                     
+                        producerId:`${t.mansx}`,
+                        name:`${t.tennsx}`,
+                        origin:`${t.xuatxu}`
                     }}
                     scrollToFirstError
                     className="register-form"
                 >
                     <Form.Item
-                        name="typeId"
+                        name="producerId"
                         id="typeId"
-                        label="Mã loại"
+                        label="Mã nhà sản xuất"
                     >
                     <Input  />
                     </Form.Item>
                     <Form.Item
                         name="name"
                         id="name"
-                        label="Tên loại"
+                        label="Tên nhà sản xuất"
                         rules={[
-                            {
-                                type: "name",
-                                message: "Vui lòng nhập đúng E-mail!",
-                            },
+                           
                             {
                                 required: true,
-                                message: "Bạn chưa nhập E-mail !",
+                                message: "Bạn chưa nhập tên nhà sản xuất ",
                             },
                         ]}
                     >
-                        <Input value={type.maloai} defaultValue="đese" />
+                        <Input />
                     </Form.Item>
-                   
+                    <Form.Item
+                        name="origin"
+                        id="name"
+                        label="Xuất xứ"
+                        rules={[
+                           
+                            {
+                                required: true,
+                                message: "Bạn chưa nhập tên nhà sản xuất ",
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
-                    <Link to={'/DanhsachAdmin'}><p   style={{marginRight:"20px",}}className="ant-btn ant-btn-dashed ">Trở về</p></Link>
+                    <Link to={'/Danhsachnhasx'}><p   style={{marginRight:"20px",}}className="ant-btn ant-btn-dashed ">Trở về</p></Link>
                     <Button value="submit" type="primary" htmlType="submit">
                             Xác nhận
                 </Button>
@@ -137,4 +132,6 @@ const EditType = () => {
     );
 }
 
-export default EditType;
+export default EditProducer;
+
+
