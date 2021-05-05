@@ -567,7 +567,9 @@ def delete_order():
 # API Thêm đơn hàng:
 @app.route("/api/v1/add-order", methods=["POST"])
 def insert_order():
-    user_id = request.json['userId']
+    import pdb
+    pdb.set_trace()
+    user_id = request.json['sp']
     product_id = request.json['masp']
     product_name = request.json['tensp']
     price = request.json["gia"]

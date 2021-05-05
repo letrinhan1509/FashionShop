@@ -144,16 +144,13 @@ const Cart = (props) => {
                                 <Link to="/">
                                     Tiếp tục mua hàng <RollbackOutlined />
                                 </Link>
-
                             </Button>
                         </Col>
-                        <Col>
-                            <Payments payCart={props.cart} size={size} />
-
+                        <Col className="payments">
+                            <Paycart payCart={props.cart} size={size} />
                         </Col>
-                        <Col offset={19} className="payments">
-                            <Paycart payCart={props.cart} />
-                        </Col>
+                      
+                       
                     </Row>
                 </>
             )}
