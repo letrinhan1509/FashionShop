@@ -67,7 +67,7 @@ const footer = () => {
                 </Col>
             </Row>
             <Divider className="driver" />
-            <p>© 2018 Ecommerce theme by www.bisenbaev.com</p>
+            <p className="copyRight">© 2018 Ecommerce theme by www.bisenbaev.com</p>
         </Footer>
     );
 

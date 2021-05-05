@@ -3,6 +3,7 @@ import React, { useState, useEffect} from 'react';
 import "../container/components-css/ProductDetail.scss"
 import "../components/Select_Product"
 import SelectProduct from "../components/Select_Product";
+import Link_Page from "../components/Link_Page";
 const { Content } = Layout;
 
 const ProductDetail = (props) => {
@@ -13,22 +14,10 @@ const ProductDetail = (props) => {
         setRelatedItems(props.initRelatedItems);
             // eslint-disable-next-line
     }, [])
-
+    
     return (
         <Content className="detail-wrapper">
-            <Row className="link-row">
-                <Col className="link-col" offset={10} >
-                    <Breadcrumb>
-                        <Breadcrumb.Item>
-                            <a href="#/">Home</a>
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>
-                            <a href="#/">Hot Deal</a>
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>BIGBALL CHUNKY P BOSTON RED SOX</Breadcrumb.Item>
-                    </Breadcrumb>
-                </Col>
-            </Row>
+            <Link_Page />
             <Row>
                 <Col offset={2}>
                     <SelectProduct ListPro={props.ListProductHome} />

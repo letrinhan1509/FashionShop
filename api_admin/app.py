@@ -69,7 +69,7 @@ def check_login():  # request.json[""]
 def check_login_user():  # request.json[""]
     email = request.json["email"]
     mk = request.json["pass"]
-    pas_check = mk + database.mysecret_key
+    pas_check = mk #+ database.mysecret_key
     with database.connection.cursor() as cur:
         sql = '''
             SELECT tenkh, email, matkhau, sodienthoai, diachi, trangthai
@@ -192,6 +192,17 @@ def get_admin_id(admin_id):
             return jsonify({"status": "fail", "message": ex})
 
 
+@app.route("/api/v1/producer-id/<string:producer_id>", methods=["GET"])
+def get_producer_id(producer_id):
+        try:
+            data = db_pyMySQL.get_producer_id(producer_id)
+            if not data:
+                return jsonify({"status": "fail", "message": "Không tìm thấy admin có mã số  này!!!"})
+            return jsonify({"status": "success", "data": data})
+        except Exception as ex:
+            return jsonify({"status": "fail", "message": ex})
+
+
 @app.route("/api/v1/type-id/<string:type_id>", methods=["GET"])
 def get_type_id(type_id):
         try:
@@ -202,6 +213,17 @@ def get_type_id(type_id):
         except Exception as ex:
             return jsonify({"status": "fail", "message": ex})
 
+
+# API Tìm product theo id:
+@app.route("/api/v1/product-id/<int:product_id>", methods=["GET"])
+def get_product_id(product_id):
+    try:
+        data = db_pyMySQL.check_product_id(product_id)
+        if not data:
+            return jsonify({"status": "Fail", "message": "Không tìm thấy sản phẩm có id này!!!"})
+        return jsonify({"status": "Success", "message": "Tìm thấy sản phẩm", "data": data})
+    except Exception as ex:
+        return jsonify({"status": "Fail", "message": ex})
 
 
 # API Tìm product theo tên:
@@ -395,11 +417,12 @@ def update_password_user():
 def update_category():
     category_id = request.json['categoryId']
     name = request.json['name']
-    if db_pyMySQL.check_category_id(category_id) == 1:
+    if db_pyMySQL.check_category_id(category_id) == -1:
+        return jsonify({"status": "Fail", "message": "Không tìm thấy danh mục trong Database!!!"})
+    else:
         if model_insert.update_category(name, category_id) == 1:
             return jsonify({"status": "Success", "message": "Sửa danh mục thành công!!!"})
         return jsonify({"status": "Fail", "message": "Sửa danh mục không thành công!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy danh mục trong Database!!!"})
 
 
 # API Sửa loại:
@@ -420,11 +443,12 @@ def update_producer():
     producer_id = request.json['producerId']
     name = request.json['name']
     origin = request.json['origin']
-    if db_pyMySQL.check_producer_id(producer_id) == 1:
+    if db_pyMySQL.check_producer_id(producer_id) == -1:  # Ko có NSX trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy nhà sản xuất trong Database!!!"})
+    else:
         if model_insert.update_producer(name, origin, producer_id) == 1:
             return jsonify({"status": "Success", "message": "Sửa nhà sản xuất thành công!!!"})
         return jsonify({"status": "Fail", "message": "Sửa nhà sản xuất không thành công!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy nhà sản xuất trong Database!!!"})
 
 
 # API Sửa quyền:
@@ -432,11 +456,12 @@ def update_producer():
 def update_permission():
     permission_id = request.json['permissionId']
     name = request.json['name']
-    if db_pyMySQL.check_permission_id(permission_id) == 1:
+    if db_pyMySQL.check_permission_id(permission_id) == -1:     # Ko có quyền trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy quyền trong Database!!!"})
+    else:
         if model_insert.update_permission(name, permission_id) == 1:
             return jsonify({"status": "Success", "message": "Sửa quyền thành công!!!"})
         return jsonify({"status": "Fail", "message": "Sửa quyền không thành công!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy quyền trong Database!!!"})
 
 
 # API Sửa trạng thái:
@@ -444,11 +469,12 @@ def update_permission():
 def update_status():
     status_id = request.json['statusId']
     name = request.json['name']
-    if db_pyMySQL.check_status_id(status_id) == 1:
+    if db_pyMySQL.check_status_id(status_id) == -1:  # Ko tìm thấy trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy trạng thái trong Database!!!"})
+    else:
         if model_insert.update_status(name, status_id) == 1:
             return jsonify({"status": "Success", "message": "Sửa trạng thái thành công!!!"})
         return jsonify({"status": "Fail", "message": "Sửa trạng thái không thành công!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy trạng thái trong Database!!!"})
 
 
 # API Sửa sản phẩm:
@@ -473,93 +499,93 @@ def update_product():
 
     # API DELETE:
 # API Khoá tài khoản admin:
-@app.route("/api/v1/lock-admin", methods=["POST"])
-def lock_admin():
-    ad = request.json["adminId"]
-    if model_delete.lock_admin(ad) == 1:    # Có admin trong DB và khoá thành công.
+@app.route("/api/v1/lock-admin/<int:admin_id>", methods=["GET"])
+def lock_admin(admin_id):
+    if model_delete.lock_admin(admin_id) == 1:    # Có admin trong DB và khoá thành công.
         return jsonify({"status": "Success", "message": "Khoá tài khoản admin thành công!!!"})
     return jsonify({"status": "Fail", "message": "Không tìm thấy tài khoản admin trong Database!!!"})
 
 
 # API Mở khoá tài khoản admin:
-@app.route("/api/v1/unlock-admin", methods=["POST"])
-def unlock_admin():
-    ad = request.json["adminId"]
-    if model_delete.unlock_admin(ad) == 1:
+@app.route("/api/v1/unlock-admin/<int:admin_id>", methods=["GET"])
+def unlock_admin(admin_id):
+    if model_delete.unlock_admin(admin_id) == 1:
         return jsonify({"status": "Success", "message": "Mở khoá tài khoản admin thành công!!!"})
     return jsonify({"status": "Fail", "message": "Không tìm thấy tài khoản admin trong Database!!!"})
 
 
 # API Khoá tài khoản khách hàng:
-@app.route("/api/v1/lock-user", methods=["POST"])
-def lock_user():
-    us = request.json["userId"]
-    if model_delete.lock_user(us) == 1:
+@app.route("/api/v1/lock-user/<int:user_id>", methods=["GET"])
+def lock_user(user_id):
+    if model_delete.lock_user(user_id) == 1:
         return jsonify({"status": "Success", "message": "Khoá tài khoản user thành công!!!"})
     return jsonify({"status": "Fail", "message": "Không tìm thấy user trong Database!!!"})
 
 
 # API Mở khoá tài khoản khách hàng:
-@app.route("/api/v1/unlock-user", methods=["POST"])
-def unlock_user():
-    user = request.json["userId"]
-    if model_delete.unlock_user(user) == 1:
+@app.route("/api/v1/unlock-user/<int:user_id>", methods=["GET"])
+def unlock_user(user_id):
+    if model_delete.unlock_user(user_id) == 1:
         return jsonify({"status": "Success", "message": "Mở khoá tài khoản user thành công!!!"})
     return jsonify({"status": "Fail", "message": "Không tìm thấy user trong Database!!!"})
 
 
 # API Xoá quyền hạn:
-@app.route("/api/v1/del-permission", methods=["POST"])
-def delete_permission():
-    code = request.json["code"]
-    if db_pyMySQL.check_permission_id(code) == 1:   # Có quyền trong DB.
+@app.route("/api/v1/del-permission/<int:code>", methods=["GET"])
+def delete_permission(code):
+    # code = request.json["code"]
+    if db_pyMySQL.check_permission_id(code) == -1:   # Ko có quyền trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy quyền trong Database!!!"})
+    else:   # Có quyền trong DB.
         if model_delete.delete_permission(code) == 1:   # Không bị ràng buộc khoá ngoại => Xoá thành công.
             return jsonify({"status": "Success", "message": "Xoá quyền thành công!!!"})
         return jsonify({"status": "Fail", "message": "Ràng buộc khoá ngoại. Không thể xoá!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy quyền trong Database!!!"})
 
 
 # API Xoá trạng thái:
-@app.route("/api/v1/del-status", methods=["POST"])
-def delete_status():
-    stt = request.json["stt"]   # Lấy khoá chính của table trangthai trong DB.
-    if db_pyMySQL.check_status_id(stt) == 1:    # Tìm thấy trạng thái trong DB.
+@app.route("/api/v1/del-status/<int:stt>", methods=["GET"])
+def delete_status(stt):
+    # stt = request.json["stt"]   # Lấy khoá chính của table trangthai trong DB.
+    if db_pyMySQL.check_status_id(stt) == -1:    # Ko tìm thấy trạng thái trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy trạng thái trong Database!!!"})
+    else:   # Tìm thấy trạng thái trong DB.
         if model_delete.delete_status(stt) == 1:    # Kô bị ràng buộc khoá ngoại nên có thể xoá.
             return jsonify({"status": "Success", "message": "Xoá trạng thái thành công!!!"})
         return jsonify({"status": "Fail", "message": "Lỗi ràng buộc khoá ngoại, không thể xoá!!!"})
-    else:
-        return jsonify({"status": "Fail", "message": "Không tìm thấy trạng thái trong Database!!!"})
 
 
 # API Xoá nhà sản xuất:
-@app.route("/api/v1/del-producer", methods=["POST"])
-def delete_producer():
-    producer_id = request.json["producerId"]
-    if db_pyMySQL.check_producer_id(producer_id) == 1:   # Có nhà sản xuất trong DB.
+@app.route("/api/v1/del-producer/<string:producer_id>", methods=["GET"])
+def delete_producer(producer_id):
+    # producer_id = request.json["producerId"]
+    if db_pyMySQL.check_producer_id(producer_id) == -1:   # Ko có NSX trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy nhà sản xuất trong Database!!!"})
+    else:
         if model_delete.delete_producer(producer_id) == 1:
             return jsonify({"status": "Success", "message": "Xoá nhà sản xuất thành công!!!"})
         return jsonify({"status": "Fail", "message": "Lỗi ràng buộc khoá ngoại, không thể xoá!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy nhà sản xuất trong Database!!!"})
 
 
 # API Xoá loại:
-@app.route("/api/v1/del-type", methods=["POST"])
-def delete_type():
-    type_id = request.json["typrId"]
-    if db_pyMySQL.check_type_id(type_id) == 1:  # Có loại trong DB.
+@app.route("/api/v1/del-type/<int:type_id>", methods=["GET"])
+def delete_type(type_id):
+    # type_id = request.json["typeId"]
+    if db_pyMySQL.check_type_id(type_id) == -1:  # Ko tìm thấy loại trong DB.
+        return jsonify({"status": "Fail", "message": "Không tìm thấy loại trong Database!!!"})
+    else:   # Tìm thấy loại trong DB.
         if model_delete.delete_type(type_id) == 1:
             return jsonify({"status": "Success", "message": "Xoá loại thành công!!!"})
         return jsonify({"status": "Fail", "message": "Lỗi ràng buộc khoá ngoại, không thể xoá loại!!!"})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy loại trong Database!!!"})
 
 
     # API Xoá danh mục:
-@app.route("/api/v1/del-category", methods=["POST"])
-def delete_category():
-    category_id = request.json["categoryId"]
-    if db_pyMySQL.check_category_id(category_id) == 1:
+@app.route("/api/v1/del-category/<int:category_id>", methods=["GET"])
+def delete_category(category_id):
+    # category_id = request.json["categoryId"]
+    if db_pyMySQL.check_category_id(category_id) == -1:
+        return jsonify({"status": "Fail", "message": "Không tìm thấy danh mục trong Database!!!"})
+    else:
         return jsonify({"status": "Success", "message": "Chức năng đang bảo trì."})
-    return jsonify({"status": "Fail", "message": "Không tìm thấy danh mục trong Database!!!"})
 
 
 # API Xoá sản phẩm:
@@ -577,9 +603,9 @@ def delete_product(pro_id):
 
     # API USER:
 # API Xoá đơn hàng:
-@app.route("/api/v1/del-order", methods=["POST"])
-def delete_order():
-    order_id = request.json["orderId"]
+@app.route("/api/v1/del-order/<int:order_id>", methods=["GET"])
+def delete_order(order_id):
+    # order_id = request.json["orderId"]
     if db_pyMySQL.check_type_id(order_id) == -1:  # Không có đơn hàng trong DB.
         return jsonify({"status": "Fail", "message": "Không tìm thấy đơn hàng này trong Database!!!"})
     else:   # Có đơn hàng trong DB.

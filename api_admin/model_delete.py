@@ -9,7 +9,7 @@ conn = database.connection
 # trạng thái: 0 -> "khoá", 1 -> "Ko khoá"
 
 
-# Khoá mõm admin:
+# Khoá tài khoản admin:
 def lock_admin(admin_id,):
     with conn.cursor() as cur:
         if db_pyMySQL.check_admin_id(admin_id) == 1:    # Tìm thấy admin_id trong DB
@@ -24,7 +24,7 @@ def lock_admin(admin_id,):
         return -1
 
 
-# Mở khoá mõm admin:
+# Mở khoá tài khoản admin:
 def unlock_admin(admin_id):
     with conn.cursor() as cur:
         if db_pyMySQL.check_admin_id(admin_id) == 1:
@@ -39,7 +39,7 @@ def unlock_admin(admin_id):
         return -1
 
 
-# Khoá mõm khách hàng:
+# Khoá tài khoản khách hàng:
 def lock_user(user_id):
     with conn.cursor() as cur:
         sql_check = "SELECT * FROM khachhang WHERE makh = %s"
@@ -58,7 +58,7 @@ def lock_user(user_id):
             return 1    # Khoá tài khoản user thành công.
 
 
-# Mở khoá mõm khách hàng:
+# Mở khoá tài khoản khách hàng:
 def unlock_user(user_id):
     with conn.cursor() as cur:
         if db_pyMySQL.check_user_id(user_id) == 1:  # Có user trong DB => Có thể mở khoá.
@@ -148,7 +148,7 @@ def delete_type(type_id):
 def delete_status(stt_id):
     with conn.cursor() as cur:
         stt = '''
-        SELECT `donhang`.`madonhang`, `donhang`.`masp`, `donhang`.`makh`, TT.`trangthai`
+        SELECT `donhang`.`madonhang`, `donhang`.`makh`, TT.`trangthai`
         FROM `donhang` JOIN `trangthai` TT
         ON `donhang`.`trangthai` = TT.`trangthai`
         WHERE TT.`trangthai` = %s
