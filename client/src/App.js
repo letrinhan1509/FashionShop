@@ -11,6 +11,7 @@ import Footer from "./components/include/Footer";
 import Register from "./container/Register";
 import Login from "./container/Login";
 import Cart from "./container/Cart";
+import Contact from "./container/Contact";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Shirt from "./container/Shirt";
@@ -195,6 +196,9 @@ function App() {
           </Route>
           <Route path="/cart">
             <Cart cart={cart} CountCart={cart.length} addCart={addCart} removeCart={removeCart} removeProduct={removeProduct} PriceCart={sumPrice}/>
+          </Route>
+          <Route path="/Contact">
+            <Contact />
           </Route>
         </Content>
         <Footer />
