@@ -5,36 +5,23 @@ from datetime import datetime
 conn = database.connection
 
 with conn.cursor() as cur:
-    # trthai = "SELECT `donhang`.`madonhang`, `donhang`.`makh`, TT.`trangthai` FROM `donhang` JOIN `trangthai` TT ON `donhang`.`trangthai` = TT.`trangthai` WHERE TT.`trangthai` = %s "
-    sql = "SELECT * FROM `chitietdh` WHERE madonhang = %s"
-    today = datetime.today()
-    id = 5
-    total = 650000
-    # sql = '''
-    #           INSERT INTO donhang(makh, tong, ngaydat)
-    #           VALUES (%s, %s, %s);
-    # '''
-    # cur.execute(sql, (id, total, today,))
-    # sql = "SELECT LAST_INSERT_ID() as LastID;"
-    cur.execute(sql, 46)
-    stt = cur.fetchall()
-    print(stt)
-    #print("Last id", a['LastID'])
-
-    # stt = []
-    # print("id mới thêm vào DB", ['LastID'])
-    o = 1
-    for i in stt:
-        print("ok",o)
-        u = i['tensp']
-        print("chi tiet", i)
-        print("ma chi tiet", i['madonhang'])
-        print(u)
-        o = o + 1
-    # print(stt['madonhang'])
-    if not stt:  # stt = null
-        print("Ko có đơn hàng chứa trạng thái. Xoá được")
-    else:   # stt != null
-        print(len(stt))
-        # print("Ko đc xoá")
-
+    # Kiểm tra ràng buộc khoá ngoại:
+    sql = '''
+        SELECT chitietdh.mact, sanpham.code, sanpham.tensp
+        FROM sanpham JOIN chitietdh
+        ON sanpham.masp = chitietdh.masp
+        WHERE sanpham.masp = %s
+    '''
+    cur.execute(sql, 35)
+    order = cur.fetchall()
+    print("fetchall" , order)
+    if not order:  # Ko có chi tiết đơn hàng nào chứa sản phẩm => Có thể xoá.
+        sql1 = '''
+            DELETE  FROM sanpham
+            WHERE masp = %s
+        '''
+        cur.execute(sql1, (35,))
+        conn.commit()
+        print(1)  # Xoá sản phẩm thành công.
+    else:  # Có chi tiết đơn hàng chứa sản phẩm => Ko thể xoá.
+        print()  # Xoá sản phẩm ko thành công.

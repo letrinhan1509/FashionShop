@@ -1,6 +1,7 @@
 import "antd/dist/antd.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import Layout from "antd/lib/layout/layout";
 import { Content } from 'antd/lib/layout/layout';
 import { Col, Row, Image } from "antd";
@@ -19,6 +20,10 @@ import CategoryProduct from "./Container/Components/CategoryProduct";
 import ListOder from "./Container/Components/ListOder";
 import ListTypeProduct from "./Container/Components/ListTypeProduct";
 import AddTypeProduct from "./Container/Components/AddTypeProduct";
+import EditType from "./Container/Components/EditType";
+import ListProducter from "./Container/Components/ListProducter";
+import EditProduct from "./Container/Components/EditProduct";
+
 function App() {
 
 
@@ -30,7 +35,12 @@ function App() {
     setLoad(a);
     console.log(load);
   };
-
+  const [listType, setListType]= useState([]);
+  useEffect(()=>{
+      axios.get("http://127.0.0.1:5000/api/v1/type").then((res)=>{
+          setListType(res.data.data)
+      })
+  },[])
 
 
   //Admin
@@ -66,7 +76,10 @@ function App() {
                     <AllProduct />
                   </Route>
                   <Route path="/Themsanpham">
-                    <AddProduct />
+                    <AddProduct listType={listType} />
+                  </Route>
+                  <Route path="/Editsanpham">
+                    <EditProduct/>
                   </Route>
                   <Route path="/DMsanpham">
                     <CategoryProduct />
@@ -86,6 +99,9 @@ function App() {
                   <Route path="/EditNV">
                     <EditNV />
                   </Route>
+                  <Route path="/EditType">
+                    <EditType />
+                  </Route>
                   <Route path="/Danhsachdonhang">
                     <ListOder />
                   </Route>
@@ -94,6 +110,9 @@ function App() {
                   </Route>
                   <Route path="/Themloai">
                     <AddTypeProduct />
+                  </Route>
+                  <Route path="/Danhsachnhasx">
+                    <ListProducter />
                   </Route>
                 </Content>
               </Col>

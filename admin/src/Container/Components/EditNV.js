@@ -40,24 +40,16 @@ const EditNV = (props) => {
     const [form] = Form.useForm();
     const history = useHistory();
     const Admin = JSON.parse(localStorage.getItem("admin"))
-    console.log("Thông tin admin:", Admin.data.matkhau);
-    const prefixSelector = (
-        <Form.Item name="prefix" noStyle>
-            <Select style={{ width: 70 }}>
-                <Option value="86">+84</Option>
-            </Select>
-        </Form.Item>
-
-    );
+    
 
     const register = (values) => {
         console.log(values)
         let a = JSON.stringify({ admin: "adas@gmail.com" });
 
         console.log(a);
-        const url = "http://127.0.0.1:5000/api/v1/add-admin"
-       /*  axios.post(url, values).then((res) => {
-            if (res.data.status === "success") {
+        const url = "http://127.0.0.1:5000/api/v1/update-profile-admin"
+        axios.post(url, values).then((res) => {
+            if (res.data.status === "Success") {
                 message.success(res.data.message)
                 setTimeout(() => {
                     history.push('/DanhsachAdmin');
@@ -66,7 +58,7 @@ const EditNV = (props) => {
             else {
                 message.error("Thêm thất bại")
             }
-        }) */
+        }) 
             .catch(err => {
                 console.log(err.response);
                 message.error(`Login fail!\n ${err.response.data}`)
@@ -86,9 +78,9 @@ const EditNV = (props) => {
                     name="register"
                     onFinish={register}
                     initialValues={{
-                        manv: `${Admin.data.manv}`,
+                        id: `${Admin.data.manv}`,
                         prefix: "86",
-                        admin:`${Admin.data.admin}`,
+                        email:`${Admin.data.admin}`,
                         name:`${Admin.data.tennv}`,
                         pass:`${Admin.data.matkhau}`,
                         pass1:`${Admin.data.matkhau}`,
@@ -101,7 +93,7 @@ const EditNV = (props) => {
                 >
 
                     <Form.Item
-                        name="manv"
+                        name="id"
                         id="manv"
                         label="Mã nhân viên"
 
@@ -109,7 +101,7 @@ const EditNV = (props) => {
                         <Input disabled  />
                     </Form.Item>
                     <Form.Item
-                        name="admin"
+                        name="email"
                         id="admin"
                         label="E-mail"
                         rules={[

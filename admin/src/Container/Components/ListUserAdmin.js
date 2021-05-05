@@ -24,7 +24,11 @@ const ListUserAdmin = () => {
  
   localStorage.setItem('admin',JSON.stringify(Admin) )
 
+  const lickIdAdmmin =()=>{
+    console.log('ádada');
 
+
+  }
 
 
 
@@ -102,7 +106,12 @@ const ListUserAdmin = () => {
   return (
     <>
        <h2 style={{ textAlign: 'center',marginTop:"50px" }}>Danh sách nhân viên</h2>
-      <Table dataSource={ListAdmin} columns={columns} pagination={{ pageSize: 6 }} size="middle" />
+      <Table onSelect={lickIdAdmmin} dataSource={ListAdmin} columns={columns} pagination={{ pageSize: 6 }} size="middle" 
+        
+      
+      
+      
+      />
 
       {/*   <a className="ant-btn ant-btn-primary" href='/Themnhanvien'  type="primary">Thêm nhân viên</a> */}
     

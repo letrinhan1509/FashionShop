@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Row, Col, Button, message, Select } from "antd";
 //import "./component-css/Register.css";
 
@@ -39,7 +39,8 @@ const tailFormItemLayout = {
 const AddNV = (props) => {
     const [form] = Form.useForm();
     const history = useHistory();
-
+   
+  
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
             <Select style={{ width: 70 }}>
@@ -47,6 +48,8 @@ const AddNV = (props) => {
             </Select>
         </Form.Item>
     );
+
+
     const register = (values) => {
         console.log(values)
         let a = JSON.stringify({ admin: "adas@gmail.com" });

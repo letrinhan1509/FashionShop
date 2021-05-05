@@ -28,6 +28,7 @@ const Navigation = () => {
                                 <Menu.Item key="DMsanpham">Danh mục sản phẩm</Menu.Item>
                                 <Menu.Item key="Danhsachloai">Danh sách loại</Menu.Item>
                                 <Menu.Item key="Themloai">Thêm loại</Menu.Item>
+                                <Menu.Item key ="Danhsachnhasx">Danh sách nhà sản xuất</Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" title=" Quản lý tài khoản">
                                 <Menu.Item key="Danhsachkhachhang">Khách hàng</Menu.Item>

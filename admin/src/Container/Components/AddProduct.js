@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios"
-import { Form, Input, Button, Upload, message, Image } from 'antd';
+import { Form, Input, Button, Upload, message, Select } from 'antd';
 import { useHistory } from "react-router-dom"
 import { UploadOutlined, } from '@ant-design/icons';
-
+const { Option } = Select;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -34,7 +34,7 @@ const normFile = (e: any) => {
     }
     return e && e.fileList;
 };
-const Balo = () => {
+const Balo = (props) => {
     const [form] = Form.useForm();
     const history = useHistory();
     const addProduct = (values) => {
@@ -54,39 +54,45 @@ const Balo = () => {
                 message.error(`Login fail!\n ${err.response.data}`)
             })
     };
-
-  
-const [fileList, setFileList] = useState([]);
-const meta = {
-	title: 'title 1',
-  	contents: 'contents 1',
-}
-
-const handleUpload = () => {
-	const formData = new FormData();
-  	fileList.forEach(file => formData.append('img', file));
-  	for(let key in meta) {
-    	formData.append(key, meta[key]);
+    const [fileList, setFileList] = useState([]);
+    const meta = {
+        title: 'title 1',
+        contents: 'contents 1',
     }
-  
-  	axios.post('http://127.0.0.1:5000/api/v1/add-img', formData, {
-    	header: { 'Content-Type': 'multipart/form-data'}
-    });
-}
-const beforeUpload= file => {
-    setFileList(fileList.concat(file));
-    return false;
-}
+    const handleUpload = () => {
+        const formData = new FormData();
+        fileList.forEach(file => formData.append('img', file));
+        for (let key in meta) {
+            formData.append(key, meta[key]);
+        }
+
+        axios.post('http://127.0.0.1:5000/api/v1/add-img', formData, {
+            header: { 'Content-Type': 'multipart/form-data' }
+        });
+    }
+    const beforeUpload = file => {
+        setFileList(fileList.concat(file));
+        return false;
+    }
+
+    const [listProduct, setlistProduct] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://127.0.0.1:5000/api/v1/producer").then((res) => {
+            setlistProduct(res.data.data)
+        })
+    }, [])
+    console.log(listProduct);
+    console.log(props.listType);
+
     return (
         <>
             <h2 style={{ textAlign: 'center' }}> Nhập thông tin sản phẩm</h2>
             <Form
                 {...formItemLayout}
-
                 form={form}
                 name="register"
                 onFinish={addProduct}
-
                 scrollToFirstError
             >
                 <Form.Item
@@ -115,7 +121,6 @@ const beforeUpload= file => {
                             message: 'Nhập tên sản phẩm!',
                         },
                     ]}
-
                 >
                     <Input />
                 </Form.Item>
@@ -123,7 +128,6 @@ const beforeUpload= file => {
                 <Form.Item
                     name="price"
                     label="Giá"
-
                     rules={[
                         {
                             required: true,
@@ -133,11 +137,9 @@ const beforeUpload= file => {
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
                     name="redPrice"
                     label="Khuyến mãi"
-
                     rules={[{ required: false }]}
                 >
                     <Input />
@@ -145,7 +147,6 @@ const beforeUpload= file => {
                 <Form.Item
                     name="amount"
                     label="Số lượng"
-
                     rules={[{ required: false }]}
                 >
                     <Input />
@@ -156,40 +157,50 @@ const beforeUpload= file => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                 >
-                    <Upload 
+                    <Upload
                         listType="picture"
                         name='img'
-                        multiple= 'true'
-                        action= 'http://127.0.0.1:5000/api/v1/add-img'
+                        multiple='true'
+                        action='http://127.0.0.1:5000/api/v1/add-img'
                         beforeUpload={beforeUpload}
                         fileList
                     >
                         <Button icon={<UploadOutlined />}>Click to upload</Button>
                     </Upload>
                 </Form.Item>
-            <Form.Item
-                name="producer"
-                label="Mã nhà sản xuất"
-                rules={[{ required: true, message: 'Nhập mã nhà sản xuất' }]}
-            >
-                <Input />
-            </Form.Item>
-
-            <Form.Item
-                name="type"
-                label="Nhập mã loại"
-                rules={[{ required: true, message: 'Nhập mã loại!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" onClick={handleUpload} htmlType="submit">
-                    Thêm sảm phẩm
+                <Form.Item name="producer"  name="producer"
+                    label="Nhà sản xuất">
+                    <Select>
+                        {listProduct.map((item) => {
+                            return (
+                                <>
+                                    <Option value={item.mansx}>{item.tennsx}</Option>
+                                </>
+                            )
+                        })}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    name="type"
+                    label="Nhập mã loại"
+                    rules={[{ required: true, message: 'Nhập mã loại!' }]}
+                >
+                     <Select>
+                        {props.listType.map((item) => {
+                            return (
+                                <>
+                                    <Option value={item.maloai}>{item.tenloai}</Option>
+                                </>
+                            )
+                        })}
+                    </Select>
+                </Form.Item>
+                <Form.Item {...tailFormItemLayout}>
+                    <Button type="primary" onClick={handleUpload} htmlType="submit">
+                        Thêm sảm phẩm
               </Button>
-            </Form.Item>
-           
-        </Form>
-            
+                </Form.Item>
+            </Form>
         </>
     );
 };

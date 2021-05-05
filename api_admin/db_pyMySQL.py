@@ -35,6 +35,16 @@ def get_code_admin(id):
         ad = cur.fetchone()
         return ad
 
+
+def get_code_type(typeid):
+    with connection.cursor() as cur:
+        sql ="SELECT * FROM loaisp WHERE maloai = %s"
+        cur.execute(sql, (typeid,))
+        ad = cur.fetchone()
+        return ad
+
+
+
 # Tài khoản "Admin" theo số điện thoại:
 def get_phone_admin(admin_phone):
     with connection.cursor() as cur:
@@ -100,6 +110,9 @@ def get_all_order():
 
 
 # Danh sách "chi tiết đơn hàng" theo id đơn hàng:
+
+
+
 def get_all_detailOrder(order_id):
     with connection.cursor() as cur:
         sql = "SELECT * FROM `chitietdh` WHERE madonhang = %s"
@@ -137,6 +150,7 @@ def get_product_name(name):
         cur.execute(sql, (name,))
         ad = cur.fetchall()
         return ad
+
 
 
     # CHECK IN DATABASE:
@@ -239,7 +253,8 @@ def check_product_id(product_id):
         sql = "SELECT * FROM sanpham WHERE masp = %s"
         cur.execute(sql, (product_id,))
         product = cur.fetchone()
-        if not product:  # Ko có sản phẩm trong DB.
+        print(product)
+        if product == {}:  # Ko có sản phẩm trong DB.
             return -1
         return product   # Có sản phẩm trong DB.
 

@@ -6,12 +6,13 @@ import Item from 'antd/lib/list/Item';
 
 const ListTypeProduct = () => {
     const link = useHistory();
-    const [a, setA] = useState([]);
+    //const [a, setA] = useState([]);
     const [code, setCode] = useState('')
     const linkto = (e) => {
-        setA(e.key);
+        console.log(e.key);
+        localStorage.setItem('type',JSON.stringify(e.key) )
         setTimeout(() => {
-            link.push('/EditNV');
+            link.push('/EditType');
         }, 100)
     }
     const getName = (e) => {

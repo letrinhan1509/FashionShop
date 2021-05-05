@@ -192,6 +192,18 @@ def get_admin_id(admin_id):
             return jsonify({"status": "fail", "message": ex})
 
 
+@app.route("/api/v1/type-id/<string:type_id>", methods=["GET"])
+def get_type_id(type_id):
+        try:
+            data = db_pyMySQL.get_code_type(type_id)
+            if not data:
+                return jsonify({"status": "fail", "message": "Không tìm thấy mã loại !!!"})
+            return jsonify({"status": "success", "data": data})
+        except Exception as ex:
+            return jsonify({"status": "fail", "message": ex})
+
+
+
 # API Tìm product theo tên:
 @app.route("/api/v1/product/<string:product_name>", methods=["GET"])
 def get_product_name(product_name):
@@ -206,6 +218,7 @@ def get_product_name(product_name):
 
 # API ADD:
 # API Thêm Admin:
+
 @app.route("/api/v1/add-admin", methods=["POST"])
 def insert_admin():
     admin = request.json["admin"]
@@ -550,13 +563,13 @@ def delete_category():
 
 
 # API Xoá sản phẩm:
-@app.route("/api/v1/del-product", methods=["POST"])
-def delete_product():
-    product_id = request.json["productId"]
-    if db_pyMySQL.check_product_id(product_id) == -1:
+@app.route("/api/v1/del-product/<int:pro_id>", methods=["GET"])
+def delete_product(pro_id):
+    # product_id = request.json["productId"]
+    if db_pyMySQL.check_product_id(pro_id) == -1:
         return jsonify({"status": "Fail", "message": "Không tìm thấy sản phẩm này trong Database!!!"})
     else:
-        if model_delete.delete_product(product_id) == 1:
+        if model_delete.delete_product(pro_id) == 1:
             return jsonify({"status": "Success", "message": "Xoá sản phẩm thành công!!!"})
         else:
             return jsonify({"status": "Fail", "message": "Lỗi ràng buộc khoá ngoại, không thể xoá sản phẩm này!!!"})

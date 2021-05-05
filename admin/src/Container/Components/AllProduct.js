@@ -1,8 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Button, Table,Modal, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { useHistory } from 'react-router';
 const AllProduct = () => {
+  let link = useHistory()
+  const [idPro, setIdPro]=useState([]);
+  const loadEdit= (e)=>{
+    let i =e.currentTarget.dataset.id;
+    console.log(i);
+    window.localStorage.setItem("masp",i)
+    link.push('/Editsanpham');
+  }
+  const onClick=(e)=>{
+    let id = e.currentTarget.dataset.id
+    setIdPro(id)
+    console.log('Content: ', e.currentTarget.dataset.id);
+    console.log(idPro);
+    setIsModalVisible(true);
+  }
+ 
+  ///Modal Xoá
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+ 
+  const handleOk = () => {
+    let url = "http://127.0.0.1:5000/api/v1/del-product/"+idPro;
+    console.log(url);
+     axios.get(url).then((res)=>{
+       if(res.data.status ==="Success"){
+          message.success(res.data.message);
+          window.location.reload()
+       }
+       if(res.data.status ==="Fail"){
+        message.error(res.data.message);
+       }
+      
+   
+      })
+     
+    setIsModalVisible(false);
+    
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   const [ListProductHome, setListProductHome] = useState([]);
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/api/v1/product").then((res) => {
@@ -13,11 +56,13 @@ const AllProduct = () => {
     let { sortedInfo, filteredInfo } = useState([]);
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
+   
     const columns = [
         {
           title: 'Mã sản phẩm',
           dataIndex: 'masp',
           key: 'masp',
+          
         },
         {
           title: 'Code',
@@ -74,11 +119,30 @@ const AllProduct = () => {
         sortOrder: sortedInfo.columnKey === 'maloai' && sortedInfo.order, */
         ellipsis: true,
         },
+        {
+          title: 'Action',
+          dataIndex:"masp",
+          key:"masp",
+          render:text =><Button data-id={text} onClick={onClick}>Xoá</Button>,
+         
+        },
+        {
+          title: '',
+          dataIndex:"masp",
+          key:"masp",
+          render:text =><Button data-id={text} onClick={loadEdit} >Sửa</Button>
+        }
       ];
       
     return (
         <>
-        <Table dataSource={ListProductHome} columns={columns} pagination={{ pageSize: 6 }}  size="middle" />
+        <Table dataSource={ListProductHome} rowKey="uid"   columns={columns} pagination={{ pageSize: 6 }}  size="middle"
+       
+        />
+         <Modal title="Thông báo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+       
+        <p>Bạn có muốn xoá sản phẩm này không ?</p>
+      </Modal>
         
         
         <Link to={'/Themsanpham'}><p className="ant-btn ant-btn-primary" type="primary">Thêm sản phẩm</p></Link>
