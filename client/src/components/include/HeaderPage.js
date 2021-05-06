@@ -121,7 +121,7 @@ const HeaderPage = (props) => {
                             <img alt='logo' src="../images/icon/logo.svg" />
                         </div>
                         <div className="search_bar">
-                            <input value={wordSearch} placeholder='Tên sản phẩm' onChange={e => handlerClick(e)} />
+                            <input value={wordSearch} placeholder='Nhập tên sản phẩm' onChange={e => handlerClick(e)} />
                             <div>
                                 {
                                     hidden ? (
@@ -152,7 +152,7 @@ const HeaderPage = (props) => {
                             {props.PriceCart}Đ
                         </Menu.Item>
                         <Menu.Item key="Contact">
-                            <PhoneOutlined />
+                            Contact
                         </Menu.Item>
                         
                         {JSON.parse(localStorage.getItem('user')) === null ? (

@@ -17,7 +17,7 @@ const footer = () => {
                     lg={{ span: 6, offset: 2 }}>
                     <p className="footer-title">FshionShop</p>
                     <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.Since the 1500s, when an unknown printer
+                        "Chúng tôi đang tạo ra những bộ trang phục sản xuất trong nước hoàn toàn có thể sánh ngang với các thương hiệu thời trang nam đến từ nước ngoài về kiểu dáng, chất lượng lẫn phong cách thời trang."
                     </p>
 
                 </Col>

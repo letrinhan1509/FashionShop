@@ -22,7 +22,7 @@ const ProductDetail = (props) => {
             <Link_Page />
             <Row>
                 <Col offset={2}>
-                    <SelectProduct ListPro={props.ListProductHome} />
+                    <SelectProduct ListPro={props.ListProductHome} Thongbao_Them={props.Thongbao_Them}/>
                 </Col>
             </Row>
             <Row className="related">

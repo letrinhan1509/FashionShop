@@ -37,7 +37,7 @@ const Paycart = (props) => {
     const url = "http://127.0.0.1:5000/api/v1/add-order";
     axios
       .post("http://127.0.0.1:5000/api/v1/add-order", values)
-      // console.log(values)
+      console.log(values)
       .then(async (res) => {
         if (res.data.status === "Success") {
           message.success(`Tạo đơn hàng thành công !`);
@@ -52,11 +52,11 @@ const Paycart = (props) => {
       }); */
   };
 
-  const [paycarts, setPaycart] = useState();
+  const [paycarts, setPaycart] = useState([]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     localStorage.setItem(...["cart", JSON.stringify(props.cart)]);
-  }, [props.cart]);
+  }, [props.cart]); */
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -141,7 +141,7 @@ const Paycart = (props) => {
                 <Form.Item>
                   <Button type="primary" onClick={pay} htmlType="submit">
                     Xác nhận
-            </Button>
+                  </Button>
                 </Form.Item>
               </Form>
             </>

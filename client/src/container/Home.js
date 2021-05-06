@@ -121,7 +121,7 @@ const Home = (props) => {
                         {/* <h3 className="slider__bg__title">
                             Super Flash Sale 50% Off
                         </h3> */}
-                        <Carousel className="slider__bg__title" autoplay>
+                        <Carousel className="slider__bg__title" autoplay dots={false}>
                             <div>
                                 <h3 style={info_sale}>Super Flash Sale 30% Off</h3>
                             </div>

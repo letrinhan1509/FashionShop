@@ -12,11 +12,11 @@ const { Option } = Select;
 
 export const DataContext = createContext()
 const Select_Product = (props) => {
-    const [cart,setCart] = useState([])
+    const [cart, setCart] = useState([])
 
-   
 
-    
+
+
     const { id } = useParams();
     function handleChange(value) {
         console.log(`selected ${value}`);
@@ -107,7 +107,7 @@ const Select_Product = (props) => {
     ];
 
     const TabsProduct = () => (
-        
+
         <Tabs defaultActiveKey="1" style={{ width: 900 }}>
             <TabPane tab="Product Infomation" key="1">
                 <p>
@@ -178,7 +178,7 @@ const Select_Product = (props) => {
     )
 
     return (
-        
+
         <Content>
             <Row className="cover-one">
                 {item.map((e) => {
@@ -239,7 +239,7 @@ const Select_Product = (props) => {
                                 </Radio.Group> */}
                                             {
                                                 product.map((items) => {
-                                                    
+
                                                     return (
                                                         <div >
                                                             {items.color.map((item) => {
@@ -270,11 +270,9 @@ const Select_Product = (props) => {
                                 <div className="add-cart">
                                     <Row>
                                         <Col offset={13} span={4}>
-                                            <Link to={`ProductDetail/${e.masp}/cart`}>
-                                                <Button className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
-                                                    Add To Cart
-                                </Button>
-                                            </Link>
+                                            <Button onClick={() => props.Thongbao_Them(e)} className="btn-add" type="primary" icon={<ShoppingCartOutlined />} size={size}>
+                                                Add To Cart
+                                            </Button>
                                         </Col>
                                         <Col offset={4} span={2}>
                                             <Button className="btn-add" type="primary" icon={<HeartOutlined />} size={size} />
